@@ -291,6 +291,6 @@ function ServicesPage() {
 }
 
 // Définir la route
-export const Route = createFileRoute("/_home/admin/service")({
+export const Route = createFileRoute("/_home/service")({
   component: ServicesPage,
 });

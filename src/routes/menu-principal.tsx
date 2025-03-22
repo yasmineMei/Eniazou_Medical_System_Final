@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/menu-principal")({
@@ -6,7 +6,7 @@ export const Route = createFileRoute("/menu-principal")({
 });
 
 const menuItems = [
-  { title: "OPD", icon: "🏥", path: "/OPD/opd" },
+  { title: "OPD", icon: "🏥", path: "/registration" },
   { title: "IPD", icon: "🛏️", path: "/IPD/ipd" },
   { title: "Rendez-vous", icon: "📅", path: "/appoitments/appointments" },
   { title: "Laboratoire", icon: "🔬", path: "/lab/lab" },
@@ -14,13 +14,33 @@ const menuItems = [
   { title: "Infirmier", icon: "💉", path: "/nurse/nurse" },
   { title: "Médecin", icon: "👨‍⚕️", path: "doctor/doctor" },
   { title: "Stock Médicale", icon: "💊", path: "/medical-stock/medical-stock" },
-  { title: "Administrateur", icon: "👨‍💼", path: "/admin/dashboard" },
-];
+  { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
+] as const;
+
+type MenuTitle = (typeof menuItems)[number]["title"];
 
 function RouteComponent() {
+  const role = localStorage.getItem("role") || "";
+  if (!role || role === "") {
+    // Rediriger vers la page de connexion si le rôle n'est pas autorisé
+    return <Navigate to="/login" />;
+  }
+
+  let menu = [...menuItems];
+
+  if (role === "doctor") {
+    const toKeep: MenuTitle[] = ["Médecin", "Laboratoire", "Radiologie", "IPD"];
+    menu = menu.filter((x) => toKeep.includes(x.title));
+  } else if (role === "nurse") {
+    const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire", "IPD"];
+    menu = menu.filter((x) => toKeep.includes(x.title));
+  } else if (role === "receptionist") {
+    const toKeep: MenuTitle[] = ["OPD", "Rendez-vous"];
+    menu = menu.filter((x) => toKeep.includes(x.title));
+  }
+
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6">
-
       {/* Titre du menu */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
@@ -38,8 +58,8 @@ function RouteComponent() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl"
       >
-        {menuItems.map((item, index) => (
-          <Link to={item.path} key={index}>
+        {menu.map((item, index) => (
+          <Link to={item.path.toString()} key={index}>
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

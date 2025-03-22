@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/pagination";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/_home/admin/personnel")({
+export const Route = createFileRoute("/_home/personnel")({
   component: RouteComponent,
 });
 

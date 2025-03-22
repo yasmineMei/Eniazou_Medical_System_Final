@@ -66,7 +66,7 @@ const reportData = {
   ],
 };
 
-export const Route = createFileRoute("/_home/admin/report")({
+export const Route = createFileRoute("/_home/report")({
   component: ReportsPage,
 });
 

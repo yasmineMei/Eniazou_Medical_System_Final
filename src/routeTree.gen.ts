@@ -13,24 +13,42 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as MenuPrincipalImport } from './routes/menu-principal'
 import { Route as LoginImport } from './routes/login'
+import { Route as RadiologyImport } from './routes/_radiology'
+import { Route as OpdImport } from './routes/_opd'
+import { Route as NurseImport } from './routes/_nurse'
+import { Route as MedicalStockImport } from './routes/_medical-stock'
+import { Route as LabImport } from './routes/_lab'
+import { Route as IpdImport } from './routes/_ipd'
 import { Route as HomeImport } from './routes/_home'
+import { Route as DoctorImport } from './routes/_doctor'
+import { Route as AppointmentsImport } from './routes/_appointments'
 import { Route as IndexImport } from './routes/index'
-import { Route as HomeStockStockImport } from './routes/_home/stock/stock'
-import { Route as HomeRadiologyRadiologyImport } from './routes/_home/radiology/radiology'
-import { Route as HomeNurseNurseImport } from './routes/_home/nurse/nurse'
-import { Route as HomeLabLabImport } from './routes/_home/lab/lab'
-import { Route as HomeDoctorDoctorImport } from './routes/_home/doctor/doctor'
-import { Route as HomeAppointmentsAppointmentsImport } from './routes/_home/appointments/appointments'
-import { Route as HomeAdminSettingImport } from './routes/_home/admin/setting'
-import { Route as HomeAdminServiceImport } from './routes/_home/admin/service'
-import { Route as HomeAdminReportImport } from './routes/_home/admin/report'
-import { Route as HomeAdminProfilImport } from './routes/_home/admin/profil'
-import { Route as HomeAdminPersonnelImport } from './routes/_home/admin/personnel'
-import { Route as HomeAdminPatientImport } from './routes/_home/admin/patient'
-import { Route as HomeAdminMessageImport } from './routes/_home/admin/message'
-import { Route as HomeAdminDashboardImport } from './routes/_home/admin/dashboard'
-import { Route as HomeOPDOpdImport } from './routes/_home/OPD/opd'
-import { Route as HomeIPDIpdImport } from './routes/_home/IPD/ipd'
+import { Route as OpdVaccinImport } from './routes/_opd/vaccin'
+import { Route as OpdRegistrationImport } from './routes/_opd/registration'
+import { Route as OpdQueueImport } from './routes/_opd/queue'
+import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registration'
+import { Route as NurseNurseImport } from './routes/_nurse/nurse'
+import { Route as MedicalStockMedicalStockImport } from './routes/_medical-stock/medical-stock'
+import { Route as LabLabImport } from './routes/_lab/lab'
+import { Route as IpdMedecinesImport } from './routes/_ipd/medecines'
+import { Route as IpdIpdImport } from './routes/_ipd/ipd'
+import { Route as IpdInvestigationImport } from './routes/_ipd/investigation'
+import { Route as IpdDischargeImport } from './routes/_ipd/discharge'
+import { Route as HomeSettingImport } from './routes/_home/setting'
+import { Route as HomeServiceImport } from './routes/_home/service'
+import { Route as HomeReportImport } from './routes/_home/report'
+import { Route as HomeProfilImport } from './routes/_home/profil'
+import { Route as HomePersonnelImport } from './routes/_home/personnel'
+import { Route as HomePatientImport } from './routes/_home/patient'
+import { Route as HomeMessageImport } from './routes/_home/message'
+import { Route as HomeDashboardImport } from './routes/_home/dashboard'
+import { Route as DoctorDoctorImport } from './routes/_doctor/doctor'
+import { Route as AppointmentsAppointmentsImport } from './routes/_appointments/appointments'
+
+import { Route as IpdReportImport } from './routes/_ipd/report'
+import { Route as IpdRegistrationImport } from './routes/_ipd/registration'
+import { Route as IpdPaymentImport } from './routes/_ipd/payment'
+import { Route as IpdOTImport } from './routes/_ipd/oT'
 
 // Create/Update Routes
 
@@ -46,8 +64,48 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RadiologyRoute = RadiologyImport.update({
+  id: '/_radiology',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OpdRoute = OpdImport.update({
+  id: '/_opd',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NurseRoute = NurseImport.update({
+  id: '/_nurse',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MedicalStockRoute = MedicalStockImport.update({
+  id: '/_medical-stock',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LabRoute = LabImport.update({
+  id: '/_lab',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IpdRoute = IpdImport.update({
+  id: '/_ipd',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const HomeRoute = HomeImport.update({
   id: '/_home',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DoctorRoute = DoctorImport.update({
+  id: '/_doctor',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AppointmentsRoute = AppointmentsImport.update({
+  id: '/_appointments',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -57,101 +115,154 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const HomeStockStockRoute = HomeStockStockImport.update({
-  id: '/stock/stock',
-  path: '/stock/stock',
+const OpdVaccinRoute = OpdVaccinImport.update({
+  id: '/vaccin',
+  path: '/vaccin',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdRegistrationRoute = OpdRegistrationImport.update({
+  id: '/registration',
+  path: '/registration',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdQueueRoute = OpdQueueImport.update({
+  id: '/queue',
+  path: '/queue',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdBirthRegistrationRoute = OpdBirthRegistrationImport.update({
+  id: '/birth-registration',
+  path: '/birth-registration',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const NurseNurseRoute = NurseNurseImport.update({
+  id: '/nurse',
+  path: '/nurse',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const MedicalStockMedicalStockRoute = MedicalStockMedicalStockImport.update({
+  id: '/medical-stock',
+  path: '/medical-stock',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const LabLabRoute = LabLabImport.update({
+  id: '/lab',
+  path: '/lab',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const IpdMedecinesRoute = IpdMedecinesImport.update({
+  id: '/medecines',
+  path: '/medecines',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdIpdRoute = IpdIpdImport.update({
+  id: '/ipd',
+  path: '/ipd',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdInvestigationRoute = IpdInvestigationImport.update({
+  id: '/investigation',
+  path: '/investigation',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdDischargeRoute = IpdDischargeImport.update({
+  id: '/discharge',
+  path: '/discharge',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const HomeSettingRoute = HomeSettingImport.update({
+  id: '/setting',
+  path: '/setting',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeRadiologyRadiologyRoute = HomeRadiologyRadiologyImport.update({
-  id: '/radiology/radiology',
-  path: '/radiology/radiology',
+const HomeServiceRoute = HomeServiceImport.update({
+  id: '/service',
+  path: '/service',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeNurseNurseRoute = HomeNurseNurseImport.update({
-  id: '/nurse/nurse',
-  path: '/nurse/nurse',
+const HomeReportRoute = HomeReportImport.update({
+  id: '/report',
+  path: '/report',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeLabLabRoute = HomeLabLabImport.update({
-  id: '/lab/lab',
-  path: '/lab/lab',
+const HomeProfilRoute = HomeProfilImport.update({
+  id: '/profil',
+  path: '/profil',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeDoctorDoctorRoute = HomeDoctorDoctorImport.update({
-  id: '/doctor/doctor',
-  path: '/doctor/doctor',
+const HomePersonnelRoute = HomePersonnelImport.update({
+  id: '/personnel',
+  path: '/personnel',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeAppointmentsAppointmentsRoute =
-  HomeAppointmentsAppointmentsImport.update({
-    id: '/appointments/appointments',
-    path: '/appointments/appointments',
-    getParentRoute: () => HomeRoute,
-  } as any)
-
-const HomeAdminSettingRoute = HomeAdminSettingImport.update({
-  id: '/admin/setting',
-  path: '/admin/setting',
+const HomePatientRoute = HomePatientImport.update({
+  id: '/patient',
+  path: '/patient',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeAdminServiceRoute = HomeAdminServiceImport.update({
-  id: '/admin/service',
-  path: '/admin/service',
+const HomeMessageRoute = HomeMessageImport.update({
+  id: '/message',
+  path: '/message',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeAdminReportRoute = HomeAdminReportImport.update({
-  id: '/admin/report',
-  path: '/admin/report',
+const HomeDashboardRoute = HomeDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeAdminProfilRoute = HomeAdminProfilImport.update({
-  id: '/admin/profil',
-  path: '/admin/profil',
-  getParentRoute: () => HomeRoute,
+const DoctorDoctorRoute = DoctorDoctorImport.update({
+  id: '/doctor',
+  path: '/doctor',
+  getParentRoute: () => DoctorRoute,
 } as any)
 
-const HomeAdminPersonnelRoute = HomeAdminPersonnelImport.update({
-  id: '/admin/personnel',
-  path: '/admin/personnel',
-  getParentRoute: () => HomeRoute,
+const AppointmentsAppointmentsRoute = AppointmentsAppointmentsImport.update({
+  id: '/appointments',
+  path: '/appointments',
+  getParentRoute: () => AppointmentsRoute,
 } as any)
 
-const HomeAdminPatientRoute = HomeAdminPatientImport.update({
-  id: '/admin/patient',
-  path: '/admin/patient',
-  getParentRoute: () => HomeRoute,
+const IpdInPatientReportRoute = IpdInPatientReportImport.update({
+  id: '/InPatient/report',
+  path: '/InPatient/report',
+  getParentRoute: () => IpdRoute,
 } as any)
 
-const HomeAdminMessageRoute = HomeAdminMessageImport.update({
-  id: '/admin/message',
-  path: '/admin/message',
-  getParentRoute: () => HomeRoute,
+const IpdInPatientRegistrationRoute = IpdInPatientRegistrationImport.update({
+  id: '/InPatient/registration',
+  path: '/InPatient/registration',
+  getParentRoute: () => IpdRoute,
 } as any)
 
-const HomeAdminDashboardRoute = HomeAdminDashboardImport.update({
-  id: '/admin/dashboard',
-  path: '/admin/dashboard',
-  getParentRoute: () => HomeRoute,
+const IpdInPatientPaymentRoute = IpdInPatientPaymentImport.update({
+  id: '/InPatient/payment',
+  path: '/InPatient/payment',
+  getParentRoute: () => IpdRoute,
 } as any)
 
-const HomeOPDOpdRoute = HomeOPDOpdImport.update({
-  id: '/OPD/opd',
-  path: '/OPD/opd',
-  getParentRoute: () => HomeRoute,
-} as any)
-
-const HomeIPDIpdRoute = HomeIPDIpdImport.update({
-  id: '/IPD/ipd',
-  path: '/IPD/ipd',
-  getParentRoute: () => HomeRoute,
+const IpdInPatientOTRoute = IpdInPatientOTImport.update({
+  id: '/InPatient/oT',
+  path: '/InPatient/oT',
+  getParentRoute: () => IpdRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -165,11 +276,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_appointments': {
+      id: '/_appointments'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppointmentsImport
+      parentRoute: typeof rootRoute
+    }
+    '/_doctor': {
+      id: '/_doctor'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DoctorImport
+      parentRoute: typeof rootRoute
+    }
     '/_home': {
       id: '/_home'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof HomeImport
+      parentRoute: typeof rootRoute
+    }
+    '/_ipd': {
+      id: '/_ipd'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof IpdImport
+      parentRoute: typeof rootRoute
+    }
+    '/_lab': {
+      id: '/_lab'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LabImport
+      parentRoute: typeof rootRoute
+    }
+    '/_medical-stock': {
+      id: '/_medical-stock'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MedicalStockImport
+      parentRoute: typeof rootRoute
+    }
+    '/_nurse': {
+      id: '/_nurse'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof NurseImport
+      parentRoute: typeof rootRoute
+    }
+    '/_opd': {
+      id: '/_opd'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof OpdImport
+      parentRoute: typeof rootRoute
+    }
+    '/_radiology': {
+      id: '/_radiology'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof RadiologyImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -186,231 +353,408 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MenuPrincipalImport
       parentRoute: typeof rootRoute
     }
-    '/_home/IPD/ipd': {
-      id: '/_home/IPD/ipd'
-      path: '/IPD/ipd'
-      fullPath: '/IPD/ipd'
-      preLoaderRoute: typeof HomeIPDIpdImport
+    '/_appointments/appointments': {
+      id: '/_appointments/appointments'
+      path: '/appointments'
+      fullPath: '/appointments'
+      preLoaderRoute: typeof AppointmentsAppointmentsImport
+      parentRoute: typeof AppointmentsImport
+    }
+    '/_doctor/doctor': {
+      id: '/_doctor/doctor'
+      path: '/doctor'
+      fullPath: '/doctor'
+      preLoaderRoute: typeof DoctorDoctorImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_home/dashboard': {
+      id: '/_home/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof HomeDashboardImport
       parentRoute: typeof HomeImport
     }
-    '/_home/OPD/opd': {
-      id: '/_home/OPD/opd'
-      path: '/OPD/opd'
-      fullPath: '/OPD/opd'
-      preLoaderRoute: typeof HomeOPDOpdImport
+    '/_home/message': {
+      id: '/_home/message'
+      path: '/message'
+      fullPath: '/message'
+      preLoaderRoute: typeof HomeMessageImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/dashboard': {
-      id: '/_home/admin/dashboard'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof HomeAdminDashboardImport
+    '/_home/patient': {
+      id: '/_home/patient'
+      path: '/patient'
+      fullPath: '/patient'
+      preLoaderRoute: typeof HomePatientImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/message': {
-      id: '/_home/admin/message'
-      path: '/admin/message'
-      fullPath: '/admin/message'
-      preLoaderRoute: typeof HomeAdminMessageImport
+    '/_home/personnel': {
+      id: '/_home/personnel'
+      path: '/personnel'
+      fullPath: '/personnel'
+      preLoaderRoute: typeof HomePersonnelImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/patient': {
-      id: '/_home/admin/patient'
-      path: '/admin/patient'
-      fullPath: '/admin/patient'
-      preLoaderRoute: typeof HomeAdminPatientImport
+    '/_home/profil': {
+      id: '/_home/profil'
+      path: '/profil'
+      fullPath: '/profil'
+      preLoaderRoute: typeof HomeProfilImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/personnel': {
-      id: '/_home/admin/personnel'
-      path: '/admin/personnel'
-      fullPath: '/admin/personnel'
-      preLoaderRoute: typeof HomeAdminPersonnelImport
+    '/_home/report': {
+      id: '/_home/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof HomeReportImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/profil': {
-      id: '/_home/admin/profil'
-      path: '/admin/profil'
-      fullPath: '/admin/profil'
-      preLoaderRoute: typeof HomeAdminProfilImport
+    '/_home/service': {
+      id: '/_home/service'
+      path: '/service'
+      fullPath: '/service'
+      preLoaderRoute: typeof HomeServiceImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/report': {
-      id: '/_home/admin/report'
-      path: '/admin/report'
-      fullPath: '/admin/report'
-      preLoaderRoute: typeof HomeAdminReportImport
+    '/_home/setting': {
+      id: '/_home/setting'
+      path: '/setting'
+      fullPath: '/setting'
+      preLoaderRoute: typeof HomeSettingImport
       parentRoute: typeof HomeImport
     }
-    '/_home/admin/service': {
-      id: '/_home/admin/service'
-      path: '/admin/service'
-      fullPath: '/admin/service'
-      preLoaderRoute: typeof HomeAdminServiceImport
-      parentRoute: typeof HomeImport
+    '/_ipd/discharge': {
+      id: '/_ipd/discharge'
+      path: '/discharge'
+      fullPath: '/discharge'
+      preLoaderRoute: typeof IpdDischargeImport
+      parentRoute: typeof IpdImport
     }
-    '/_home/admin/setting': {
-      id: '/_home/admin/setting'
-      path: '/admin/setting'
-      fullPath: '/admin/setting'
-      preLoaderRoute: typeof HomeAdminSettingImport
-      parentRoute: typeof HomeImport
+    '/_ipd/investigation': {
+      id: '/_ipd/investigation'
+      path: '/investigation'
+      fullPath: '/investigation'
+      preLoaderRoute: typeof IpdInvestigationImport
+      parentRoute: typeof IpdImport
     }
-    '/_home/appointments/appointments': {
-      id: '/_home/appointments/appointments'
-      path: '/appointments/appointments'
-      fullPath: '/appointments/appointments'
-      preLoaderRoute: typeof HomeAppointmentsAppointmentsImport
-      parentRoute: typeof HomeImport
+    '/_ipd/ipd': {
+      id: '/_ipd/ipd'
+      path: '/ipd'
+      fullPath: '/ipd'
+      preLoaderRoute: typeof IpdIpdImport
+      parentRoute: typeof IpdImport
     }
-    '/_home/doctor/doctor': {
-      id: '/_home/doctor/doctor'
-      path: '/doctor/doctor'
-      fullPath: '/doctor/doctor'
-      preLoaderRoute: typeof HomeDoctorDoctorImport
-      parentRoute: typeof HomeImport
+    '/_ipd/medecines': {
+      id: '/_ipd/medecines'
+      path: '/medecines'
+      fullPath: '/medecines'
+      preLoaderRoute: typeof IpdMedecinesImport
+      parentRoute: typeof IpdImport
     }
-    '/_home/lab/lab': {
-      id: '/_home/lab/lab'
-      path: '/lab/lab'
-      fullPath: '/lab/lab'
-      preLoaderRoute: typeof HomeLabLabImport
-      parentRoute: typeof HomeImport
+    '/_lab/lab': {
+      id: '/_lab/lab'
+      path: '/lab'
+      fullPath: '/lab'
+      preLoaderRoute: typeof LabLabImport
+      parentRoute: typeof LabImport
     }
-    '/_home/nurse/nurse': {
-      id: '/_home/nurse/nurse'
-      path: '/nurse/nurse'
-      fullPath: '/nurse/nurse'
-      preLoaderRoute: typeof HomeNurseNurseImport
-      parentRoute: typeof HomeImport
+    '/_medical-stock/medical-stock': {
+      id: '/_medical-stock/medical-stock'
+      path: '/medical-stock'
+      fullPath: '/medical-stock'
+      preLoaderRoute: typeof MedicalStockMedicalStockImport
+      parentRoute: typeof MedicalStockImport
     }
-    '/_home/radiology/radiology': {
-      id: '/_home/radiology/radiology'
-      path: '/radiology/radiology'
-      fullPath: '/radiology/radiology'
-      preLoaderRoute: typeof HomeRadiologyRadiologyImport
-      parentRoute: typeof HomeImport
+    '/_nurse/nurse': {
+      id: '/_nurse/nurse'
+      path: '/nurse'
+      fullPath: '/nurse'
+      preLoaderRoute: typeof NurseNurseImport
+      parentRoute: typeof NurseImport
     }
-    '/_home/stock/stock': {
-      id: '/_home/stock/stock'
-      path: '/stock/stock'
-      fullPath: '/stock/stock'
-      preLoaderRoute: typeof HomeStockStockImport
-      parentRoute: typeof HomeImport
+    '/_opd/birth-registration': {
+      id: '/_opd/birth-registration'
+      path: '/birth-registration'
+      fullPath: '/birth-registration'
+      preLoaderRoute: typeof OpdBirthRegistrationImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/queue': {
+      id: '/_opd/queue'
+      path: '/queue'
+      fullPath: '/queue'
+      preLoaderRoute: typeof OpdQueueImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/registration': {
+      id: '/_opd/registration'
+      path: '/registration'
+      fullPath: '/registration'
+      preLoaderRoute: typeof OpdRegistrationImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/vaccin': {
+      id: '/_opd/vaccin'
+      path: '/vaccin'
+      fullPath: '/vaccin'
+      preLoaderRoute: typeof OpdVaccinImport
+      parentRoute: typeof OpdImport
+    }
+    '/_ipd/InPatient/oT': {
+      id: '/_ipd/InPatient/oT'
+      path: '/InPatient/oT'
+      fullPath: '/InPatient/oT'
+      preLoaderRoute: typeof IpdInPatientOTImport
+      parentRoute: typeof IpdImport
+    }
+    '/_ipd/InPatient/payment': {
+      id: '/_ipd/InPatient/payment'
+      path: '/InPatient/payment'
+      fullPath: '/InPatient/payment'
+      preLoaderRoute: typeof IpdInPatientPaymentImport
+      parentRoute: typeof IpdImport
+    }
+    '/_ipd/InPatient/registration': {
+      id: '/_ipd/InPatient/registration'
+      path: '/InPatient/registration'
+      fullPath: '/InPatient/registration'
+      preLoaderRoute: typeof IpdInPatientRegistrationImport
+      parentRoute: typeof IpdImport
+    }
+    '/_ipd/InPatient/report': {
+      id: '/_ipd/InPatient/report'
+      path: '/InPatient/report'
+      fullPath: '/InPatient/report'
+      preLoaderRoute: typeof IpdInPatientReportImport
+      parentRoute: typeof IpdImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AppointmentsRouteChildren {
+  AppointmentsAppointmentsRoute: typeof AppointmentsAppointmentsRoute
+}
+
+const AppointmentsRouteChildren: AppointmentsRouteChildren = {
+  AppointmentsAppointmentsRoute: AppointmentsAppointmentsRoute,
+}
+
+const AppointmentsRouteWithChildren = AppointmentsRoute._addFileChildren(
+  AppointmentsRouteChildren,
+)
+
+interface DoctorRouteChildren {
+  DoctorDoctorRoute: typeof DoctorDoctorRoute
+}
+
+const DoctorRouteChildren: DoctorRouteChildren = {
+  DoctorDoctorRoute: DoctorDoctorRoute,
+}
+
+const DoctorRouteWithChildren =
+  DoctorRoute._addFileChildren(DoctorRouteChildren)
+
 interface HomeRouteChildren {
-  HomeIPDIpdRoute: typeof HomeIPDIpdRoute
-  HomeOPDOpdRoute: typeof HomeOPDOpdRoute
-  HomeAdminDashboardRoute: typeof HomeAdminDashboardRoute
-  HomeAdminMessageRoute: typeof HomeAdminMessageRoute
-  HomeAdminPatientRoute: typeof HomeAdminPatientRoute
-  HomeAdminPersonnelRoute: typeof HomeAdminPersonnelRoute
-  HomeAdminProfilRoute: typeof HomeAdminProfilRoute
-  HomeAdminReportRoute: typeof HomeAdminReportRoute
-  HomeAdminServiceRoute: typeof HomeAdminServiceRoute
-  HomeAdminSettingRoute: typeof HomeAdminSettingRoute
-  HomeAppointmentsAppointmentsRoute: typeof HomeAppointmentsAppointmentsRoute
-  HomeDoctorDoctorRoute: typeof HomeDoctorDoctorRoute
-  HomeLabLabRoute: typeof HomeLabLabRoute
-  HomeNurseNurseRoute: typeof HomeNurseNurseRoute
-  HomeRadiologyRadiologyRoute: typeof HomeRadiologyRadiologyRoute
-  HomeStockStockRoute: typeof HomeStockStockRoute
+  HomeDashboardRoute: typeof HomeDashboardRoute
+  HomeMessageRoute: typeof HomeMessageRoute
+  HomePatientRoute: typeof HomePatientRoute
+  HomePersonnelRoute: typeof HomePersonnelRoute
+  HomeProfilRoute: typeof HomeProfilRoute
+  HomeReportRoute: typeof HomeReportRoute
+  HomeServiceRoute: typeof HomeServiceRoute
+  HomeSettingRoute: typeof HomeSettingRoute
 }
 
 const HomeRouteChildren: HomeRouteChildren = {
-  HomeIPDIpdRoute: HomeIPDIpdRoute,
-  HomeOPDOpdRoute: HomeOPDOpdRoute,
-  HomeAdminDashboardRoute: HomeAdminDashboardRoute,
-  HomeAdminMessageRoute: HomeAdminMessageRoute,
-  HomeAdminPatientRoute: HomeAdminPatientRoute,
-  HomeAdminPersonnelRoute: HomeAdminPersonnelRoute,
-  HomeAdminProfilRoute: HomeAdminProfilRoute,
-  HomeAdminReportRoute: HomeAdminReportRoute,
-  HomeAdminServiceRoute: HomeAdminServiceRoute,
-  HomeAdminSettingRoute: HomeAdminSettingRoute,
-  HomeAppointmentsAppointmentsRoute: HomeAppointmentsAppointmentsRoute,
-  HomeDoctorDoctorRoute: HomeDoctorDoctorRoute,
-  HomeLabLabRoute: HomeLabLabRoute,
-  HomeNurseNurseRoute: HomeNurseNurseRoute,
-  HomeRadiologyRadiologyRoute: HomeRadiologyRadiologyRoute,
-  HomeStockStockRoute: HomeStockStockRoute,
+  HomeDashboardRoute: HomeDashboardRoute,
+  HomeMessageRoute: HomeMessageRoute,
+  HomePatientRoute: HomePatientRoute,
+  HomePersonnelRoute: HomePersonnelRoute,
+  HomeProfilRoute: HomeProfilRoute,
+  HomeReportRoute: HomeReportRoute,
+  HomeServiceRoute: HomeServiceRoute,
+  HomeSettingRoute: HomeSettingRoute,
 }
 
 const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
 
+interface IpdRouteChildren {
+  IpdDischargeRoute: typeof IpdDischargeRoute
+  IpdInvestigationRoute: typeof IpdInvestigationRoute
+  IpdIpdRoute: typeof IpdIpdRoute
+  IpdMedecinesRoute: typeof IpdMedecinesRoute
+  IpdInPatientOTRoute: typeof IpdInPatientOTRoute
+  IpdInPatientPaymentRoute: typeof IpdInPatientPaymentRoute
+  IpdInPatientRegistrationRoute: typeof IpdInPatientRegistrationRoute
+  IpdInPatientReportRoute: typeof IpdInPatientReportRoute
+}
+
+const IpdRouteChildren: IpdRouteChildren = {
+  IpdDischargeRoute: IpdDischargeRoute,
+  IpdInvestigationRoute: IpdInvestigationRoute,
+  IpdIpdRoute: IpdIpdRoute,
+  IpdMedecinesRoute: IpdMedecinesRoute,
+  IpdInPatientOTRoute: IpdInPatientOTRoute,
+  IpdInPatientPaymentRoute: IpdInPatientPaymentRoute,
+  IpdInPatientRegistrationRoute: IpdInPatientRegistrationRoute,
+  IpdInPatientReportRoute: IpdInPatientReportRoute,
+}
+
+const IpdRouteWithChildren = IpdRoute._addFileChildren(IpdRouteChildren)
+
+interface LabRouteChildren {
+  LabLabRoute: typeof LabLabRoute
+}
+
+const LabRouteChildren: LabRouteChildren = {
+  LabLabRoute: LabLabRoute,
+}
+
+const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
+
+interface MedicalStockRouteChildren {
+  MedicalStockMedicalStockRoute: typeof MedicalStockMedicalStockRoute
+}
+
+const MedicalStockRouteChildren: MedicalStockRouteChildren = {
+  MedicalStockMedicalStockRoute: MedicalStockMedicalStockRoute,
+}
+
+const MedicalStockRouteWithChildren = MedicalStockRoute._addFileChildren(
+  MedicalStockRouteChildren,
+)
+
+interface NurseRouteChildren {
+  NurseNurseRoute: typeof NurseNurseRoute
+}
+
+const NurseRouteChildren: NurseRouteChildren = {
+  NurseNurseRoute: NurseNurseRoute,
+}
+
+const NurseRouteWithChildren = NurseRoute._addFileChildren(NurseRouteChildren)
+
+interface OpdRouteChildren {
+  OpdBirthRegistrationRoute: typeof OpdBirthRegistrationRoute
+  OpdQueueRoute: typeof OpdQueueRoute
+  OpdRegistrationRoute: typeof OpdRegistrationRoute
+  OpdVaccinRoute: typeof OpdVaccinRoute
+}
+
+const OpdRouteChildren: OpdRouteChildren = {
+  OpdBirthRegistrationRoute: OpdBirthRegistrationRoute,
+  OpdQueueRoute: OpdQueueRoute,
+  OpdRegistrationRoute: OpdRegistrationRoute,
+  OpdVaccinRoute: OpdVaccinRoute,
+}
+
+const OpdRouteWithChildren = OpdRoute._addFileChildren(OpdRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof HomeRouteWithChildren
+  '': typeof RadiologyRoute
   '/login': typeof LoginRoute
   '/menu-principal': typeof MenuPrincipalRoute
-  '/IPD/ipd': typeof HomeIPDIpdRoute
-  '/OPD/opd': typeof HomeOPDOpdRoute
-  '/admin/dashboard': typeof HomeAdminDashboardRoute
-  '/admin/message': typeof HomeAdminMessageRoute
-  '/admin/patient': typeof HomeAdminPatientRoute
-  '/admin/personnel': typeof HomeAdminPersonnelRoute
-  '/admin/profil': typeof HomeAdminProfilRoute
-  '/admin/report': typeof HomeAdminReportRoute
-  '/admin/service': typeof HomeAdminServiceRoute
-  '/admin/setting': typeof HomeAdminSettingRoute
-  '/appointments/appointments': typeof HomeAppointmentsAppointmentsRoute
-  '/doctor/doctor': typeof HomeDoctorDoctorRoute
-  '/lab/lab': typeof HomeLabLabRoute
-  '/nurse/nurse': typeof HomeNurseNurseRoute
-  '/radiology/radiology': typeof HomeRadiologyRadiologyRoute
-  '/stock/stock': typeof HomeStockStockRoute
+  '/appointments': typeof AppointmentsAppointmentsRoute
+  '/doctor': typeof DoctorDoctorRoute
+  '/dashboard': typeof HomeDashboardRoute
+  '/message': typeof HomeMessageRoute
+  '/patient': typeof HomePatientRoute
+  '/personnel': typeof HomePersonnelRoute
+  '/profil': typeof HomeProfilRoute
+  '/report': typeof HomeReportRoute
+  '/service': typeof HomeServiceRoute
+  '/setting': typeof HomeSettingRoute
+  '/discharge': typeof IpdDischargeRoute
+  '/investigation': typeof IpdInvestigationRoute
+  '/ipd': typeof IpdIpdRoute
+  '/medecines': typeof IpdMedecinesRoute
+  '/lab': typeof LabLabRoute
+  '/medical-stock': typeof MedicalStockMedicalStockRoute
+  '/nurse': typeof NurseNurseRoute
+  '/birth-registration': typeof OpdBirthRegistrationRoute
+  '/queue': typeof OpdQueueRoute
+  '/registration': typeof OpdRegistrationRoute
+  '/vaccin': typeof OpdVaccinRoute
+  '/InPatient/oT': typeof IpdInPatientOTRoute
+  '/InPatient/payment': typeof IpdInPatientPaymentRoute
+  '/InPatient/registration': typeof IpdInPatientRegistrationRoute
+  '/InPatient/report': typeof IpdInPatientReportRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof HomeRouteWithChildren
+  '': typeof RadiologyRoute
   '/login': typeof LoginRoute
   '/menu-principal': typeof MenuPrincipalRoute
-  '/IPD/ipd': typeof HomeIPDIpdRoute
-  '/OPD/opd': typeof HomeOPDOpdRoute
-  '/admin/dashboard': typeof HomeAdminDashboardRoute
-  '/admin/message': typeof HomeAdminMessageRoute
-  '/admin/patient': typeof HomeAdminPatientRoute
-  '/admin/personnel': typeof HomeAdminPersonnelRoute
-  '/admin/profil': typeof HomeAdminProfilRoute
-  '/admin/report': typeof HomeAdminReportRoute
-  '/admin/service': typeof HomeAdminServiceRoute
-  '/admin/setting': typeof HomeAdminSettingRoute
-  '/appointments/appointments': typeof HomeAppointmentsAppointmentsRoute
-  '/doctor/doctor': typeof HomeDoctorDoctorRoute
-  '/lab/lab': typeof HomeLabLabRoute
-  '/nurse/nurse': typeof HomeNurseNurseRoute
-  '/radiology/radiology': typeof HomeRadiologyRadiologyRoute
-  '/stock/stock': typeof HomeStockStockRoute
+  '/appointments': typeof AppointmentsAppointmentsRoute
+  '/doctor': typeof DoctorDoctorRoute
+  '/dashboard': typeof HomeDashboardRoute
+  '/message': typeof HomeMessageRoute
+  '/patient': typeof HomePatientRoute
+  '/personnel': typeof HomePersonnelRoute
+  '/profil': typeof HomeProfilRoute
+  '/report': typeof HomeReportRoute
+  '/service': typeof HomeServiceRoute
+  '/setting': typeof HomeSettingRoute
+  '/discharge': typeof IpdDischargeRoute
+  '/investigation': typeof IpdInvestigationRoute
+  '/ipd': typeof IpdIpdRoute
+  '/medecines': typeof IpdMedecinesRoute
+  '/lab': typeof LabLabRoute
+  '/medical-stock': typeof MedicalStockMedicalStockRoute
+  '/nurse': typeof NurseNurseRoute
+  '/birth-registration': typeof OpdBirthRegistrationRoute
+  '/queue': typeof OpdQueueRoute
+  '/registration': typeof OpdRegistrationRoute
+  '/vaccin': typeof OpdVaccinRoute
+  '/InPatient/oT': typeof IpdInPatientOTRoute
+  '/InPatient/payment': typeof IpdInPatientPaymentRoute
+  '/InPatient/registration': typeof IpdInPatientRegistrationRoute
+  '/InPatient/report': typeof IpdInPatientReportRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_appointments': typeof AppointmentsRouteWithChildren
+  '/_doctor': typeof DoctorRouteWithChildren
   '/_home': typeof HomeRouteWithChildren
+  '/_ipd': typeof IpdRouteWithChildren
+  '/_lab': typeof LabRouteWithChildren
+  '/_medical-stock': typeof MedicalStockRouteWithChildren
+  '/_nurse': typeof NurseRouteWithChildren
+  '/_opd': typeof OpdRouteWithChildren
+  '/_radiology': typeof RadiologyRoute
   '/login': typeof LoginRoute
   '/menu-principal': typeof MenuPrincipalRoute
-  '/_home/IPD/ipd': typeof HomeIPDIpdRoute
-  '/_home/OPD/opd': typeof HomeOPDOpdRoute
-  '/_home/admin/dashboard': typeof HomeAdminDashboardRoute
-  '/_home/admin/message': typeof HomeAdminMessageRoute
-  '/_home/admin/patient': typeof HomeAdminPatientRoute
-  '/_home/admin/personnel': typeof HomeAdminPersonnelRoute
-  '/_home/admin/profil': typeof HomeAdminProfilRoute
-  '/_home/admin/report': typeof HomeAdminReportRoute
-  '/_home/admin/service': typeof HomeAdminServiceRoute
-  '/_home/admin/setting': typeof HomeAdminSettingRoute
-  '/_home/appointments/appointments': typeof HomeAppointmentsAppointmentsRoute
-  '/_home/doctor/doctor': typeof HomeDoctorDoctorRoute
-  '/_home/lab/lab': typeof HomeLabLabRoute
-  '/_home/nurse/nurse': typeof HomeNurseNurseRoute
-  '/_home/radiology/radiology': typeof HomeRadiologyRadiologyRoute
-  '/_home/stock/stock': typeof HomeStockStockRoute
+  '/_appointments/appointments': typeof AppointmentsAppointmentsRoute
+  '/_doctor/doctor': typeof DoctorDoctorRoute
+  '/_home/dashboard': typeof HomeDashboardRoute
+  '/_home/message': typeof HomeMessageRoute
+  '/_home/patient': typeof HomePatientRoute
+  '/_home/personnel': typeof HomePersonnelRoute
+  '/_home/profil': typeof HomeProfilRoute
+  '/_home/report': typeof HomeReportRoute
+  '/_home/service': typeof HomeServiceRoute
+  '/_home/setting': typeof HomeSettingRoute
+  '/_ipd/discharge': typeof IpdDischargeRoute
+  '/_ipd/investigation': typeof IpdInvestigationRoute
+  '/_ipd/ipd': typeof IpdIpdRoute
+  '/_ipd/medecines': typeof IpdMedecinesRoute
+  '/_lab/lab': typeof LabLabRoute
+  '/_medical-stock/medical-stock': typeof MedicalStockMedicalStockRoute
+  '/_nurse/nurse': typeof NurseNurseRoute
+  '/_opd/birth-registration': typeof OpdBirthRegistrationRoute
+  '/_opd/queue': typeof OpdQueueRoute
+  '/_opd/registration': typeof OpdRegistrationRoute
+  '/_opd/vaccin': typeof OpdVaccinRoute
+  '/_ipd/InPatient/oT': typeof IpdInPatientOTRoute
+  '/_ipd/InPatient/payment': typeof IpdInPatientPaymentRoute
+  '/_ipd/InPatient/registration': typeof IpdInPatientRegistrationRoute
+  '/_ipd/InPatient/report': typeof IpdInPatientReportRoute
 }
 
 export interface FileRouteTypes {
@@ -420,79 +764,130 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/menu-principal'
-    | '/IPD/ipd'
-    | '/OPD/opd'
-    | '/admin/dashboard'
-    | '/admin/message'
-    | '/admin/patient'
-    | '/admin/personnel'
-    | '/admin/profil'
-    | '/admin/report'
-    | '/admin/service'
-    | '/admin/setting'
-    | '/appointments/appointments'
-    | '/doctor/doctor'
-    | '/lab/lab'
-    | '/nurse/nurse'
-    | '/radiology/radiology'
-    | '/stock/stock'
+    | '/appointments'
+    | '/doctor'
+    | '/dashboard'
+    | '/message'
+    | '/patient'
+    | '/personnel'
+    | '/profil'
+    | '/report'
+    | '/service'
+    | '/setting'
+    | '/discharge'
+    | '/investigation'
+    | '/ipd'
+    | '/medecines'
+    | '/lab'
+    | '/medical-stock'
+    | '/nurse'
+    | '/birth-registration'
+    | '/queue'
+    | '/registration'
+    | '/vaccin'
+    | '/InPatient/oT'
+    | '/InPatient/payment'
+    | '/InPatient/registration'
+    | '/InPatient/report'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/login'
     | '/menu-principal'
-    | '/IPD/ipd'
-    | '/OPD/opd'
-    | '/admin/dashboard'
-    | '/admin/message'
-    | '/admin/patient'
-    | '/admin/personnel'
-    | '/admin/profil'
-    | '/admin/report'
-    | '/admin/service'
-    | '/admin/setting'
-    | '/appointments/appointments'
-    | '/doctor/doctor'
-    | '/lab/lab'
-    | '/nurse/nurse'
-    | '/radiology/radiology'
-    | '/stock/stock'
+    | '/appointments'
+    | '/doctor'
+    | '/dashboard'
+    | '/message'
+    | '/patient'
+    | '/personnel'
+    | '/profil'
+    | '/report'
+    | '/service'
+    | '/setting'
+    | '/discharge'
+    | '/investigation'
+    | '/ipd'
+    | '/medecines'
+    | '/lab'
+    | '/medical-stock'
+    | '/nurse'
+    | '/birth-registration'
+    | '/queue'
+    | '/registration'
+    | '/vaccin'
+    | '/InPatient/oT'
+    | '/InPatient/payment'
+    | '/InPatient/registration'
+    | '/InPatient/report'
   id:
     | '__root__'
     | '/'
+    | '/_appointments'
+    | '/_doctor'
     | '/_home'
+    | '/_ipd'
+    | '/_lab'
+    | '/_medical-stock'
+    | '/_nurse'
+    | '/_opd'
+    | '/_radiology'
     | '/login'
     | '/menu-principal'
-    | '/_home/IPD/ipd'
-    | '/_home/OPD/opd'
-    | '/_home/admin/dashboard'
-    | '/_home/admin/message'
-    | '/_home/admin/patient'
-    | '/_home/admin/personnel'
-    | '/_home/admin/profil'
-    | '/_home/admin/report'
-    | '/_home/admin/service'
-    | '/_home/admin/setting'
-    | '/_home/appointments/appointments'
-    | '/_home/doctor/doctor'
-    | '/_home/lab/lab'
-    | '/_home/nurse/nurse'
-    | '/_home/radiology/radiology'
-    | '/_home/stock/stock'
+    | '/_appointments/appointments'
+    | '/_doctor/doctor'
+    | '/_home/dashboard'
+    | '/_home/message'
+    | '/_home/patient'
+    | '/_home/personnel'
+    | '/_home/profil'
+    | '/_home/report'
+    | '/_home/service'
+    | '/_home/setting'
+    | '/_ipd/discharge'
+    | '/_ipd/investigation'
+    | '/_ipd/ipd'
+    | '/_ipd/medecines'
+    | '/_lab/lab'
+    | '/_medical-stock/medical-stock'
+    | '/_nurse/nurse'
+    | '/_opd/birth-registration'
+    | '/_opd/queue'
+    | '/_opd/registration'
+    | '/_opd/vaccin'
+    | '/_ipd/InPatient/oT'
+    | '/_ipd/InPatient/payment'
+    | '/_ipd/InPatient/registration'
+    | '/_ipd/InPatient/report'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppointmentsRoute: typeof AppointmentsRouteWithChildren
+  DoctorRoute: typeof DoctorRouteWithChildren
   HomeRoute: typeof HomeRouteWithChildren
+  IpdRoute: typeof IpdRouteWithChildren
+  LabRoute: typeof LabRouteWithChildren
+  MedicalStockRoute: typeof MedicalStockRouteWithChildren
+  NurseRoute: typeof NurseRouteWithChildren
+  OpdRoute: typeof OpdRouteWithChildren
+  RadiologyRoute: typeof RadiologyRoute
   LoginRoute: typeof LoginRoute
   MenuPrincipalRoute: typeof MenuPrincipalRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppointmentsRoute: AppointmentsRouteWithChildren,
+  DoctorRoute: DoctorRouteWithChildren,
   HomeRoute: HomeRouteWithChildren,
+  IpdRoute: IpdRouteWithChildren,
+  LabRoute: LabRouteWithChildren,
+  MedicalStockRoute: MedicalStockRouteWithChildren,
+  NurseRoute: NurseRouteWithChildren,
+  OpdRoute: OpdRouteWithChildren,
+  RadiologyRoute: RadiologyRoute,
   LoginRoute: LoginRoute,
   MenuPrincipalRoute: MenuPrincipalRoute,
 }
@@ -508,7 +903,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_appointments",
+        "/_doctor",
         "/_home",
+        "/_ipd",
+        "/_lab",
+        "/_medical-stock",
+        "/_nurse",
+        "/_opd",
+        "/_radiology",
         "/login",
         "/menu-principal"
       ]
@@ -516,26 +919,73 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/_appointments": {
+      "filePath": "_appointments.tsx",
+      "children": [
+        "/_appointments/appointments"
+      ]
+    },
+    "/_doctor": {
+      "filePath": "_doctor.tsx",
+      "children": [
+        "/_doctor/doctor"
+      ]
+    },
     "/_home": {
       "filePath": "_home.tsx",
       "children": [
-        "/_home/IPD/ipd",
-        "/_home/OPD/opd",
-        "/_home/admin/dashboard",
-        "/_home/admin/message",
-        "/_home/admin/patient",
-        "/_home/admin/personnel",
-        "/_home/admin/profil",
-        "/_home/admin/report",
-        "/_home/admin/service",
-        "/_home/admin/setting",
-        "/_home/appointments/appointments",
-        "/_home/doctor/doctor",
-        "/_home/lab/lab",
-        "/_home/nurse/nurse",
-        "/_home/radiology/radiology",
-        "/_home/stock/stock"
+        "/_home/dashboard",
+        "/_home/message",
+        "/_home/patient",
+        "/_home/personnel",
+        "/_home/profil",
+        "/_home/report",
+        "/_home/service",
+        "/_home/setting"
       ]
+    },
+    "/_ipd": {
+      "filePath": "_ipd.tsx",
+      "children": [
+        "/_ipd/discharge",
+        "/_ipd/investigation",
+        "/_ipd/ipd",
+        "/_ipd/medecines",
+        "/_ipd/InPatient/oT",
+        "/_ipd/InPatient/payment",
+        "/_ipd/InPatient/registration",
+        "/_ipd/InPatient/report"
+      ]
+    },
+    "/_lab": {
+      "filePath": "_lab.tsx",
+      "children": [
+        "/_lab/lab"
+      ]
+    },
+    "/_medical-stock": {
+      "filePath": "_medical-stock.tsx",
+      "children": [
+        "/_medical-stock/medical-stock"
+      ]
+    },
+    "/_nurse": {
+      "filePath": "_nurse.tsx",
+      "children": [
+        "/_nurse/nurse"
+      ]
+    },
+    "/_opd": {
+      "filePath": "_opd.tsx",
+      "children": [
+        "/_opd/birth-registration",
+        "/_opd/queue",
+        "/_opd/registration",
+        "/_opd/vaccin"
+      ]
+    },
+    "/_radiology": {
+      "filePath": "_radiology.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
@@ -543,69 +993,105 @@ export const routeTree = rootRoute
     "/menu-principal": {
       "filePath": "menu-principal.tsx"
     },
-    "/_home/IPD/ipd": {
-      "filePath": "_home/IPD/ipd.tsx",
+    "/_appointments/appointments": {
+      "filePath": "_appointments/appointments.tsx",
+      "parent": "/_appointments"
+    },
+    "/_doctor/doctor": {
+      "filePath": "_doctor/doctor.tsx",
+      "parent": "/_doctor"
+    },
+    "/_home/dashboard": {
+      "filePath": "_home/dashboard.tsx",
       "parent": "/_home"
     },
-    "/_home/OPD/opd": {
-      "filePath": "_home/OPD/opd.tsx",
+    "/_home/message": {
+      "filePath": "_home/message.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/dashboard": {
-      "filePath": "_home/admin/dashboard.tsx",
+    "/_home/patient": {
+      "filePath": "_home/patient.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/message": {
-      "filePath": "_home/admin/message.tsx",
+    "/_home/personnel": {
+      "filePath": "_home/personnel.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/patient": {
-      "filePath": "_home/admin/patient.tsx",
+    "/_home/profil": {
+      "filePath": "_home/profil.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/personnel": {
-      "filePath": "_home/admin/personnel.tsx",
+    "/_home/report": {
+      "filePath": "_home/report.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/profil": {
-      "filePath": "_home/admin/profil.tsx",
+    "/_home/service": {
+      "filePath": "_home/service.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/report": {
-      "filePath": "_home/admin/report.tsx",
+    "/_home/setting": {
+      "filePath": "_home/setting.tsx",
       "parent": "/_home"
     },
-    "/_home/admin/service": {
-      "filePath": "_home/admin/service.tsx",
-      "parent": "/_home"
+    "/_ipd/discharge": {
+      "filePath": "_ipd/discharge.tsx",
+      "parent": "/_ipd"
     },
-    "/_home/admin/setting": {
-      "filePath": "_home/admin/setting.tsx",
-      "parent": "/_home"
+    "/_ipd/investigation": {
+      "filePath": "_ipd/investigation.tsx",
+      "parent": "/_ipd"
     },
-    "/_home/appointments/appointments": {
-      "filePath": "_home/appointments/appointments.tsx",
-      "parent": "/_home"
+    "/_ipd/ipd": {
+      "filePath": "_ipd/ipd.tsx",
+      "parent": "/_ipd"
     },
-    "/_home/doctor/doctor": {
-      "filePath": "_home/doctor/doctor.tsx",
-      "parent": "/_home"
+    "/_ipd/medecines": {
+      "filePath": "_ipd/medecines.tsx",
+      "parent": "/_ipd"
     },
-    "/_home/lab/lab": {
-      "filePath": "_home/lab/lab.tsx",
-      "parent": "/_home"
+    "/_lab/lab": {
+      "filePath": "_lab/lab.tsx",
+      "parent": "/_lab"
     },
-    "/_home/nurse/nurse": {
-      "filePath": "_home/nurse/nurse.tsx",
-      "parent": "/_home"
+    "/_medical-stock/medical-stock": {
+      "filePath": "_medical-stock/medical-stock.tsx",
+      "parent": "/_medical-stock"
     },
-    "/_home/radiology/radiology": {
-      "filePath": "_home/radiology/radiology.tsx",
-      "parent": "/_home"
+    "/_nurse/nurse": {
+      "filePath": "_nurse/nurse.tsx",
+      "parent": "/_nurse"
     },
-    "/_home/stock/stock": {
-      "filePath": "_home/stock/stock.tsx",
-      "parent": "/_home"
+    "/_opd/birth-registration": {
+      "filePath": "_opd/birth-registration.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/queue": {
+      "filePath": "_opd/queue.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/registration": {
+      "filePath": "_opd/registration.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/vaccin": {
+      "filePath": "_opd/vaccin.tsx",
+      "parent": "/_opd"
+    },
+    "/_ipd/InPatient/oT": {
+      "filePath": "_ipd/InPatient/oT.tsx",
+      "parent": "/_ipd"
+    },
+    "/_ipd/InPatient/payment": {
+      "filePath": "_ipd/InPatient/payment.tsx",
+      "parent": "/_ipd"
+    },
+    "/_ipd/InPatient/registration": {
+      "filePath": "_ipd/InPatient/registration.tsx",
+      "parent": "/_ipd"
+    },
+    "/_ipd/InPatient/report": {
+      "filePath": "_ipd/InPatient/report.tsx",
+      "parent": "/_ipd"
     }
   }
 }

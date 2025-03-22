@@ -54,7 +54,7 @@ function RouteComponent() {
           <p className="text-lg text-gray-200 max-w-2xl">
             Optimisez vos processus médicaux avec notre solution tout-en-un.
           </p>
-          <Link to="/menu-principal">
+          <Link to="/login">
             <Button className="w-24 bg-[#018a8cff] hover:bg-[#016a6cff] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
               Commencer
             </Button>

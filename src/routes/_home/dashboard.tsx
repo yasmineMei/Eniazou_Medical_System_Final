@@ -55,7 +55,7 @@ const chartConfig2 = {
   },
 } satisfies ChartConfig;
 
-export const Route = createFileRoute("/_home/admin/dashboard")({
+export const Route = createFileRoute("/_home/dashboard")({
   component: DashboardComponent,
 });
 

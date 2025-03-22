@@ -23,7 +23,7 @@ import { useState } from "react";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/_home/admin/patient")({
+export const Route = createFileRoute("/_home/patient")({
   component: RouteComponent,
 });
 

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
-export const Route = createFileRoute("/_home/admin/setting")({
+export const Route = createFileRoute("/_home/setting")({
   component: SettingsPage,
 });
 

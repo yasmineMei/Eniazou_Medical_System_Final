@@ -5,7 +5,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/_home/admin/message")({
+export const Route = createFileRoute("/_home/message")({
   component: RouteComponent,
 });
 
