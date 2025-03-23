@@ -24,12 +24,16 @@ import { Route as DoctorImport } from './routes/_doctor'
 import { Route as AppointmentsImport } from './routes/_appointments'
 import { Route as IndexImport } from './routes/index'
 import { Route as OpdVaccinImport } from './routes/_opd/vaccin'
-import { Route as OpdRegistrationImport } from './routes/_opd/registration'
+import { Route as OpdRegistrationOpdImport } from './routes/_opd/registration-opd'
 import { Route as OpdQueueImport } from './routes/_opd/queue'
 import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registration'
 import { Route as NurseNurseImport } from './routes/_nurse/nurse'
 import { Route as MedicalStockMedicalStockImport } from './routes/_medical-stock/medical-stock'
 import { Route as LabLabImport } from './routes/_lab/lab'
+import { Route as IpdReportIpdImport } from './routes/_ipd/report-ipd'
+import { Route as IpdRegistrationIpdImport } from './routes/_ipd/registration-ipd'
+import { Route as IpdPaymentImport } from './routes/_ipd/payment'
+import { Route as IpdOTImport } from './routes/_ipd/oT'
 import { Route as IpdMedecinesImport } from './routes/_ipd/medecines'
 import { Route as IpdIpdImport } from './routes/_ipd/ipd'
 import { Route as IpdInvestigationImport } from './routes/_ipd/investigation'
@@ -44,11 +48,6 @@ import { Route as HomeMessageImport } from './routes/_home/message'
 import { Route as HomeDashboardImport } from './routes/_home/dashboard'
 import { Route as DoctorDoctorImport } from './routes/_doctor/doctor'
 import { Route as AppointmentsAppointmentsImport } from './routes/_appointments/appointments'
-
-import { Route as IpdReportImport } from './routes/_ipd/report'
-import { Route as IpdRegistrationImport } from './routes/_ipd/registration'
-import { Route as IpdPaymentImport } from './routes/_ipd/payment'
-import { Route as IpdOTImport } from './routes/_ipd/oT'
 
 // Create/Update Routes
 
@@ -121,9 +120,9 @@ const OpdVaccinRoute = OpdVaccinImport.update({
   getParentRoute: () => OpdRoute,
 } as any)
 
-const OpdRegistrationRoute = OpdRegistrationImport.update({
-  id: '/registration',
-  path: '/registration',
+const OpdRegistrationOpdRoute = OpdRegistrationOpdImport.update({
+  id: '/registration-opd',
+  path: '/registration-opd',
   getParentRoute: () => OpdRoute,
 } as any)
 
@@ -155,6 +154,30 @@ const LabLabRoute = LabLabImport.update({
   id: '/lab',
   path: '/lab',
   getParentRoute: () => LabRoute,
+} as any)
+
+const IpdReportIpdRoute = IpdReportIpdImport.update({
+  id: '/report-ipd',
+  path: '/report-ipd',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdRegistrationIpdRoute = IpdRegistrationIpdImport.update({
+  id: '/registration-ipd',
+  path: '/registration-ipd',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdPaymentRoute = IpdPaymentImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdOTRoute = IpdOTImport.update({
+  id: '/oT',
+  path: '/oT',
+  getParentRoute: () => IpdRoute,
 } as any)
 
 const IpdMedecinesRoute = IpdMedecinesImport.update({
@@ -239,30 +262,6 @@ const AppointmentsAppointmentsRoute = AppointmentsAppointmentsImport.update({
   id: '/appointments',
   path: '/appointments',
   getParentRoute: () => AppointmentsRoute,
-} as any)
-
-const IpdInPatientReportRoute = IpdInPatientReportImport.update({
-  id: '/InPatient/report',
-  path: '/InPatient/report',
-  getParentRoute: () => IpdRoute,
-} as any)
-
-const IpdInPatientRegistrationRoute = IpdInPatientRegistrationImport.update({
-  id: '/InPatient/registration',
-  path: '/InPatient/registration',
-  getParentRoute: () => IpdRoute,
-} as any)
-
-const IpdInPatientPaymentRoute = IpdInPatientPaymentImport.update({
-  id: '/InPatient/payment',
-  path: '/InPatient/payment',
-  getParentRoute: () => IpdRoute,
-} as any)
-
-const IpdInPatientOTRoute = IpdInPatientOTImport.update({
-  id: '/InPatient/oT',
-  path: '/InPatient/oT',
-  getParentRoute: () => IpdRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -451,6 +450,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IpdMedecinesImport
       parentRoute: typeof IpdImport
     }
+    '/_ipd/oT': {
+      id: '/_ipd/oT'
+      path: '/oT'
+      fullPath: '/oT'
+      preLoaderRoute: typeof IpdOTImport
+      parentRoute: typeof IpdImport
+    }
+    '/_ipd/payment': {
+      id: '/_ipd/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof IpdPaymentImport
+      parentRoute: typeof IpdImport
+    }
+    '/_ipd/registration-ipd': {
+      id: '/_ipd/registration-ipd'
+      path: '/registration-ipd'
+      fullPath: '/registration-ipd'
+      preLoaderRoute: typeof IpdRegistrationIpdImport
+      parentRoute: typeof IpdImport
+    }
+    '/_ipd/report-ipd': {
+      id: '/_ipd/report-ipd'
+      path: '/report-ipd'
+      fullPath: '/report-ipd'
+      preLoaderRoute: typeof IpdReportIpdImport
+      parentRoute: typeof IpdImport
+    }
     '/_lab/lab': {
       id: '/_lab/lab'
       path: '/lab'
@@ -486,11 +513,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdQueueImport
       parentRoute: typeof OpdImport
     }
-    '/_opd/registration': {
-      id: '/_opd/registration'
-      path: '/registration'
-      fullPath: '/registration'
-      preLoaderRoute: typeof OpdRegistrationImport
+    '/_opd/registration-opd': {
+      id: '/_opd/registration-opd'
+      path: '/registration-opd'
+      fullPath: '/registration-opd'
+      preLoaderRoute: typeof OpdRegistrationOpdImport
       parentRoute: typeof OpdImport
     }
     '/_opd/vaccin': {
@@ -499,34 +526,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/vaccin'
       preLoaderRoute: typeof OpdVaccinImport
       parentRoute: typeof OpdImport
-    }
-    '/_ipd/InPatient/oT': {
-      id: '/_ipd/InPatient/oT'
-      path: '/InPatient/oT'
-      fullPath: '/InPatient/oT'
-      preLoaderRoute: typeof IpdInPatientOTImport
-      parentRoute: typeof IpdImport
-    }
-    '/_ipd/InPatient/payment': {
-      id: '/_ipd/InPatient/payment'
-      path: '/InPatient/payment'
-      fullPath: '/InPatient/payment'
-      preLoaderRoute: typeof IpdInPatientPaymentImport
-      parentRoute: typeof IpdImport
-    }
-    '/_ipd/InPatient/registration': {
-      id: '/_ipd/InPatient/registration'
-      path: '/InPatient/registration'
-      fullPath: '/InPatient/registration'
-      preLoaderRoute: typeof IpdInPatientRegistrationImport
-      parentRoute: typeof IpdImport
-    }
-    '/_ipd/InPatient/report': {
-      id: '/_ipd/InPatient/report'
-      path: '/InPatient/report'
-      fullPath: '/InPatient/report'
-      preLoaderRoute: typeof IpdInPatientReportImport
-      parentRoute: typeof IpdImport
     }
   }
 }
@@ -585,10 +584,10 @@ interface IpdRouteChildren {
   IpdInvestigationRoute: typeof IpdInvestigationRoute
   IpdIpdRoute: typeof IpdIpdRoute
   IpdMedecinesRoute: typeof IpdMedecinesRoute
-  IpdInPatientOTRoute: typeof IpdInPatientOTRoute
-  IpdInPatientPaymentRoute: typeof IpdInPatientPaymentRoute
-  IpdInPatientRegistrationRoute: typeof IpdInPatientRegistrationRoute
-  IpdInPatientReportRoute: typeof IpdInPatientReportRoute
+  IpdOTRoute: typeof IpdOTRoute
+  IpdPaymentRoute: typeof IpdPaymentRoute
+  IpdRegistrationIpdRoute: typeof IpdRegistrationIpdRoute
+  IpdReportIpdRoute: typeof IpdReportIpdRoute
 }
 
 const IpdRouteChildren: IpdRouteChildren = {
@@ -596,10 +595,10 @@ const IpdRouteChildren: IpdRouteChildren = {
   IpdInvestigationRoute: IpdInvestigationRoute,
   IpdIpdRoute: IpdIpdRoute,
   IpdMedecinesRoute: IpdMedecinesRoute,
-  IpdInPatientOTRoute: IpdInPatientOTRoute,
-  IpdInPatientPaymentRoute: IpdInPatientPaymentRoute,
-  IpdInPatientRegistrationRoute: IpdInPatientRegistrationRoute,
-  IpdInPatientReportRoute: IpdInPatientReportRoute,
+  IpdOTRoute: IpdOTRoute,
+  IpdPaymentRoute: IpdPaymentRoute,
+  IpdRegistrationIpdRoute: IpdRegistrationIpdRoute,
+  IpdReportIpdRoute: IpdReportIpdRoute,
 }
 
 const IpdRouteWithChildren = IpdRoute._addFileChildren(IpdRouteChildren)
@@ -639,14 +638,14 @@ const NurseRouteWithChildren = NurseRoute._addFileChildren(NurseRouteChildren)
 interface OpdRouteChildren {
   OpdBirthRegistrationRoute: typeof OpdBirthRegistrationRoute
   OpdQueueRoute: typeof OpdQueueRoute
-  OpdRegistrationRoute: typeof OpdRegistrationRoute
+  OpdRegistrationOpdRoute: typeof OpdRegistrationOpdRoute
   OpdVaccinRoute: typeof OpdVaccinRoute
 }
 
 const OpdRouteChildren: OpdRouteChildren = {
   OpdBirthRegistrationRoute: OpdBirthRegistrationRoute,
   OpdQueueRoute: OpdQueueRoute,
-  OpdRegistrationRoute: OpdRegistrationRoute,
+  OpdRegistrationOpdRoute: OpdRegistrationOpdRoute,
   OpdVaccinRoute: OpdVaccinRoute,
 }
 
@@ -671,17 +670,17 @@ export interface FileRoutesByFullPath {
   '/investigation': typeof IpdInvestigationRoute
   '/ipd': typeof IpdIpdRoute
   '/medecines': typeof IpdMedecinesRoute
+  '/oT': typeof IpdOTRoute
+  '/payment': typeof IpdPaymentRoute
+  '/registration-ipd': typeof IpdRegistrationIpdRoute
+  '/report-ipd': typeof IpdReportIpdRoute
   '/lab': typeof LabLabRoute
   '/medical-stock': typeof MedicalStockMedicalStockRoute
   '/nurse': typeof NurseNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/queue': typeof OpdQueueRoute
-  '/registration': typeof OpdRegistrationRoute
+  '/registration-opd': typeof OpdRegistrationOpdRoute
   '/vaccin': typeof OpdVaccinRoute
-  '/InPatient/oT': typeof IpdInPatientOTRoute
-  '/InPatient/payment': typeof IpdInPatientPaymentRoute
-  '/InPatient/registration': typeof IpdInPatientRegistrationRoute
-  '/InPatient/report': typeof IpdInPatientReportRoute
 }
 
 export interface FileRoutesByTo {
@@ -703,17 +702,17 @@ export interface FileRoutesByTo {
   '/investigation': typeof IpdInvestigationRoute
   '/ipd': typeof IpdIpdRoute
   '/medecines': typeof IpdMedecinesRoute
+  '/oT': typeof IpdOTRoute
+  '/payment': typeof IpdPaymentRoute
+  '/registration-ipd': typeof IpdRegistrationIpdRoute
+  '/report-ipd': typeof IpdReportIpdRoute
   '/lab': typeof LabLabRoute
   '/medical-stock': typeof MedicalStockMedicalStockRoute
   '/nurse': typeof NurseNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/queue': typeof OpdQueueRoute
-  '/registration': typeof OpdRegistrationRoute
+  '/registration-opd': typeof OpdRegistrationOpdRoute
   '/vaccin': typeof OpdVaccinRoute
-  '/InPatient/oT': typeof IpdInPatientOTRoute
-  '/InPatient/payment': typeof IpdInPatientPaymentRoute
-  '/InPatient/registration': typeof IpdInPatientRegistrationRoute
-  '/InPatient/report': typeof IpdInPatientReportRoute
 }
 
 export interface FileRoutesById {
@@ -744,17 +743,17 @@ export interface FileRoutesById {
   '/_ipd/investigation': typeof IpdInvestigationRoute
   '/_ipd/ipd': typeof IpdIpdRoute
   '/_ipd/medecines': typeof IpdMedecinesRoute
+  '/_ipd/oT': typeof IpdOTRoute
+  '/_ipd/payment': typeof IpdPaymentRoute
+  '/_ipd/registration-ipd': typeof IpdRegistrationIpdRoute
+  '/_ipd/report-ipd': typeof IpdReportIpdRoute
   '/_lab/lab': typeof LabLabRoute
   '/_medical-stock/medical-stock': typeof MedicalStockMedicalStockRoute
   '/_nurse/nurse': typeof NurseNurseRoute
   '/_opd/birth-registration': typeof OpdBirthRegistrationRoute
   '/_opd/queue': typeof OpdQueueRoute
-  '/_opd/registration': typeof OpdRegistrationRoute
+  '/_opd/registration-opd': typeof OpdRegistrationOpdRoute
   '/_opd/vaccin': typeof OpdVaccinRoute
-  '/_ipd/InPatient/oT': typeof IpdInPatientOTRoute
-  '/_ipd/InPatient/payment': typeof IpdInPatientPaymentRoute
-  '/_ipd/InPatient/registration': typeof IpdInPatientRegistrationRoute
-  '/_ipd/InPatient/report': typeof IpdInPatientReportRoute
 }
 
 export interface FileRouteTypes {
@@ -778,17 +777,17 @@ export interface FileRouteTypes {
     | '/investigation'
     | '/ipd'
     | '/medecines'
+    | '/oT'
+    | '/payment'
+    | '/registration-ipd'
+    | '/report-ipd'
     | '/lab'
     | '/medical-stock'
     | '/nurse'
     | '/birth-registration'
     | '/queue'
-    | '/registration'
+    | '/registration-opd'
     | '/vaccin'
-    | '/InPatient/oT'
-    | '/InPatient/payment'
-    | '/InPatient/registration'
-    | '/InPatient/report'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -809,17 +808,17 @@ export interface FileRouteTypes {
     | '/investigation'
     | '/ipd'
     | '/medecines'
+    | '/oT'
+    | '/payment'
+    | '/registration-ipd'
+    | '/report-ipd'
     | '/lab'
     | '/medical-stock'
     | '/nurse'
     | '/birth-registration'
     | '/queue'
-    | '/registration'
+    | '/registration-opd'
     | '/vaccin'
-    | '/InPatient/oT'
-    | '/InPatient/payment'
-    | '/InPatient/registration'
-    | '/InPatient/report'
   id:
     | '__root__'
     | '/'
@@ -848,17 +847,17 @@ export interface FileRouteTypes {
     | '/_ipd/investigation'
     | '/_ipd/ipd'
     | '/_ipd/medecines'
+    | '/_ipd/oT'
+    | '/_ipd/payment'
+    | '/_ipd/registration-ipd'
+    | '/_ipd/report-ipd'
     | '/_lab/lab'
     | '/_medical-stock/medical-stock'
     | '/_nurse/nurse'
     | '/_opd/birth-registration'
     | '/_opd/queue'
-    | '/_opd/registration'
+    | '/_opd/registration-opd'
     | '/_opd/vaccin'
-    | '/_ipd/InPatient/oT'
-    | '/_ipd/InPatient/payment'
-    | '/_ipd/InPatient/registration'
-    | '/_ipd/InPatient/report'
   fileRoutesById: FileRoutesById
 }
 
@@ -951,10 +950,10 @@ export const routeTree = rootRoute
         "/_ipd/investigation",
         "/_ipd/ipd",
         "/_ipd/medecines",
-        "/_ipd/InPatient/oT",
-        "/_ipd/InPatient/payment",
-        "/_ipd/InPatient/registration",
-        "/_ipd/InPatient/report"
+        "/_ipd/oT",
+        "/_ipd/payment",
+        "/_ipd/registration-ipd",
+        "/_ipd/report-ipd"
       ]
     },
     "/_lab": {
@@ -980,7 +979,7 @@ export const routeTree = rootRoute
       "children": [
         "/_opd/birth-registration",
         "/_opd/queue",
-        "/_opd/registration",
+        "/_opd/registration-opd",
         "/_opd/vaccin"
       ]
     },
@@ -1049,6 +1048,22 @@ export const routeTree = rootRoute
       "filePath": "_ipd/medecines.tsx",
       "parent": "/_ipd"
     },
+    "/_ipd/oT": {
+      "filePath": "_ipd/oT.tsx",
+      "parent": "/_ipd"
+    },
+    "/_ipd/payment": {
+      "filePath": "_ipd/payment.tsx",
+      "parent": "/_ipd"
+    },
+    "/_ipd/registration-ipd": {
+      "filePath": "_ipd/registration-ipd.tsx",
+      "parent": "/_ipd"
+    },
+    "/_ipd/report-ipd": {
+      "filePath": "_ipd/report-ipd.tsx",
+      "parent": "/_ipd"
+    },
     "/_lab/lab": {
       "filePath": "_lab/lab.tsx",
       "parent": "/_lab"
@@ -1069,29 +1084,13 @@ export const routeTree = rootRoute
       "filePath": "_opd/queue.tsx",
       "parent": "/_opd"
     },
-    "/_opd/registration": {
-      "filePath": "_opd/registration.tsx",
+    "/_opd/registration-opd": {
+      "filePath": "_opd/registration-opd.tsx",
       "parent": "/_opd"
     },
     "/_opd/vaccin": {
       "filePath": "_opd/vaccin.tsx",
       "parent": "/_opd"
-    },
-    "/_ipd/InPatient/oT": {
-      "filePath": "_ipd/InPatient/oT.tsx",
-      "parent": "/_ipd"
-    },
-    "/_ipd/InPatient/payment": {
-      "filePath": "_ipd/InPatient/payment.tsx",
-      "parent": "/_ipd"
-    },
-    "/_ipd/InPatient/registration": {
-      "filePath": "_ipd/InPatient/registration.tsx",
-      "parent": "/_ipd"
-    },
-    "/_ipd/InPatient/report": {
-      "filePath": "_ipd/InPatient/report.tsx",
-      "parent": "/_ipd"
     }
   }
 }
