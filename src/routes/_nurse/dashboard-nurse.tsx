@@ -1,6 +1,15 @@
+/**
+ * Tableau de bord simplifié
+
+Liste des patients par chambre ou statut (ex: "en surveillance", "prêt à sortir").
+
+Alertes urgentes (ex: médicaments en retard, constantes anormales).
+
+Résumé des tâches à effectuer dans la journée.
+ */
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_appointments/priseAppointment')({
+export const Route = createFileRoute('/_nurse/dashboard-nurse')({
   component: RouteComponent,
 })
 

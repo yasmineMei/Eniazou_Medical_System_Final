@@ -6,18 +6,18 @@ export const Route = createFileRoute("/menu-principal")({
 });
 
 const menuItems = [
-  { title: "OPD", icon: "🏥", path: "/registration-opd" },
-  { title: "IPD", icon: "🛏️", path: "/registration-ipd" },
+  { title: "Consultation", icon: "🏥", path: "/registration-opd" },
+  { title: "Hospitalisation", icon: "🛏️", path: "/registration-ipd" },
   {
     title: "Rendez-vous",
     icon: "📅",
     path: "/dashboard-appointment",
   },
-  { title: "Laboratoire", icon: "🔬", path: "/lab/lab" },
+  { title: "Laboratoire", icon: "🔬", path: "/opd-request" },
   { title: "Radiologie", icon: "📷", path: "/radiology/radiology" },
-  { title: "Infirmier", icon: "💉", path: "/nurse/nurse" },
+  { title: "Infirmier", icon: "💉", path: "/dashboard-nurse" },
   { title: "Médecin", icon: "👨‍⚕️", path: "/dashboard-doctor" },
-  { title: "Stock Médicale", icon: "💊", path: "/dashboard-stock" },
+  { title: "Stock Médicale", icon: "💊", path: "/administration" },
   { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
 ] as const;
 
@@ -36,10 +36,10 @@ function RouteComponent() {
     const toKeep: MenuTitle[] = ["Médecin", "Laboratoire", "Radiologie"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   } else if (role === "nurse") {
-    const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire", "IPD"];
+    const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire", "Consultation"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   } else if (role === "receptionist") {
-    const toKeep: MenuTitle[] = ["OPD", "Rendez-vous"];
+    const toKeep: MenuTitle[] = ["Hospitalisation", "Rendez-vous"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   }
 

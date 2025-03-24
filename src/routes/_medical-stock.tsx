@@ -16,10 +16,13 @@ import {
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Settings2Icon,
-  Calendar,
+
   LayoutDashboard,
-  Pill,
-  Users,
+  ClipboardList,
+  Package,
+  ShoppingCart,
+  Truck,
+  Wrench,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_medical-stock")({
@@ -30,7 +33,8 @@ function RouteComponent() {
   const location = useLocation(); // Hook pour obtenir l'URL actuelle
   const pathname = location.pathname; // Extraire le chemin de l'URL
 
-  // Déclaration des éléments de navigation
+
+
   const navMain = [
     {
       title: "Administration",
@@ -39,45 +43,49 @@ function RouteComponent() {
       isActive: true,
     },
     {
-      title: "Articles Médicaux ",
-      url: "/appointment-doctor",
-      icon: Calendar,
+      title: "Articles Médicaux",
+      url: "/article",
+      icon: Package, // Icône représentant des boîtes de médicaments
     },
     {
       title: "Inventaire",
-      url: "/patient-doctor",
-      icon: Users,
+      url: "/inventaire",
+      icon: ClipboardList, // Icône représentant une liste d'éléments
     },
     {
       title: "Commandes d'Achat",
-      url: "/ordonnance",
-      icon: Pill,
+      url: "/commande",
+      icon: ShoppingCart, // Icône pour les achats et commandes
     },
     {
       title: "Approvisionnement",
-      url: "/ordonnance",
-      icon: Pill,
+      url: "/approvisionnement",
+      icon: Truck, // Icône de camion pour la gestion des livraisons
     },
     {
-      title: " Maintenance",
-      url: "/ordonnance",
-      icon: Pill,
+      title: "Maintenance",
+      url: "/maintenance",
+      icon: Wrench, // Icône représentant les outils de réparation
     },
     {
       title: "Paramètres",
-      url: "/setting-doctor",
-      icon: Settings2Icon,
+      url: "/setting-stock",
+      icon: Settings2Icon, 
     },
   ];
+
+
 
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/dashboard-doctor": "Tableau de bord",
-      "/appointment-doctor": "Mes rendez-vous",
-      "/patient-doctor": "Patients",
-      "/ordonnance": "Prescriptions & Ordonnances",
-      "/setting-doctor": "Paramètres",
+      "/administration": "Administration",
+      "/article": "Articles Médicaux",
+      "/inventaire": "Inventaire",
+      "/commande": "Commandes d'Achat",
+      "/approvisionnement": "Approvisionnement",
+      "/maintenance": "Maintenance",
+      "/setting-stock": "Paramètres",
 
       "/profil-stock": "Profil",
       "/message-stock": "Messagerie",

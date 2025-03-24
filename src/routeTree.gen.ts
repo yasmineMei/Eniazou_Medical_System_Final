@@ -35,7 +35,12 @@ import { Route as OpdInvestigationOpdImport } from './routes/_opd/investigation-
 import { Route as OpdDayCareImport } from './routes/_opd/dayCare'
 import { Route as OpdCertificateImport } from './routes/_opd/certificate'
 import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registration'
-import { Route as NurseNurseImport } from './routes/_nurse/nurse'
+import { Route as NurseSettingNurseImport } from './routes/_nurse/setting-nurse'
+import { Route as NurseReportNurseImport } from './routes/_nurse/report-nurse'
+import { Route as NursePatientMedecineImport } from './routes/_nurse/patient-medecine'
+import { Route as NurseFichePatientImport } from './routes/_nurse/fiche-patient'
+import { Route as NurseDashboardNurseImport } from './routes/_nurse/dashboard-nurse'
+import { Route as NurseChecklistImport } from './routes/_nurse/checklist'
 import { Route as MedicalStockSettingStockImport } from './routes/_medical-stock/setting-stock'
 import { Route as MedicalStockProfilStockImport } from './routes/_medical-stock/profil-stock'
 import { Route as MedicalStockMessageStockImport } from './routes/_medical-stock/message-stock'
@@ -46,7 +51,10 @@ import { Route as MedicalStockCommandeImport } from './routes/_medical-stock/com
 import { Route as MedicalStockArticleImport } from './routes/_medical-stock/article'
 import { Route as MedicalStockApprovisionnementImport } from './routes/_medical-stock/approvisionnement'
 import { Route as MedicalStockAdministrationImport } from './routes/_medical-stock/administration'
-import { Route as LabLabImport } from './routes/_lab/lab'
+import { Route as LabSettingLabImport } from './routes/_lab/setting-lab'
+import { Route as LabReportLabImport } from './routes/_lab/report-lab'
+import { Route as LabOpdRequestImport } from './routes/_lab/opd-request'
+import { Route as LabIpdRequestImport } from './routes/_lab/ipd-request'
 import { Route as IpdReportIpdImport } from './routes/_ipd/report-ipd'
 import { Route as IpdRegistrationIpdImport } from './routes/_ipd/registration-ipd'
 import { Route as IpdPaymentImport } from './routes/_ipd/payment'
@@ -214,9 +222,39 @@ const OpdBirthRegistrationRoute = OpdBirthRegistrationImport.update({
   getParentRoute: () => OpdRoute,
 } as any)
 
-const NurseNurseRoute = NurseNurseImport.update({
-  id: '/nurse',
-  path: '/nurse',
+const NurseSettingNurseRoute = NurseSettingNurseImport.update({
+  id: '/setting-nurse',
+  path: '/setting-nurse',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const NurseReportNurseRoute = NurseReportNurseImport.update({
+  id: '/report-nurse',
+  path: '/report-nurse',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const NursePatientMedecineRoute = NursePatientMedecineImport.update({
+  id: '/patient-medecine',
+  path: '/patient-medecine',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const NurseFichePatientRoute = NurseFichePatientImport.update({
+  id: '/fiche-patient',
+  path: '/fiche-patient',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const NurseDashboardNurseRoute = NurseDashboardNurseImport.update({
+  id: '/dashboard-nurse',
+  path: '/dashboard-nurse',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const NurseChecklistRoute = NurseChecklistImport.update({
+  id: '/checklist',
+  path: '/checklist',
   getParentRoute: () => NurseRoute,
 } as any)
 
@@ -285,9 +323,27 @@ const MedicalStockAdministrationRoute = MedicalStockAdministrationImport.update(
   } as any,
 )
 
-const LabLabRoute = LabLabImport.update({
-  id: '/lab',
-  path: '/lab',
+const LabSettingLabRoute = LabSettingLabImport.update({
+  id: '/setting-lab',
+  path: '/setting-lab',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const LabReportLabRoute = LabReportLabImport.update({
+  id: '/report-lab',
+  path: '/report-lab',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const LabOpdRequestRoute = LabOpdRequestImport.update({
+  id: '/opd-request',
+  path: '/opd-request',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const LabIpdRequestRoute = LabIpdRequestImport.update({
+  id: '/ipd-request',
+  path: '/ipd-request',
   getParentRoute: () => LabRoute,
 } as any)
 
@@ -762,11 +818,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IpdReportIpdImport
       parentRoute: typeof IpdImport
     }
-    '/_lab/lab': {
-      id: '/_lab/lab'
-      path: '/lab'
-      fullPath: '/lab'
-      preLoaderRoute: typeof LabLabImport
+    '/_lab/ipd-request': {
+      id: '/_lab/ipd-request'
+      path: '/ipd-request'
+      fullPath: '/ipd-request'
+      preLoaderRoute: typeof LabIpdRequestImport
+      parentRoute: typeof LabImport
+    }
+    '/_lab/opd-request': {
+      id: '/_lab/opd-request'
+      path: '/opd-request'
+      fullPath: '/opd-request'
+      preLoaderRoute: typeof LabOpdRequestImport
+      parentRoute: typeof LabImport
+    }
+    '/_lab/report-lab': {
+      id: '/_lab/report-lab'
+      path: '/report-lab'
+      fullPath: '/report-lab'
+      preLoaderRoute: typeof LabReportLabImport
+      parentRoute: typeof LabImport
+    }
+    '/_lab/setting-lab': {
+      id: '/_lab/setting-lab'
+      path: '/setting-lab'
+      fullPath: '/setting-lab'
+      preLoaderRoute: typeof LabSettingLabImport
       parentRoute: typeof LabImport
     }
     '/_medical-stock/administration': {
@@ -839,11 +916,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MedicalStockSettingStockImport
       parentRoute: typeof MedicalStockImport
     }
-    '/_nurse/nurse': {
-      id: '/_nurse/nurse'
-      path: '/nurse'
-      fullPath: '/nurse'
-      preLoaderRoute: typeof NurseNurseImport
+    '/_nurse/checklist': {
+      id: '/_nurse/checklist'
+      path: '/checklist'
+      fullPath: '/checklist'
+      preLoaderRoute: typeof NurseChecklistImport
+      parentRoute: typeof NurseImport
+    }
+    '/_nurse/dashboard-nurse': {
+      id: '/_nurse/dashboard-nurse'
+      path: '/dashboard-nurse'
+      fullPath: '/dashboard-nurse'
+      preLoaderRoute: typeof NurseDashboardNurseImport
+      parentRoute: typeof NurseImport
+    }
+    '/_nurse/fiche-patient': {
+      id: '/_nurse/fiche-patient'
+      path: '/fiche-patient'
+      fullPath: '/fiche-patient'
+      preLoaderRoute: typeof NurseFichePatientImport
+      parentRoute: typeof NurseImport
+    }
+    '/_nurse/patient-medecine': {
+      id: '/_nurse/patient-medecine'
+      path: '/patient-medecine'
+      fullPath: '/patient-medecine'
+      preLoaderRoute: typeof NursePatientMedecineImport
+      parentRoute: typeof NurseImport
+    }
+    '/_nurse/report-nurse': {
+      id: '/_nurse/report-nurse'
+      path: '/report-nurse'
+      fullPath: '/report-nurse'
+      preLoaderRoute: typeof NurseReportNurseImport
+      parentRoute: typeof NurseImport
+    }
+    '/_nurse/setting-nurse': {
+      id: '/_nurse/setting-nurse'
+      path: '/setting-nurse'
+      fullPath: '/setting-nurse'
+      preLoaderRoute: typeof NurseSettingNurseImport
       parentRoute: typeof NurseImport
     }
     '/_opd/birth-registration': {
@@ -1029,11 +1141,17 @@ const IpdRouteChildren: IpdRouteChildren = {
 const IpdRouteWithChildren = IpdRoute._addFileChildren(IpdRouteChildren)
 
 interface LabRouteChildren {
-  LabLabRoute: typeof LabLabRoute
+  LabIpdRequestRoute: typeof LabIpdRequestRoute
+  LabOpdRequestRoute: typeof LabOpdRequestRoute
+  LabReportLabRoute: typeof LabReportLabRoute
+  LabSettingLabRoute: typeof LabSettingLabRoute
 }
 
 const LabRouteChildren: LabRouteChildren = {
-  LabLabRoute: LabLabRoute,
+  LabIpdRequestRoute: LabIpdRequestRoute,
+  LabOpdRequestRoute: LabOpdRequestRoute,
+  LabReportLabRoute: LabReportLabRoute,
+  LabSettingLabRoute: LabSettingLabRoute,
 }
 
 const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
@@ -1069,11 +1187,21 @@ const MedicalStockRouteWithChildren = MedicalStockRoute._addFileChildren(
 )
 
 interface NurseRouteChildren {
-  NurseNurseRoute: typeof NurseNurseRoute
+  NurseChecklistRoute: typeof NurseChecklistRoute
+  NurseDashboardNurseRoute: typeof NurseDashboardNurseRoute
+  NurseFichePatientRoute: typeof NurseFichePatientRoute
+  NursePatientMedecineRoute: typeof NursePatientMedecineRoute
+  NurseReportNurseRoute: typeof NurseReportNurseRoute
+  NurseSettingNurseRoute: typeof NurseSettingNurseRoute
 }
 
 const NurseRouteChildren: NurseRouteChildren = {
-  NurseNurseRoute: NurseNurseRoute,
+  NurseChecklistRoute: NurseChecklistRoute,
+  NurseDashboardNurseRoute: NurseDashboardNurseRoute,
+  NurseFichePatientRoute: NurseFichePatientRoute,
+  NursePatientMedecineRoute: NursePatientMedecineRoute,
+  NurseReportNurseRoute: NurseReportNurseRoute,
+  NurseSettingNurseRoute: NurseSettingNurseRoute,
 }
 
 const NurseRouteWithChildren = NurseRoute._addFileChildren(NurseRouteChildren)
@@ -1154,7 +1282,10 @@ export interface FileRoutesByFullPath {
   '/payment': typeof IpdPaymentRoute
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/report-ipd': typeof IpdReportIpdRoute
-  '/lab': typeof LabLabRoute
+  '/ipd-request': typeof LabIpdRequestRoute
+  '/opd-request': typeof LabOpdRequestRoute
+  '/report-lab': typeof LabReportLabRoute
+  '/setting-lab': typeof LabSettingLabRoute
   '/administration': typeof MedicalStockAdministrationRoute
   '/approvisionnement': typeof MedicalStockApprovisionnementRoute
   '/article': typeof MedicalStockArticleRoute
@@ -1165,7 +1296,12 @@ export interface FileRoutesByFullPath {
   '/message-stock': typeof MedicalStockMessageStockRoute
   '/profil-stock': typeof MedicalStockProfilStockRoute
   '/setting-stock': typeof MedicalStockSettingStockRoute
-  '/nurse': typeof NurseNurseRoute
+  '/checklist': typeof NurseChecklistRoute
+  '/dashboard-nurse': typeof NurseDashboardNurseRoute
+  '/fiche-patient': typeof NurseFichePatientRoute
+  '/patient-medecine': typeof NursePatientMedecineRoute
+  '/report-nurse': typeof NurseReportNurseRoute
+  '/setting-nurse': typeof NurseSettingNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/certificate': typeof OpdCertificateRoute
   '/dayCare': typeof OpdDayCareRoute
@@ -1214,7 +1350,10 @@ export interface FileRoutesByTo {
   '/payment': typeof IpdPaymentRoute
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/report-ipd': typeof IpdReportIpdRoute
-  '/lab': typeof LabLabRoute
+  '/ipd-request': typeof LabIpdRequestRoute
+  '/opd-request': typeof LabOpdRequestRoute
+  '/report-lab': typeof LabReportLabRoute
+  '/setting-lab': typeof LabSettingLabRoute
   '/administration': typeof MedicalStockAdministrationRoute
   '/approvisionnement': typeof MedicalStockApprovisionnementRoute
   '/article': typeof MedicalStockArticleRoute
@@ -1225,7 +1364,12 @@ export interface FileRoutesByTo {
   '/message-stock': typeof MedicalStockMessageStockRoute
   '/profil-stock': typeof MedicalStockProfilStockRoute
   '/setting-stock': typeof MedicalStockSettingStockRoute
-  '/nurse': typeof NurseNurseRoute
+  '/checklist': typeof NurseChecklistRoute
+  '/dashboard-nurse': typeof NurseDashboardNurseRoute
+  '/fiche-patient': typeof NurseFichePatientRoute
+  '/patient-medecine': typeof NursePatientMedecineRoute
+  '/report-nurse': typeof NurseReportNurseRoute
+  '/setting-nurse': typeof NurseSettingNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/certificate': typeof OpdCertificateRoute
   '/dayCare': typeof OpdDayCareRoute
@@ -1283,7 +1427,10 @@ export interface FileRoutesById {
   '/_ipd/payment': typeof IpdPaymentRoute
   '/_ipd/registration-ipd': typeof IpdRegistrationIpdRoute
   '/_ipd/report-ipd': typeof IpdReportIpdRoute
-  '/_lab/lab': typeof LabLabRoute
+  '/_lab/ipd-request': typeof LabIpdRequestRoute
+  '/_lab/opd-request': typeof LabOpdRequestRoute
+  '/_lab/report-lab': typeof LabReportLabRoute
+  '/_lab/setting-lab': typeof LabSettingLabRoute
   '/_medical-stock/administration': typeof MedicalStockAdministrationRoute
   '/_medical-stock/approvisionnement': typeof MedicalStockApprovisionnementRoute
   '/_medical-stock/article': typeof MedicalStockArticleRoute
@@ -1294,7 +1441,12 @@ export interface FileRoutesById {
   '/_medical-stock/message-stock': typeof MedicalStockMessageStockRoute
   '/_medical-stock/profil-stock': typeof MedicalStockProfilStockRoute
   '/_medical-stock/setting-stock': typeof MedicalStockSettingStockRoute
-  '/_nurse/nurse': typeof NurseNurseRoute
+  '/_nurse/checklist': typeof NurseChecklistRoute
+  '/_nurse/dashboard-nurse': typeof NurseDashboardNurseRoute
+  '/_nurse/fiche-patient': typeof NurseFichePatientRoute
+  '/_nurse/patient-medecine': typeof NursePatientMedecineRoute
+  '/_nurse/report-nurse': typeof NurseReportNurseRoute
+  '/_nurse/setting-nurse': typeof NurseSettingNurseRoute
   '/_opd/birth-registration': typeof OpdBirthRegistrationRoute
   '/_opd/certificate': typeof OpdCertificateRoute
   '/_opd/dayCare': typeof OpdDayCareRoute
@@ -1345,7 +1497,10 @@ export interface FileRouteTypes {
     | '/payment'
     | '/registration-ipd'
     | '/report-ipd'
-    | '/lab'
+    | '/ipd-request'
+    | '/opd-request'
+    | '/report-lab'
+    | '/setting-lab'
     | '/administration'
     | '/approvisionnement'
     | '/article'
@@ -1356,7 +1511,12 @@ export interface FileRouteTypes {
     | '/message-stock'
     | '/profil-stock'
     | '/setting-stock'
-    | '/nurse'
+    | '/checklist'
+    | '/dashboard-nurse'
+    | '/fiche-patient'
+    | '/patient-medecine'
+    | '/report-nurse'
+    | '/setting-nurse'
     | '/birth-registration'
     | '/certificate'
     | '/dayCare'
@@ -1404,7 +1564,10 @@ export interface FileRouteTypes {
     | '/payment'
     | '/registration-ipd'
     | '/report-ipd'
-    | '/lab'
+    | '/ipd-request'
+    | '/opd-request'
+    | '/report-lab'
+    | '/setting-lab'
     | '/administration'
     | '/approvisionnement'
     | '/article'
@@ -1415,7 +1578,12 @@ export interface FileRouteTypes {
     | '/message-stock'
     | '/profil-stock'
     | '/setting-stock'
-    | '/nurse'
+    | '/checklist'
+    | '/dashboard-nurse'
+    | '/fiche-patient'
+    | '/patient-medecine'
+    | '/report-nurse'
+    | '/setting-nurse'
     | '/birth-registration'
     | '/certificate'
     | '/dayCare'
@@ -1471,7 +1639,10 @@ export interface FileRouteTypes {
     | '/_ipd/payment'
     | '/_ipd/registration-ipd'
     | '/_ipd/report-ipd'
-    | '/_lab/lab'
+    | '/_lab/ipd-request'
+    | '/_lab/opd-request'
+    | '/_lab/report-lab'
+    | '/_lab/setting-lab'
     | '/_medical-stock/administration'
     | '/_medical-stock/approvisionnement'
     | '/_medical-stock/article'
@@ -1482,7 +1653,12 @@ export interface FileRouteTypes {
     | '/_medical-stock/message-stock'
     | '/_medical-stock/profil-stock'
     | '/_medical-stock/setting-stock'
-    | '/_nurse/nurse'
+    | '/_nurse/checklist'
+    | '/_nurse/dashboard-nurse'
+    | '/_nurse/fiche-patient'
+    | '/_nurse/patient-medecine'
+    | '/_nurse/report-nurse'
+    | '/_nurse/setting-nurse'
     | '/_opd/birth-registration'
     | '/_opd/certificate'
     | '/_opd/dayCare'
@@ -1607,7 +1783,10 @@ export const routeTree = rootRoute
     "/_lab": {
       "filePath": "_lab.tsx",
       "children": [
-        "/_lab/lab"
+        "/_lab/ipd-request",
+        "/_lab/opd-request",
+        "/_lab/report-lab",
+        "/_lab/setting-lab"
       ]
     },
     "/_medical-stock": {
@@ -1628,7 +1807,12 @@ export const routeTree = rootRoute
     "/_nurse": {
       "filePath": "_nurse.tsx",
       "children": [
-        "/_nurse/nurse"
+        "/_nurse/checklist",
+        "/_nurse/dashboard-nurse",
+        "/_nurse/fiche-patient",
+        "/_nurse/patient-medecine",
+        "/_nurse/report-nurse",
+        "/_nurse/setting-nurse"
       ]
     },
     "/_opd": {
@@ -1775,8 +1959,20 @@ export const routeTree = rootRoute
       "filePath": "_ipd/report-ipd.tsx",
       "parent": "/_ipd"
     },
-    "/_lab/lab": {
-      "filePath": "_lab/lab.tsx",
+    "/_lab/ipd-request": {
+      "filePath": "_lab/ipd-request.tsx",
+      "parent": "/_lab"
+    },
+    "/_lab/opd-request": {
+      "filePath": "_lab/opd-request.tsx",
+      "parent": "/_lab"
+    },
+    "/_lab/report-lab": {
+      "filePath": "_lab/report-lab.tsx",
+      "parent": "/_lab"
+    },
+    "/_lab/setting-lab": {
+      "filePath": "_lab/setting-lab.tsx",
       "parent": "/_lab"
     },
     "/_medical-stock/administration": {
@@ -1819,8 +2015,28 @@ export const routeTree = rootRoute
       "filePath": "_medical-stock/setting-stock.tsx",
       "parent": "/_medical-stock"
     },
-    "/_nurse/nurse": {
-      "filePath": "_nurse/nurse.tsx",
+    "/_nurse/checklist": {
+      "filePath": "_nurse/checklist.tsx",
+      "parent": "/_nurse"
+    },
+    "/_nurse/dashboard-nurse": {
+      "filePath": "_nurse/dashboard-nurse.tsx",
+      "parent": "/_nurse"
+    },
+    "/_nurse/fiche-patient": {
+      "filePath": "_nurse/fiche-patient.tsx",
+      "parent": "/_nurse"
+    },
+    "/_nurse/patient-medecine": {
+      "filePath": "_nurse/patient-medecine.tsx",
+      "parent": "/_nurse"
+    },
+    "/_nurse/report-nurse": {
+      "filePath": "_nurse/report-nurse.tsx",
+      "parent": "/_nurse"
+    },
+    "/_nurse/setting-nurse": {
+      "filePath": "_nurse/setting-nurse.tsx",
       "parent": "/_nurse"
     },
     "/_opd/birth-registration": {
