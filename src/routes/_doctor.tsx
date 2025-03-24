@@ -16,13 +16,10 @@ import {
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Settings2Icon,
-  CheckCircle,
-  ClipboardList,
-  Clock,
-  FileText,
-  HeartPulse,
-  Microscope,
-  Baby,
+  Calendar,
+  LayoutDashboard,
+  Pill,
+  Users,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_doctor")({
@@ -37,43 +34,28 @@ function RouteComponent() {
   const navMain = [
     {
       title: "Tableau de bord",
-      url: "/registration-opd",
-      icon: ClipboardList,
+      url: "/dashboard-doctor",
+      icon: LayoutDashboard,
       isActive: true,
     },
     {
-      title: "File d'attente",
-      url: "/queue",
-      icon: Clock,
+      title: "Mes Rendez-vous",
+      url: "/appointment-doctor",
+      icon: Calendar,
     },
     {
-      title: "Examens médicaux",
-      url: "/investigation-opd",
-      icon: Microscope,
+      title: "Patients",
+      url: "/patient-doctor",
+      icon: Users,
     },
     {
-      title: "Soins ambulatoires",
-      url: "/dayCare",
-      icon: HeartPulse,
-    },
-    {
-      title: "Naissances",
-      url: "/birth-registration",
-      icon: Baby,
-    },
-    {
-      title: "Consultations de suivi",
-      url: "/revisit",
-      icon: CheckCircle,
-    },
-    {
-      title: "Certificats",
-      url: "/certificat",
-      icon: FileText,
+      title: "Prescriptions & Ordonnances",
+      url: "/ordonnance",
+      icon: Pill,
     },
     {
       title: "Paramètres",
-      url: "/setting-opd",
+      url: "/setting-doctor",
       icon: Settings2Icon,
     },
   ];
@@ -81,17 +63,14 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/registration-opd": "Consultation",
-      "/queue": "File d'attente",
-      "/investigation-opd": "Examens médicaux ",
-      "/dayCare": "Soins ambulatoires",
-      "/birth-registration": "Naissances ",
-      "/revisit": "Consultations de suivi",
-      "/certificat": "Certificats",
-      "/setting-opd": "Paramètres",
+      "/dashboard-doctor": "Tableau de bord",
+      "/appointment-doctor": "Mes rendez-vous",
+      "/patient-doctor": "Patients",
+      "/ordonnance": "Prescriptions & Ordonnances",
+      "/setting-doctor": "Paramètres",
 
-      "/profil-opd": "Profil",
-      "/message-opd": "Messagerie",
+      "/profil-doctor": "Profil",
+      "/message-doctor": "Messagerie",
     };
 
     const currentTitle = breadcrumbs[pathname] || "Accueil";

@@ -36,7 +36,16 @@ import { Route as OpdDayCareImport } from './routes/_opd/dayCare'
 import { Route as OpdCertificateImport } from './routes/_opd/certificate'
 import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registration'
 import { Route as NurseNurseImport } from './routes/_nurse/nurse'
-import { Route as MedicalStockMedicalStockImport } from './routes/_medical-stock/medical-stock'
+import { Route as MedicalStockSettingStockImport } from './routes/_medical-stock/setting-stock'
+import { Route as MedicalStockProfilStockImport } from './routes/_medical-stock/profil-stock'
+import { Route as MedicalStockMessageStockImport } from './routes/_medical-stock/message-stock'
+import { Route as MedicalStockMaintenanceImport } from './routes/_medical-stock/maintenance'
+import { Route as MedicalStockInventaireImport } from './routes/_medical-stock/inventaire'
+import { Route as MedicalStockDashboardStockImport } from './routes/_medical-stock/dashboard-stock'
+import { Route as MedicalStockCommandeImport } from './routes/_medical-stock/commande'
+import { Route as MedicalStockArticleImport } from './routes/_medical-stock/article'
+import { Route as MedicalStockApprovisionnementImport } from './routes/_medical-stock/approvisionnement'
+import { Route as MedicalStockAdministrationImport } from './routes/_medical-stock/administration'
 import { Route as LabLabImport } from './routes/_lab/lab'
 import { Route as IpdReportIpdImport } from './routes/_ipd/report-ipd'
 import { Route as IpdRegistrationIpdImport } from './routes/_ipd/registration-ipd'
@@ -56,8 +65,11 @@ import { Route as HomeMessageImport } from './routes/_home/message'
 import { Route as HomeDashboardImport } from './routes/_home/dashboard'
 import { Route as DoctorSettingDoctorImport } from './routes/_doctor/setting-doctor'
 import { Route as DoctorProfilDoctorImport } from './routes/_doctor/profil-doctor'
+import { Route as DoctorPatientDoctorImport } from './routes/_doctor/patient-doctor'
+import { Route as DoctorOrdonnanceImport } from './routes/_doctor/ordonnance'
 import { Route as DoctorMessageDoctorImport } from './routes/_doctor/message-doctor'
-import { Route as DoctorDashboardDoctorImport} from './routes/_doctor/dashboard-doctor'
+import { Route as DoctorDashboardDoctorImport } from './routes/_doctor/dashboard-doctor'
+import { Route as DoctorAppointmentDoctorImport } from './routes/_doctor/appointment-doctor'
 import { Route as AppointmentsSuiviAppointmentImport } from './routes/_appointments/suiviAppointment'
 import { Route as AppointmentsSettingAppointmentImport } from './routes/_appointments/setting-appointment'
 import { Route as AppointmentsProfilAppointmentImport } from './routes/_appointments/profil-appointment'
@@ -208,11 +220,70 @@ const NurseNurseRoute = NurseNurseImport.update({
   getParentRoute: () => NurseRoute,
 } as any)
 
-const MedicalStockMedicalStockRoute = MedicalStockMedicalStockImport.update({
-  id: '/medical-stock',
-  path: '/medical-stock',
+const MedicalStockSettingStockRoute = MedicalStockSettingStockImport.update({
+  id: '/setting-stock',
+  path: '/setting-stock',
   getParentRoute: () => MedicalStockRoute,
 } as any)
+
+const MedicalStockProfilStockRoute = MedicalStockProfilStockImport.update({
+  id: '/profil-stock',
+  path: '/profil-stock',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const MedicalStockMessageStockRoute = MedicalStockMessageStockImport.update({
+  id: '/message-stock',
+  path: '/message-stock',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const MedicalStockMaintenanceRoute = MedicalStockMaintenanceImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const MedicalStockInventaireRoute = MedicalStockInventaireImport.update({
+  id: '/inventaire',
+  path: '/inventaire',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const MedicalStockDashboardStockRoute = MedicalStockDashboardStockImport.update(
+  {
+    id: '/dashboard-stock',
+    path: '/dashboard-stock',
+    getParentRoute: () => MedicalStockRoute,
+  } as any,
+)
+
+const MedicalStockCommandeRoute = MedicalStockCommandeImport.update({
+  id: '/commande',
+  path: '/commande',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const MedicalStockArticleRoute = MedicalStockArticleImport.update({
+  id: '/article',
+  path: '/article',
+  getParentRoute: () => MedicalStockRoute,
+} as any)
+
+const MedicalStockApprovisionnementRoute =
+  MedicalStockApprovisionnementImport.update({
+    id: '/approvisionnement',
+    path: '/approvisionnement',
+    getParentRoute: () => MedicalStockRoute,
+  } as any)
+
+const MedicalStockAdministrationRoute = MedicalStockAdministrationImport.update(
+  {
+    id: '/administration',
+    path: '/administration',
+    getParentRoute: () => MedicalStockRoute,
+  } as any,
+)
 
 const LabLabRoute = LabLabImport.update({
   id: '/lab',
@@ -328,6 +399,18 @@ const DoctorProfilDoctorRoute = DoctorProfilDoctorImport.update({
   getParentRoute: () => DoctorRoute,
 } as any)
 
+const DoctorPatientDoctorRoute = DoctorPatientDoctorImport.update({
+  id: '/patient-doctor',
+  path: '/patient-doctor',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
+const DoctorOrdonnanceRoute = DoctorOrdonnanceImport.update({
+  id: '/ordonnance',
+  path: '/ordonnance',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
 const DoctorMessageDoctorRoute = DoctorMessageDoctorImport.update({
   id: '/message-doctor',
   path: '/message-doctor',
@@ -337,6 +420,12 @@ const DoctorMessageDoctorRoute = DoctorMessageDoctorImport.update({
 const DoctorDashboardDoctorRoute = DoctorDashboardDoctorImport.update({
   id: '/dashboard-doctor',
   path: '/dashboard-doctor',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
+const DoctorAppointmentDoctorRoute = DoctorAppointmentDoctorImport.update({
+  id: '/appointment-doctor',
+  path: '/appointment-doctor',
   getParentRoute: () => DoctorRoute,
 } as any)
 
@@ -512,6 +601,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppointmentsSuiviAppointmentImport
       parentRoute: typeof AppointmentsImport
     }
+    '/_doctor/appointment-doctor': {
+      id: '/_doctor/appointment-doctor'
+      path: '/appointment-doctor'
+      fullPath: '/appointment-doctor'
+      preLoaderRoute: typeof DoctorAppointmentDoctorImport
+      parentRoute: typeof DoctorImport
+    }
     '/_doctor/dashboard-doctor': {
       id: '/_doctor/dashboard-doctor'
       path: '/dashboard-doctor'
@@ -524,6 +620,20 @@ declare module '@tanstack/react-router' {
       path: '/message-doctor'
       fullPath: '/message-doctor'
       preLoaderRoute: typeof DoctorMessageDoctorImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/ordonnance': {
+      id: '/_doctor/ordonnance'
+      path: '/ordonnance'
+      fullPath: '/ordonnance'
+      preLoaderRoute: typeof DoctorOrdonnanceImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/patient-doctor': {
+      id: '/_doctor/patient-doctor'
+      path: '/patient-doctor'
+      fullPath: '/patient-doctor'
+      preLoaderRoute: typeof DoctorPatientDoctorImport
       parentRoute: typeof DoctorImport
     }
     '/_doctor/profil-doctor': {
@@ -659,11 +769,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabLabImport
       parentRoute: typeof LabImport
     }
-    '/_medical-stock/medical-stock': {
-      id: '/_medical-stock/medical-stock'
-      path: '/medical-stock'
-      fullPath: '/medical-stock'
-      preLoaderRoute: typeof MedicalStockMedicalStockImport
+    '/_medical-stock/administration': {
+      id: '/_medical-stock/administration'
+      path: '/administration'
+      fullPath: '/administration'
+      preLoaderRoute: typeof MedicalStockAdministrationImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/approvisionnement': {
+      id: '/_medical-stock/approvisionnement'
+      path: '/approvisionnement'
+      fullPath: '/approvisionnement'
+      preLoaderRoute: typeof MedicalStockApprovisionnementImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/article': {
+      id: '/_medical-stock/article'
+      path: '/article'
+      fullPath: '/article'
+      preLoaderRoute: typeof MedicalStockArticleImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/commande': {
+      id: '/_medical-stock/commande'
+      path: '/commande'
+      fullPath: '/commande'
+      preLoaderRoute: typeof MedicalStockCommandeImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/dashboard-stock': {
+      id: '/_medical-stock/dashboard-stock'
+      path: '/dashboard-stock'
+      fullPath: '/dashboard-stock'
+      preLoaderRoute: typeof MedicalStockDashboardStockImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/inventaire': {
+      id: '/_medical-stock/inventaire'
+      path: '/inventaire'
+      fullPath: '/inventaire'
+      preLoaderRoute: typeof MedicalStockInventaireImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/maintenance': {
+      id: '/_medical-stock/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof MedicalStockMaintenanceImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/message-stock': {
+      id: '/_medical-stock/message-stock'
+      path: '/message-stock'
+      fullPath: '/message-stock'
+      preLoaderRoute: typeof MedicalStockMessageStockImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/profil-stock': {
+      id: '/_medical-stock/profil-stock'
+      path: '/profil-stock'
+      fullPath: '/profil-stock'
+      preLoaderRoute: typeof MedicalStockProfilStockImport
+      parentRoute: typeof MedicalStockImport
+    }
+    '/_medical-stock/setting-stock': {
+      id: '/_medical-stock/setting-stock'
+      path: '/setting-stock'
+      fullPath: '/setting-stock'
+      preLoaderRoute: typeof MedicalStockSettingStockImport
       parentRoute: typeof MedicalStockImport
     }
     '/_nurse/nurse': {
@@ -785,15 +958,21 @@ const AppointmentsRouteWithChildren = AppointmentsRoute._addFileChildren(
 )
 
 interface DoctorRouteChildren {
+  DoctorAppointmentDoctorRoute: typeof DoctorAppointmentDoctorRoute
   DoctorDashboardDoctorRoute: typeof DoctorDashboardDoctorRoute
   DoctorMessageDoctorRoute: typeof DoctorMessageDoctorRoute
+  DoctorOrdonnanceRoute: typeof DoctorOrdonnanceRoute
+  DoctorPatientDoctorRoute: typeof DoctorPatientDoctorRoute
   DoctorProfilDoctorRoute: typeof DoctorProfilDoctorRoute
   DoctorSettingDoctorRoute: typeof DoctorSettingDoctorRoute
 }
 
 const DoctorRouteChildren: DoctorRouteChildren = {
+  DoctorAppointmentDoctorRoute: DoctorAppointmentDoctorRoute,
   DoctorDashboardDoctorRoute: DoctorDashboardDoctorRoute,
   DoctorMessageDoctorRoute: DoctorMessageDoctorRoute,
+  DoctorOrdonnanceRoute: DoctorOrdonnanceRoute,
+  DoctorPatientDoctorRoute: DoctorPatientDoctorRoute,
   DoctorProfilDoctorRoute: DoctorProfilDoctorRoute,
   DoctorSettingDoctorRoute: DoctorSettingDoctorRoute,
 }
@@ -860,11 +1039,29 @@ const LabRouteChildren: LabRouteChildren = {
 const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
 
 interface MedicalStockRouteChildren {
-  MedicalStockMedicalStockRoute: typeof MedicalStockMedicalStockRoute
+  MedicalStockAdministrationRoute: typeof MedicalStockAdministrationRoute
+  MedicalStockApprovisionnementRoute: typeof MedicalStockApprovisionnementRoute
+  MedicalStockArticleRoute: typeof MedicalStockArticleRoute
+  MedicalStockCommandeRoute: typeof MedicalStockCommandeRoute
+  MedicalStockDashboardStockRoute: typeof MedicalStockDashboardStockRoute
+  MedicalStockInventaireRoute: typeof MedicalStockInventaireRoute
+  MedicalStockMaintenanceRoute: typeof MedicalStockMaintenanceRoute
+  MedicalStockMessageStockRoute: typeof MedicalStockMessageStockRoute
+  MedicalStockProfilStockRoute: typeof MedicalStockProfilStockRoute
+  MedicalStockSettingStockRoute: typeof MedicalStockSettingStockRoute
 }
 
 const MedicalStockRouteChildren: MedicalStockRouteChildren = {
-  MedicalStockMedicalStockRoute: MedicalStockMedicalStockRoute,
+  MedicalStockAdministrationRoute: MedicalStockAdministrationRoute,
+  MedicalStockApprovisionnementRoute: MedicalStockApprovisionnementRoute,
+  MedicalStockArticleRoute: MedicalStockArticleRoute,
+  MedicalStockCommandeRoute: MedicalStockCommandeRoute,
+  MedicalStockDashboardStockRoute: MedicalStockDashboardStockRoute,
+  MedicalStockInventaireRoute: MedicalStockInventaireRoute,
+  MedicalStockMaintenanceRoute: MedicalStockMaintenanceRoute,
+  MedicalStockMessageStockRoute: MedicalStockMessageStockRoute,
+  MedicalStockProfilStockRoute: MedicalStockProfilStockRoute,
+  MedicalStockSettingStockRoute: MedicalStockSettingStockRoute,
 }
 
 const MedicalStockRouteWithChildren = MedicalStockRoute._addFileChildren(
@@ -934,8 +1131,11 @@ export interface FileRoutesByFullPath {
   '/profil-appointment': typeof AppointmentsProfilAppointmentRoute
   '/setting-appointment': typeof AppointmentsSettingAppointmentRoute
   '/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
+  '/appointment-doctor': typeof DoctorAppointmentDoctorRoute
   '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/message-doctor': typeof DoctorMessageDoctorRoute
+  '/ordonnance': typeof DoctorOrdonnanceRoute
+  '/patient-doctor': typeof DoctorPatientDoctorRoute
   '/profil-doctor': typeof DoctorProfilDoctorRoute
   '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
@@ -955,7 +1155,16 @@ export interface FileRoutesByFullPath {
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/report-ipd': typeof IpdReportIpdRoute
   '/lab': typeof LabLabRoute
-  '/medical-stock': typeof MedicalStockMedicalStockRoute
+  '/administration': typeof MedicalStockAdministrationRoute
+  '/approvisionnement': typeof MedicalStockApprovisionnementRoute
+  '/article': typeof MedicalStockArticleRoute
+  '/commande': typeof MedicalStockCommandeRoute
+  '/dashboard-stock': typeof MedicalStockDashboardStockRoute
+  '/inventaire': typeof MedicalStockInventaireRoute
+  '/maintenance': typeof MedicalStockMaintenanceRoute
+  '/message-stock': typeof MedicalStockMessageStockRoute
+  '/profil-stock': typeof MedicalStockProfilStockRoute
+  '/setting-stock': typeof MedicalStockSettingStockRoute
   '/nurse': typeof NurseNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/certificate': typeof OpdCertificateRoute
@@ -982,8 +1191,11 @@ export interface FileRoutesByTo {
   '/profil-appointment': typeof AppointmentsProfilAppointmentRoute
   '/setting-appointment': typeof AppointmentsSettingAppointmentRoute
   '/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
+  '/appointment-doctor': typeof DoctorAppointmentDoctorRoute
   '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/message-doctor': typeof DoctorMessageDoctorRoute
+  '/ordonnance': typeof DoctorOrdonnanceRoute
+  '/patient-doctor': typeof DoctorPatientDoctorRoute
   '/profil-doctor': typeof DoctorProfilDoctorRoute
   '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
@@ -1003,7 +1215,16 @@ export interface FileRoutesByTo {
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/report-ipd': typeof IpdReportIpdRoute
   '/lab': typeof LabLabRoute
-  '/medical-stock': typeof MedicalStockMedicalStockRoute
+  '/administration': typeof MedicalStockAdministrationRoute
+  '/approvisionnement': typeof MedicalStockApprovisionnementRoute
+  '/article': typeof MedicalStockArticleRoute
+  '/commande': typeof MedicalStockCommandeRoute
+  '/dashboard-stock': typeof MedicalStockDashboardStockRoute
+  '/inventaire': typeof MedicalStockInventaireRoute
+  '/maintenance': typeof MedicalStockMaintenanceRoute
+  '/message-stock': typeof MedicalStockMessageStockRoute
+  '/profil-stock': typeof MedicalStockProfilStockRoute
+  '/setting-stock': typeof MedicalStockSettingStockRoute
   '/nurse': typeof NurseNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/certificate': typeof OpdCertificateRoute
@@ -1039,8 +1260,11 @@ export interface FileRoutesById {
   '/_appointments/profil-appointment': typeof AppointmentsProfilAppointmentRoute
   '/_appointments/setting-appointment': typeof AppointmentsSettingAppointmentRoute
   '/_appointments/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
+  '/_doctor/appointment-doctor': typeof DoctorAppointmentDoctorRoute
   '/_doctor/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/_doctor/message-doctor': typeof DoctorMessageDoctorRoute
+  '/_doctor/ordonnance': typeof DoctorOrdonnanceRoute
+  '/_doctor/patient-doctor': typeof DoctorPatientDoctorRoute
   '/_doctor/profil-doctor': typeof DoctorProfilDoctorRoute
   '/_doctor/setting-doctor': typeof DoctorSettingDoctorRoute
   '/_home/dashboard': typeof HomeDashboardRoute
@@ -1060,7 +1284,16 @@ export interface FileRoutesById {
   '/_ipd/registration-ipd': typeof IpdRegistrationIpdRoute
   '/_ipd/report-ipd': typeof IpdReportIpdRoute
   '/_lab/lab': typeof LabLabRoute
-  '/_medical-stock/medical-stock': typeof MedicalStockMedicalStockRoute
+  '/_medical-stock/administration': typeof MedicalStockAdministrationRoute
+  '/_medical-stock/approvisionnement': typeof MedicalStockApprovisionnementRoute
+  '/_medical-stock/article': typeof MedicalStockArticleRoute
+  '/_medical-stock/commande': typeof MedicalStockCommandeRoute
+  '/_medical-stock/dashboard-stock': typeof MedicalStockDashboardStockRoute
+  '/_medical-stock/inventaire': typeof MedicalStockInventaireRoute
+  '/_medical-stock/maintenance': typeof MedicalStockMaintenanceRoute
+  '/_medical-stock/message-stock': typeof MedicalStockMessageStockRoute
+  '/_medical-stock/profil-stock': typeof MedicalStockProfilStockRoute
+  '/_medical-stock/setting-stock': typeof MedicalStockSettingStockRoute
   '/_nurse/nurse': typeof NurseNurseRoute
   '/_opd/birth-registration': typeof OpdBirthRegistrationRoute
   '/_opd/certificate': typeof OpdCertificateRoute
@@ -1089,8 +1322,11 @@ export interface FileRouteTypes {
     | '/profil-appointment'
     | '/setting-appointment'
     | '/suiviAppointment'
+    | '/appointment-doctor'
     | '/dashboard-doctor'
     | '/message-doctor'
+    | '/ordonnance'
+    | '/patient-doctor'
     | '/profil-doctor'
     | '/setting-doctor'
     | '/dashboard'
@@ -1110,7 +1346,16 @@ export interface FileRouteTypes {
     | '/registration-ipd'
     | '/report-ipd'
     | '/lab'
-    | '/medical-stock'
+    | '/administration'
+    | '/approvisionnement'
+    | '/article'
+    | '/commande'
+    | '/dashboard-stock'
+    | '/inventaire'
+    | '/maintenance'
+    | '/message-stock'
+    | '/profil-stock'
+    | '/setting-stock'
     | '/nurse'
     | '/birth-registration'
     | '/certificate'
@@ -1136,8 +1381,11 @@ export interface FileRouteTypes {
     | '/profil-appointment'
     | '/setting-appointment'
     | '/suiviAppointment'
+    | '/appointment-doctor'
     | '/dashboard-doctor'
     | '/message-doctor'
+    | '/ordonnance'
+    | '/patient-doctor'
     | '/profil-doctor'
     | '/setting-doctor'
     | '/dashboard'
@@ -1157,7 +1405,16 @@ export interface FileRouteTypes {
     | '/registration-ipd'
     | '/report-ipd'
     | '/lab'
-    | '/medical-stock'
+    | '/administration'
+    | '/approvisionnement'
+    | '/article'
+    | '/commande'
+    | '/dashboard-stock'
+    | '/inventaire'
+    | '/maintenance'
+    | '/message-stock'
+    | '/profil-stock'
+    | '/setting-stock'
     | '/nurse'
     | '/birth-registration'
     | '/certificate'
@@ -1191,8 +1448,11 @@ export interface FileRouteTypes {
     | '/_appointments/profil-appointment'
     | '/_appointments/setting-appointment'
     | '/_appointments/suiviAppointment'
+    | '/_doctor/appointment-doctor'
     | '/_doctor/dashboard-doctor'
     | '/_doctor/message-doctor'
+    | '/_doctor/ordonnance'
+    | '/_doctor/patient-doctor'
     | '/_doctor/profil-doctor'
     | '/_doctor/setting-doctor'
     | '/_home/dashboard'
@@ -1212,7 +1472,16 @@ export interface FileRouteTypes {
     | '/_ipd/registration-ipd'
     | '/_ipd/report-ipd'
     | '/_lab/lab'
-    | '/_medical-stock/medical-stock'
+    | '/_medical-stock/administration'
+    | '/_medical-stock/approvisionnement'
+    | '/_medical-stock/article'
+    | '/_medical-stock/commande'
+    | '/_medical-stock/dashboard-stock'
+    | '/_medical-stock/inventaire'
+    | '/_medical-stock/maintenance'
+    | '/_medical-stock/message-stock'
+    | '/_medical-stock/profil-stock'
+    | '/_medical-stock/setting-stock'
     | '/_nurse/nurse'
     | '/_opd/birth-registration'
     | '/_opd/certificate'
@@ -1300,8 +1569,11 @@ export const routeTree = rootRoute
     "/_doctor": {
       "filePath": "_doctor.tsx",
       "children": [
+        "/_doctor/appointment-doctor",
         "/_doctor/dashboard-doctor",
         "/_doctor/message-doctor",
+        "/_doctor/ordonnance",
+        "/_doctor/patient-doctor",
         "/_doctor/profil-doctor",
         "/_doctor/setting-doctor"
       ]
@@ -1341,7 +1613,16 @@ export const routeTree = rootRoute
     "/_medical-stock": {
       "filePath": "_medical-stock.tsx",
       "children": [
-        "/_medical-stock/medical-stock"
+        "/_medical-stock/administration",
+        "/_medical-stock/approvisionnement",
+        "/_medical-stock/article",
+        "/_medical-stock/commande",
+        "/_medical-stock/dashboard-stock",
+        "/_medical-stock/inventaire",
+        "/_medical-stock/maintenance",
+        "/_medical-stock/message-stock",
+        "/_medical-stock/profil-stock",
+        "/_medical-stock/setting-stock"
       ]
     },
     "/_nurse": {
@@ -1402,12 +1683,24 @@ export const routeTree = rootRoute
       "filePath": "_appointments/suiviAppointment.tsx",
       "parent": "/_appointments"
     },
+    "/_doctor/appointment-doctor": {
+      "filePath": "_doctor/appointment-doctor.tsx",
+      "parent": "/_doctor"
+    },
     "/_doctor/dashboard-doctor": {
       "filePath": "_doctor/dashboard-doctor.tsx",
       "parent": "/_doctor"
     },
     "/_doctor/message-doctor": {
       "filePath": "_doctor/message-doctor.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/ordonnance": {
+      "filePath": "_doctor/ordonnance.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/patient-doctor": {
+      "filePath": "_doctor/patient-doctor.tsx",
       "parent": "/_doctor"
     },
     "/_doctor/profil-doctor": {
@@ -1486,8 +1779,44 @@ export const routeTree = rootRoute
       "filePath": "_lab/lab.tsx",
       "parent": "/_lab"
     },
-    "/_medical-stock/medical-stock": {
-      "filePath": "_medical-stock/medical-stock.tsx",
+    "/_medical-stock/administration": {
+      "filePath": "_medical-stock/administration.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/approvisionnement": {
+      "filePath": "_medical-stock/approvisionnement.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/article": {
+      "filePath": "_medical-stock/article.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/commande": {
+      "filePath": "_medical-stock/commande.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/dashboard-stock": {
+      "filePath": "_medical-stock/dashboard-stock.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/inventaire": {
+      "filePath": "_medical-stock/inventaire.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/maintenance": {
+      "filePath": "_medical-stock/maintenance.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/message-stock": {
+      "filePath": "_medical-stock/message-stock.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/profil-stock": {
+      "filePath": "_medical-stock/profil-stock.tsx",
+      "parent": "/_medical-stock"
+    },
+    "/_medical-stock/setting-stock": {
+      "filePath": "_medical-stock/setting-stock.tsx",
       "parent": "/_medical-stock"
     },
     "/_nurse/nurse": {

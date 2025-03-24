@@ -17,7 +17,7 @@ const menuItems = [
   { title: "Radiologie", icon: "📷", path: "/radiology/radiology" },
   { title: "Infirmier", icon: "💉", path: "/nurse/nurse" },
   { title: "Médecin", icon: "👨‍⚕️", path: "/dashboard-doctor" },
-  { title: "Stock Médicale", icon: "💊", path: "/medical-stock/medical-stock" },
+  { title: "Stock Médicale", icon: "💊", path: "/dashboard-stock" },
   { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
 ] as const;
 
@@ -33,7 +33,7 @@ function RouteComponent() {
   let menu = [...menuItems];
 
   if (role === "doctor") {
-    const toKeep: MenuTitle[] = ["Médecin", "Laboratoire", "Radiologie", "IPD"];
+    const toKeep: MenuTitle[] = ["Médecin", "Laboratoire", "Radiologie"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   } else if (role === "nurse") {
     const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire", "IPD"];
