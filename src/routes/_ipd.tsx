@@ -14,6 +14,16 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
+import {
+  BarChart,
+  Bed,
+  CreditCard,
+  LogOut,
+  Microscope,
+  Pill,
+  Scissors,
+  Settings2,
+} from "lucide-react";
 
 export const Route = createFileRoute("/_ipd")({
   component: RouteComponent,
@@ -23,131 +33,94 @@ function RouteComponent() {
   const location = useLocation(); // Hook pour obtenir l'URL actuelle
   const pathname = location.pathname; // Extraire le chemin de l'URL
 
+  // Déclaration des éléments de navigation
+  
+
+  const navMain = [
+    {
+      title: "Hospitalisation",
+      url: "/registration-ipd",
+      icon: Bed, 
+      isActive: true,
+    },
+    {
+      title: "Gestion des médicaments",
+      url: "/medecines",
+      icon: Pill, 
+    },
+    {
+      title: "Examens médicaux",
+      url: "/investigation",
+      icon: Microscope,
+    },
+    {
+      title: "Opérations & Chirurgie",
+      url: "/oT",
+      icon: Scissors, 
+    },
+    {
+      title: "Sortie des patients",
+      url: "/discharge",
+      icon: LogOut,
+    },
+    {
+      title: "Facturation",
+      url: "/payment",
+      icon: CreditCard, 
+    },
+    {
+      title: "Rapports et Statistiques",
+      url: "/report-ipd",
+      icon: BarChart, 
+    },
+    {
+      title: "Paramètres",
+      url: "/setting-opd",
+      icon: Settings2, 
+    },
+  ];
+
+
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
-    switch (pathname) {
-      case "/dashboard":
-        return (
+    const breadcrumbs: Record<string, string> = {
+      "/registration-ipd": "Hospitalisation",
+      "/medecines": "Gestion des médicaments",
+      "/investigation": "Examens médicaux ",
+      "/oT": "Opérations & Chirurgie",
+      "/discharge": "Sortie des patients",
+      "/payment": "Facturation",
+      "/report-ipd": "Rapports et Statistiques",
+      "/setting-opd": "Paramètres",
+      
+      "/profil-opd": "Profil",
+      "/message-opd": "Messagerie",
+    };
+
+    const currentTitle = breadcrumbs[pathname] || "Accueil";
+
+    return (
+      <>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/menu-principal">Accueil</BreadcrumbLink>
+        </BreadcrumbItem>
+        {currentTitle !== "Accueil" && (
           <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="text-[#108187]">
-                Tableau de bord
+                {currentTitle}
               </BreadcrumbPage>
             </BreadcrumbItem>
           </>
-        );
-      case "/patient":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">
-                Patients
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      case "/personnel":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">
-                Gestion du Personnel
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      case "/report":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">
-                Rapports
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      case "/service":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">
-                Services médicaux
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      case "/setting":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">
-                Paramètres
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      case "/profil":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">Profil</BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      case "/message":
-        return (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#108187]">
-                Messagerie
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </>
-        );
-      default:
-        return (
-          <BreadcrumbItem>
-            <BreadcrumbPage className="text-[#108187]">Accueil</BreadcrumbPage>
-          </BreadcrumbItem>
-        );
-    }
+        )}
+      </>
+    );
   };
 
   return (
     <SidebarProvider>
-      <AppSidebar items={[]} />
+      <AppSidebar items={navMain} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">

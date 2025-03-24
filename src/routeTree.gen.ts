@@ -23,9 +23,17 @@ import { Route as HomeImport } from './routes/_home'
 import { Route as DoctorImport } from './routes/_doctor'
 import { Route as AppointmentsImport } from './routes/_appointments'
 import { Route as IndexImport } from './routes/index'
+import { Route as RadiologyRadiologyImport } from './routes/_radiology/radiology'
 import { Route as OpdVaccinImport } from './routes/_opd/vaccin'
+import { Route as OpdSettingOpdImport } from './routes/_opd/setting-opd'
+import { Route as OpdRevisitImport } from './routes/_opd/revisit'
 import { Route as OpdRegistrationOpdImport } from './routes/_opd/registration-opd'
 import { Route as OpdQueueImport } from './routes/_opd/queue'
+import { Route as OpdProfilOpdImport } from './routes/_opd/profil-opd'
+import { Route as OpdMessageOpdImport } from './routes/_opd/message-opd'
+import { Route as OpdInvestigationOpdImport } from './routes/_opd/investigation-opd'
+import { Route as OpdDayCareImport } from './routes/_opd/dayCare'
+import { Route as OpdCertificateImport } from './routes/_opd/certificate'
 import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registration'
 import { Route as NurseNurseImport } from './routes/_nurse/nurse'
 import { Route as MedicalStockMedicalStockImport } from './routes/_medical-stock/medical-stock'
@@ -46,8 +54,16 @@ import { Route as HomePersonnelImport } from './routes/_home/personnel'
 import { Route as HomePatientImport } from './routes/_home/patient'
 import { Route as HomeMessageImport } from './routes/_home/message'
 import { Route as HomeDashboardImport } from './routes/_home/dashboard'
-import { Route as DoctorDoctorImport } from './routes/_doctor/doctor'
-import { Route as AppointmentsAppointmentsImport } from './routes/_appointments/appointments'
+import { Route as DoctorSettingDoctorImport } from './routes/_doctor/setting-doctor'
+import { Route as DoctorProfilDoctorImport } from './routes/_doctor/profil-doctor'
+import { Route as DoctorMessageDoctorImport } from './routes/_doctor/message-doctor'
+import { Route as DoctorDashboardDoctorImport} from './routes/_doctor/dashboard-doctor'
+import { Route as AppointmentsSuiviAppointmentImport } from './routes/_appointments/suiviAppointment'
+import { Route as AppointmentsSettingAppointmentImport } from './routes/_appointments/setting-appointment'
+import { Route as AppointmentsProfilAppointmentImport } from './routes/_appointments/profil-appointment'
+import { Route as AppointmentsPriseAppointmentImport } from './routes/_appointments/priseAppointment'
+import { Route as AppointmentsMessageAppointmentImport } from './routes/_appointments/message-appointment'
+import { Route as AppointmentsDashboardAppointmentImport } from './routes/_appointments/dashboard-appointment'
 
 // Create/Update Routes
 
@@ -114,9 +130,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RadiologyRadiologyRoute = RadiologyRadiologyImport.update({
+  id: '/radiology',
+  path: '/radiology',
+  getParentRoute: () => RadiologyRoute,
+} as any)
+
 const OpdVaccinRoute = OpdVaccinImport.update({
   id: '/vaccin',
   path: '/vaccin',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdSettingOpdRoute = OpdSettingOpdImport.update({
+  id: '/setting-opd',
+  path: '/setting-opd',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdRevisitRoute = OpdRevisitImport.update({
+  id: '/revisit',
+  path: '/revisit',
   getParentRoute: () => OpdRoute,
 } as any)
 
@@ -129,6 +163,36 @@ const OpdRegistrationOpdRoute = OpdRegistrationOpdImport.update({
 const OpdQueueRoute = OpdQueueImport.update({
   id: '/queue',
   path: '/queue',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdProfilOpdRoute = OpdProfilOpdImport.update({
+  id: '/profil-opd',
+  path: '/profil-opd',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdMessageOpdRoute = OpdMessageOpdImport.update({
+  id: '/message-opd',
+  path: '/message-opd',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdInvestigationOpdRoute = OpdInvestigationOpdImport.update({
+  id: '/investigation-opd',
+  path: '/investigation-opd',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdDayCareRoute = OpdDayCareImport.update({
+  id: '/dayCare',
+  path: '/dayCare',
+  getParentRoute: () => OpdRoute,
+} as any)
+
+const OpdCertificateRoute = OpdCertificateImport.update({
+  id: '/certificate',
+  path: '/certificate',
   getParentRoute: () => OpdRoute,
 } as any)
 
@@ -252,17 +316,71 @@ const HomeDashboardRoute = HomeDashboardImport.update({
   getParentRoute: () => HomeRoute,
 } as any)
 
-const DoctorDoctorRoute = DoctorDoctorImport.update({
-  id: '/doctor',
-  path: '/doctor',
+const DoctorSettingDoctorRoute = DoctorSettingDoctorImport.update({
+  id: '/setting-doctor',
+  path: '/setting-doctor',
   getParentRoute: () => DoctorRoute,
 } as any)
 
-const AppointmentsAppointmentsRoute = AppointmentsAppointmentsImport.update({
-  id: '/appointments',
-  path: '/appointments',
-  getParentRoute: () => AppointmentsRoute,
+const DoctorProfilDoctorRoute = DoctorProfilDoctorImport.update({
+  id: '/profil-doctor',
+  path: '/profil-doctor',
+  getParentRoute: () => DoctorRoute,
 } as any)
+
+const DoctorMessageDoctorRoute = DoctorMessageDoctorImport.update({
+  id: '/message-doctor',
+  path: '/message-doctor',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
+const DoctorDashboardDoctorRoute = DoctorDashboardDoctorImport.update({
+  id: '/dashboard-doctor',
+  path: '/dashboard-doctor',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
+const AppointmentsSuiviAppointmentRoute =
+  AppointmentsSuiviAppointmentImport.update({
+    id: '/suiviAppointment',
+    path: '/suiviAppointment',
+    getParentRoute: () => AppointmentsRoute,
+  } as any)
+
+const AppointmentsSettingAppointmentRoute =
+  AppointmentsSettingAppointmentImport.update({
+    id: '/setting-appointment',
+    path: '/setting-appointment',
+    getParentRoute: () => AppointmentsRoute,
+  } as any)
+
+const AppointmentsProfilAppointmentRoute =
+  AppointmentsProfilAppointmentImport.update({
+    id: '/profil-appointment',
+    path: '/profil-appointment',
+    getParentRoute: () => AppointmentsRoute,
+  } as any)
+
+const AppointmentsPriseAppointmentRoute =
+  AppointmentsPriseAppointmentImport.update({
+    id: '/priseAppointment',
+    path: '/priseAppointment',
+    getParentRoute: () => AppointmentsRoute,
+  } as any)
+
+const AppointmentsMessageAppointmentRoute =
+  AppointmentsMessageAppointmentImport.update({
+    id: '/message-appointment',
+    path: '/message-appointment',
+    getParentRoute: () => AppointmentsRoute,
+  } as any)
+
+const AppointmentsDashboardAppointmentRoute =
+  AppointmentsDashboardAppointmentImport.update({
+    id: '/dashboard-appointment',
+    path: '/dashboard-appointment',
+    getParentRoute: () => AppointmentsRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -352,18 +470,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MenuPrincipalImport
       parentRoute: typeof rootRoute
     }
-    '/_appointments/appointments': {
-      id: '/_appointments/appointments'
-      path: '/appointments'
-      fullPath: '/appointments'
-      preLoaderRoute: typeof AppointmentsAppointmentsImport
+    '/_appointments/dashboard-appointment': {
+      id: '/_appointments/dashboard-appointment'
+      path: '/dashboard-appointment'
+      fullPath: '/dashboard-appointment'
+      preLoaderRoute: typeof AppointmentsDashboardAppointmentImport
       parentRoute: typeof AppointmentsImport
     }
-    '/_doctor/doctor': {
-      id: '/_doctor/doctor'
-      path: '/doctor'
-      fullPath: '/doctor'
-      preLoaderRoute: typeof DoctorDoctorImport
+    '/_appointments/message-appointment': {
+      id: '/_appointments/message-appointment'
+      path: '/message-appointment'
+      fullPath: '/message-appointment'
+      preLoaderRoute: typeof AppointmentsMessageAppointmentImport
+      parentRoute: typeof AppointmentsImport
+    }
+    '/_appointments/priseAppointment': {
+      id: '/_appointments/priseAppointment'
+      path: '/priseAppointment'
+      fullPath: '/priseAppointment'
+      preLoaderRoute: typeof AppointmentsPriseAppointmentImport
+      parentRoute: typeof AppointmentsImport
+    }
+    '/_appointments/profil-appointment': {
+      id: '/_appointments/profil-appointment'
+      path: '/profil-appointment'
+      fullPath: '/profil-appointment'
+      preLoaderRoute: typeof AppointmentsProfilAppointmentImport
+      parentRoute: typeof AppointmentsImport
+    }
+    '/_appointments/setting-appointment': {
+      id: '/_appointments/setting-appointment'
+      path: '/setting-appointment'
+      fullPath: '/setting-appointment'
+      preLoaderRoute: typeof AppointmentsSettingAppointmentImport
+      parentRoute: typeof AppointmentsImport
+    }
+    '/_appointments/suiviAppointment': {
+      id: '/_appointments/suiviAppointment'
+      path: '/suiviAppointment'
+      fullPath: '/suiviAppointment'
+      preLoaderRoute: typeof AppointmentsSuiviAppointmentImport
+      parentRoute: typeof AppointmentsImport
+    }
+    '/_doctor/dashboard-doctor': {
+      id: '/_doctor/dashboard-doctor'
+      path: '/dashboard-doctor'
+      fullPath: '/dashboard-doctor'
+      preLoaderRoute: typeof DoctorDashboardDoctorImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/message-doctor': {
+      id: '/_doctor/message-doctor'
+      path: '/message-doctor'
+      fullPath: '/message-doctor'
+      preLoaderRoute: typeof DoctorMessageDoctorImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/profil-doctor': {
+      id: '/_doctor/profil-doctor'
+      path: '/profil-doctor'
+      fullPath: '/profil-doctor'
+      preLoaderRoute: typeof DoctorProfilDoctorImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/setting-doctor': {
+      id: '/_doctor/setting-doctor'
+      path: '/setting-doctor'
+      fullPath: '/setting-doctor'
+      preLoaderRoute: typeof DoctorSettingDoctorImport
       parentRoute: typeof DoctorImport
     }
     '/_home/dashboard': {
@@ -506,6 +680,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdBirthRegistrationImport
       parentRoute: typeof OpdImport
     }
+    '/_opd/certificate': {
+      id: '/_opd/certificate'
+      path: '/certificate'
+      fullPath: '/certificate'
+      preLoaderRoute: typeof OpdCertificateImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/dayCare': {
+      id: '/_opd/dayCare'
+      path: '/dayCare'
+      fullPath: '/dayCare'
+      preLoaderRoute: typeof OpdDayCareImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/investigation-opd': {
+      id: '/_opd/investigation-opd'
+      path: '/investigation-opd'
+      fullPath: '/investigation-opd'
+      preLoaderRoute: typeof OpdInvestigationOpdImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/message-opd': {
+      id: '/_opd/message-opd'
+      path: '/message-opd'
+      fullPath: '/message-opd'
+      preLoaderRoute: typeof OpdMessageOpdImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/profil-opd': {
+      id: '/_opd/profil-opd'
+      path: '/profil-opd'
+      fullPath: '/profil-opd'
+      preLoaderRoute: typeof OpdProfilOpdImport
+      parentRoute: typeof OpdImport
+    }
     '/_opd/queue': {
       id: '/_opd/queue'
       path: '/queue'
@@ -520,6 +729,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdRegistrationOpdImport
       parentRoute: typeof OpdImport
     }
+    '/_opd/revisit': {
+      id: '/_opd/revisit'
+      path: '/revisit'
+      fullPath: '/revisit'
+      preLoaderRoute: typeof OpdRevisitImport
+      parentRoute: typeof OpdImport
+    }
+    '/_opd/setting-opd': {
+      id: '/_opd/setting-opd'
+      path: '/setting-opd'
+      fullPath: '/setting-opd'
+      preLoaderRoute: typeof OpdSettingOpdImport
+      parentRoute: typeof OpdImport
+    }
     '/_opd/vaccin': {
       id: '/_opd/vaccin'
       path: '/vaccin'
@@ -527,17 +750,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdVaccinImport
       parentRoute: typeof OpdImport
     }
+    '/_radiology/radiology': {
+      id: '/_radiology/radiology'
+      path: '/radiology'
+      fullPath: '/radiology'
+      preLoaderRoute: typeof RadiologyRadiologyImport
+      parentRoute: typeof RadiologyImport
+    }
   }
 }
 
 // Create and export the route tree
 
 interface AppointmentsRouteChildren {
-  AppointmentsAppointmentsRoute: typeof AppointmentsAppointmentsRoute
+  AppointmentsDashboardAppointmentRoute: typeof AppointmentsDashboardAppointmentRoute
+  AppointmentsMessageAppointmentRoute: typeof AppointmentsMessageAppointmentRoute
+  AppointmentsPriseAppointmentRoute: typeof AppointmentsPriseAppointmentRoute
+  AppointmentsProfilAppointmentRoute: typeof AppointmentsProfilAppointmentRoute
+  AppointmentsSettingAppointmentRoute: typeof AppointmentsSettingAppointmentRoute
+  AppointmentsSuiviAppointmentRoute: typeof AppointmentsSuiviAppointmentRoute
 }
 
 const AppointmentsRouteChildren: AppointmentsRouteChildren = {
-  AppointmentsAppointmentsRoute: AppointmentsAppointmentsRoute,
+  AppointmentsDashboardAppointmentRoute: AppointmentsDashboardAppointmentRoute,
+  AppointmentsMessageAppointmentRoute: AppointmentsMessageAppointmentRoute,
+  AppointmentsPriseAppointmentRoute: AppointmentsPriseAppointmentRoute,
+  AppointmentsProfilAppointmentRoute: AppointmentsProfilAppointmentRoute,
+  AppointmentsSettingAppointmentRoute: AppointmentsSettingAppointmentRoute,
+  AppointmentsSuiviAppointmentRoute: AppointmentsSuiviAppointmentRoute,
 }
 
 const AppointmentsRouteWithChildren = AppointmentsRoute._addFileChildren(
@@ -545,11 +785,17 @@ const AppointmentsRouteWithChildren = AppointmentsRoute._addFileChildren(
 )
 
 interface DoctorRouteChildren {
-  DoctorDoctorRoute: typeof DoctorDoctorRoute
+  DoctorDashboardDoctorRoute: typeof DoctorDashboardDoctorRoute
+  DoctorMessageDoctorRoute: typeof DoctorMessageDoctorRoute
+  DoctorProfilDoctorRoute: typeof DoctorProfilDoctorRoute
+  DoctorSettingDoctorRoute: typeof DoctorSettingDoctorRoute
 }
 
 const DoctorRouteChildren: DoctorRouteChildren = {
-  DoctorDoctorRoute: DoctorDoctorRoute,
+  DoctorDashboardDoctorRoute: DoctorDashboardDoctorRoute,
+  DoctorMessageDoctorRoute: DoctorMessageDoctorRoute,
+  DoctorProfilDoctorRoute: DoctorProfilDoctorRoute,
+  DoctorSettingDoctorRoute: DoctorSettingDoctorRoute,
 }
 
 const DoctorRouteWithChildren =
@@ -637,27 +883,61 @@ const NurseRouteWithChildren = NurseRoute._addFileChildren(NurseRouteChildren)
 
 interface OpdRouteChildren {
   OpdBirthRegistrationRoute: typeof OpdBirthRegistrationRoute
+  OpdCertificateRoute: typeof OpdCertificateRoute
+  OpdDayCareRoute: typeof OpdDayCareRoute
+  OpdInvestigationOpdRoute: typeof OpdInvestigationOpdRoute
+  OpdMessageOpdRoute: typeof OpdMessageOpdRoute
+  OpdProfilOpdRoute: typeof OpdProfilOpdRoute
   OpdQueueRoute: typeof OpdQueueRoute
   OpdRegistrationOpdRoute: typeof OpdRegistrationOpdRoute
+  OpdRevisitRoute: typeof OpdRevisitRoute
+  OpdSettingOpdRoute: typeof OpdSettingOpdRoute
   OpdVaccinRoute: typeof OpdVaccinRoute
 }
 
 const OpdRouteChildren: OpdRouteChildren = {
   OpdBirthRegistrationRoute: OpdBirthRegistrationRoute,
+  OpdCertificateRoute: OpdCertificateRoute,
+  OpdDayCareRoute: OpdDayCareRoute,
+  OpdInvestigationOpdRoute: OpdInvestigationOpdRoute,
+  OpdMessageOpdRoute: OpdMessageOpdRoute,
+  OpdProfilOpdRoute: OpdProfilOpdRoute,
   OpdQueueRoute: OpdQueueRoute,
   OpdRegistrationOpdRoute: OpdRegistrationOpdRoute,
+  OpdRevisitRoute: OpdRevisitRoute,
+  OpdSettingOpdRoute: OpdSettingOpdRoute,
   OpdVaccinRoute: OpdVaccinRoute,
 }
 
 const OpdRouteWithChildren = OpdRoute._addFileChildren(OpdRouteChildren)
 
+interface RadiologyRouteChildren {
+  RadiologyRadiologyRoute: typeof RadiologyRadiologyRoute
+}
+
+const RadiologyRouteChildren: RadiologyRouteChildren = {
+  RadiologyRadiologyRoute: RadiologyRadiologyRoute,
+}
+
+const RadiologyRouteWithChildren = RadiologyRoute._addFileChildren(
+  RadiologyRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof RadiologyRoute
+  '': typeof RadiologyRouteWithChildren
   '/login': typeof LoginRoute
   '/menu-principal': typeof MenuPrincipalRoute
-  '/appointments': typeof AppointmentsAppointmentsRoute
-  '/doctor': typeof DoctorDoctorRoute
+  '/dashboard-appointment': typeof AppointmentsDashboardAppointmentRoute
+  '/message-appointment': typeof AppointmentsMessageAppointmentRoute
+  '/priseAppointment': typeof AppointmentsPriseAppointmentRoute
+  '/profil-appointment': typeof AppointmentsProfilAppointmentRoute
+  '/setting-appointment': typeof AppointmentsSettingAppointmentRoute
+  '/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
+  '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
+  '/message-doctor': typeof DoctorMessageDoctorRoute
+  '/profil-doctor': typeof DoctorProfilDoctorRoute
+  '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
   '/message': typeof HomeMessageRoute
   '/patient': typeof HomePatientRoute
@@ -678,18 +958,34 @@ export interface FileRoutesByFullPath {
   '/medical-stock': typeof MedicalStockMedicalStockRoute
   '/nurse': typeof NurseNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
+  '/certificate': typeof OpdCertificateRoute
+  '/dayCare': typeof OpdDayCareRoute
+  '/investigation-opd': typeof OpdInvestigationOpdRoute
+  '/message-opd': typeof OpdMessageOpdRoute
+  '/profil-opd': typeof OpdProfilOpdRoute
   '/queue': typeof OpdQueueRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
+  '/revisit': typeof OpdRevisitRoute
+  '/setting-opd': typeof OpdSettingOpdRoute
   '/vaccin': typeof OpdVaccinRoute
+  '/radiology': typeof RadiologyRadiologyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof RadiologyRoute
+  '': typeof RadiologyRouteWithChildren
   '/login': typeof LoginRoute
   '/menu-principal': typeof MenuPrincipalRoute
-  '/appointments': typeof AppointmentsAppointmentsRoute
-  '/doctor': typeof DoctorDoctorRoute
+  '/dashboard-appointment': typeof AppointmentsDashboardAppointmentRoute
+  '/message-appointment': typeof AppointmentsMessageAppointmentRoute
+  '/priseAppointment': typeof AppointmentsPriseAppointmentRoute
+  '/profil-appointment': typeof AppointmentsProfilAppointmentRoute
+  '/setting-appointment': typeof AppointmentsSettingAppointmentRoute
+  '/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
+  '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
+  '/message-doctor': typeof DoctorMessageDoctorRoute
+  '/profil-doctor': typeof DoctorProfilDoctorRoute
+  '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
   '/message': typeof HomeMessageRoute
   '/patient': typeof HomePatientRoute
@@ -710,9 +1006,17 @@ export interface FileRoutesByTo {
   '/medical-stock': typeof MedicalStockMedicalStockRoute
   '/nurse': typeof NurseNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
+  '/certificate': typeof OpdCertificateRoute
+  '/dayCare': typeof OpdDayCareRoute
+  '/investigation-opd': typeof OpdInvestigationOpdRoute
+  '/message-opd': typeof OpdMessageOpdRoute
+  '/profil-opd': typeof OpdProfilOpdRoute
   '/queue': typeof OpdQueueRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
+  '/revisit': typeof OpdRevisitRoute
+  '/setting-opd': typeof OpdSettingOpdRoute
   '/vaccin': typeof OpdVaccinRoute
+  '/radiology': typeof RadiologyRadiologyRoute
 }
 
 export interface FileRoutesById {
@@ -726,11 +1030,19 @@ export interface FileRoutesById {
   '/_medical-stock': typeof MedicalStockRouteWithChildren
   '/_nurse': typeof NurseRouteWithChildren
   '/_opd': typeof OpdRouteWithChildren
-  '/_radiology': typeof RadiologyRoute
+  '/_radiology': typeof RadiologyRouteWithChildren
   '/login': typeof LoginRoute
   '/menu-principal': typeof MenuPrincipalRoute
-  '/_appointments/appointments': typeof AppointmentsAppointmentsRoute
-  '/_doctor/doctor': typeof DoctorDoctorRoute
+  '/_appointments/dashboard-appointment': typeof AppointmentsDashboardAppointmentRoute
+  '/_appointments/message-appointment': typeof AppointmentsMessageAppointmentRoute
+  '/_appointments/priseAppointment': typeof AppointmentsPriseAppointmentRoute
+  '/_appointments/profil-appointment': typeof AppointmentsProfilAppointmentRoute
+  '/_appointments/setting-appointment': typeof AppointmentsSettingAppointmentRoute
+  '/_appointments/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
+  '/_doctor/dashboard-doctor': typeof DoctorDashboardDoctorRoute
+  '/_doctor/message-doctor': typeof DoctorMessageDoctorRoute
+  '/_doctor/profil-doctor': typeof DoctorProfilDoctorRoute
+  '/_doctor/setting-doctor': typeof DoctorSettingDoctorRoute
   '/_home/dashboard': typeof HomeDashboardRoute
   '/_home/message': typeof HomeMessageRoute
   '/_home/patient': typeof HomePatientRoute
@@ -751,9 +1063,17 @@ export interface FileRoutesById {
   '/_medical-stock/medical-stock': typeof MedicalStockMedicalStockRoute
   '/_nurse/nurse': typeof NurseNurseRoute
   '/_opd/birth-registration': typeof OpdBirthRegistrationRoute
+  '/_opd/certificate': typeof OpdCertificateRoute
+  '/_opd/dayCare': typeof OpdDayCareRoute
+  '/_opd/investigation-opd': typeof OpdInvestigationOpdRoute
+  '/_opd/message-opd': typeof OpdMessageOpdRoute
+  '/_opd/profil-opd': typeof OpdProfilOpdRoute
   '/_opd/queue': typeof OpdQueueRoute
   '/_opd/registration-opd': typeof OpdRegistrationOpdRoute
+  '/_opd/revisit': typeof OpdRevisitRoute
+  '/_opd/setting-opd': typeof OpdSettingOpdRoute
   '/_opd/vaccin': typeof OpdVaccinRoute
+  '/_radiology/radiology': typeof RadiologyRadiologyRoute
 }
 
 export interface FileRouteTypes {
@@ -763,8 +1083,16 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/menu-principal'
-    | '/appointments'
-    | '/doctor'
+    | '/dashboard-appointment'
+    | '/message-appointment'
+    | '/priseAppointment'
+    | '/profil-appointment'
+    | '/setting-appointment'
+    | '/suiviAppointment'
+    | '/dashboard-doctor'
+    | '/message-doctor'
+    | '/profil-doctor'
+    | '/setting-doctor'
     | '/dashboard'
     | '/message'
     | '/patient'
@@ -785,17 +1113,33 @@ export interface FileRouteTypes {
     | '/medical-stock'
     | '/nurse'
     | '/birth-registration'
+    | '/certificate'
+    | '/dayCare'
+    | '/investigation-opd'
+    | '/message-opd'
+    | '/profil-opd'
     | '/queue'
     | '/registration-opd'
+    | '/revisit'
+    | '/setting-opd'
     | '/vaccin'
+    | '/radiology'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/login'
     | '/menu-principal'
-    | '/appointments'
-    | '/doctor'
+    | '/dashboard-appointment'
+    | '/message-appointment'
+    | '/priseAppointment'
+    | '/profil-appointment'
+    | '/setting-appointment'
+    | '/suiviAppointment'
+    | '/dashboard-doctor'
+    | '/message-doctor'
+    | '/profil-doctor'
+    | '/setting-doctor'
     | '/dashboard'
     | '/message'
     | '/patient'
@@ -816,9 +1160,17 @@ export interface FileRouteTypes {
     | '/medical-stock'
     | '/nurse'
     | '/birth-registration'
+    | '/certificate'
+    | '/dayCare'
+    | '/investigation-opd'
+    | '/message-opd'
+    | '/profil-opd'
     | '/queue'
     | '/registration-opd'
+    | '/revisit'
+    | '/setting-opd'
     | '/vaccin'
+    | '/radiology'
   id:
     | '__root__'
     | '/'
@@ -833,8 +1185,16 @@ export interface FileRouteTypes {
     | '/_radiology'
     | '/login'
     | '/menu-principal'
-    | '/_appointments/appointments'
-    | '/_doctor/doctor'
+    | '/_appointments/dashboard-appointment'
+    | '/_appointments/message-appointment'
+    | '/_appointments/priseAppointment'
+    | '/_appointments/profil-appointment'
+    | '/_appointments/setting-appointment'
+    | '/_appointments/suiviAppointment'
+    | '/_doctor/dashboard-doctor'
+    | '/_doctor/message-doctor'
+    | '/_doctor/profil-doctor'
+    | '/_doctor/setting-doctor'
     | '/_home/dashboard'
     | '/_home/message'
     | '/_home/patient'
@@ -855,9 +1215,17 @@ export interface FileRouteTypes {
     | '/_medical-stock/medical-stock'
     | '/_nurse/nurse'
     | '/_opd/birth-registration'
+    | '/_opd/certificate'
+    | '/_opd/dayCare'
+    | '/_opd/investigation-opd'
+    | '/_opd/message-opd'
+    | '/_opd/profil-opd'
     | '/_opd/queue'
     | '/_opd/registration-opd'
+    | '/_opd/revisit'
+    | '/_opd/setting-opd'
     | '/_opd/vaccin'
+    | '/_radiology/radiology'
   fileRoutesById: FileRoutesById
 }
 
@@ -871,7 +1239,7 @@ export interface RootRouteChildren {
   MedicalStockRoute: typeof MedicalStockRouteWithChildren
   NurseRoute: typeof NurseRouteWithChildren
   OpdRoute: typeof OpdRouteWithChildren
-  RadiologyRoute: typeof RadiologyRoute
+  RadiologyRoute: typeof RadiologyRouteWithChildren
   LoginRoute: typeof LoginRoute
   MenuPrincipalRoute: typeof MenuPrincipalRoute
 }
@@ -886,7 +1254,7 @@ const rootRouteChildren: RootRouteChildren = {
   MedicalStockRoute: MedicalStockRouteWithChildren,
   NurseRoute: NurseRouteWithChildren,
   OpdRoute: OpdRouteWithChildren,
-  RadiologyRoute: RadiologyRoute,
+  RadiologyRoute: RadiologyRouteWithChildren,
   LoginRoute: LoginRoute,
   MenuPrincipalRoute: MenuPrincipalRoute,
 }
@@ -921,13 +1289,21 @@ export const routeTree = rootRoute
     "/_appointments": {
       "filePath": "_appointments.tsx",
       "children": [
-        "/_appointments/appointments"
+        "/_appointments/dashboard-appointment",
+        "/_appointments/message-appointment",
+        "/_appointments/priseAppointment",
+        "/_appointments/profil-appointment",
+        "/_appointments/setting-appointment",
+        "/_appointments/suiviAppointment"
       ]
     },
     "/_doctor": {
       "filePath": "_doctor.tsx",
       "children": [
-        "/_doctor/doctor"
+        "/_doctor/dashboard-doctor",
+        "/_doctor/message-doctor",
+        "/_doctor/profil-doctor",
+        "/_doctor/setting-doctor"
       ]
     },
     "/_home": {
@@ -978,13 +1354,23 @@ export const routeTree = rootRoute
       "filePath": "_opd.tsx",
       "children": [
         "/_opd/birth-registration",
+        "/_opd/certificate",
+        "/_opd/dayCare",
+        "/_opd/investigation-opd",
+        "/_opd/message-opd",
+        "/_opd/profil-opd",
         "/_opd/queue",
         "/_opd/registration-opd",
+        "/_opd/revisit",
+        "/_opd/setting-opd",
         "/_opd/vaccin"
       ]
     },
     "/_radiology": {
-      "filePath": "_radiology.tsx"
+      "filePath": "_radiology.tsx",
+      "children": [
+        "/_radiology/radiology"
+      ]
     },
     "/login": {
       "filePath": "login.tsx"
@@ -992,12 +1378,44 @@ export const routeTree = rootRoute
     "/menu-principal": {
       "filePath": "menu-principal.tsx"
     },
-    "/_appointments/appointments": {
-      "filePath": "_appointments/appointments.tsx",
+    "/_appointments/dashboard-appointment": {
+      "filePath": "_appointments/dashboard-appointment.tsx",
       "parent": "/_appointments"
     },
-    "/_doctor/doctor": {
-      "filePath": "_doctor/doctor.tsx",
+    "/_appointments/message-appointment": {
+      "filePath": "_appointments/message-appointment.tsx",
+      "parent": "/_appointments"
+    },
+    "/_appointments/priseAppointment": {
+      "filePath": "_appointments/priseAppointment.tsx",
+      "parent": "/_appointments"
+    },
+    "/_appointments/profil-appointment": {
+      "filePath": "_appointments/profil-appointment.tsx",
+      "parent": "/_appointments"
+    },
+    "/_appointments/setting-appointment": {
+      "filePath": "_appointments/setting-appointment.tsx",
+      "parent": "/_appointments"
+    },
+    "/_appointments/suiviAppointment": {
+      "filePath": "_appointments/suiviAppointment.tsx",
+      "parent": "/_appointments"
+    },
+    "/_doctor/dashboard-doctor": {
+      "filePath": "_doctor/dashboard-doctor.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/message-doctor": {
+      "filePath": "_doctor/message-doctor.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/profil-doctor": {
+      "filePath": "_doctor/profil-doctor.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/setting-doctor": {
+      "filePath": "_doctor/setting-doctor.tsx",
       "parent": "/_doctor"
     },
     "/_home/dashboard": {
@@ -1080,6 +1498,26 @@ export const routeTree = rootRoute
       "filePath": "_opd/birth-registration.tsx",
       "parent": "/_opd"
     },
+    "/_opd/certificate": {
+      "filePath": "_opd/certificate.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/dayCare": {
+      "filePath": "_opd/dayCare.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/investigation-opd": {
+      "filePath": "_opd/investigation-opd.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/message-opd": {
+      "filePath": "_opd/message-opd.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/profil-opd": {
+      "filePath": "_opd/profil-opd.tsx",
+      "parent": "/_opd"
+    },
     "/_opd/queue": {
       "filePath": "_opd/queue.tsx",
       "parent": "/_opd"
@@ -1088,9 +1526,21 @@ export const routeTree = rootRoute
       "filePath": "_opd/registration-opd.tsx",
       "parent": "/_opd"
     },
+    "/_opd/revisit": {
+      "filePath": "_opd/revisit.tsx",
+      "parent": "/_opd"
+    },
+    "/_opd/setting-opd": {
+      "filePath": "_opd/setting-opd.tsx",
+      "parent": "/_opd"
+    },
     "/_opd/vaccin": {
       "filePath": "_opd/vaccin.tsx",
       "parent": "/_opd"
+    },
+    "/_radiology/radiology": {
+      "filePath": "_radiology/radiology.tsx",
+      "parent": "/_radiology"
     }
   }
 }

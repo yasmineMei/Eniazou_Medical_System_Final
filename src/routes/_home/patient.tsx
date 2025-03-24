@@ -1,5 +1,5 @@
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { DossierMedicalPDF } from "@/components/dossier-medicalPDF";
+import { DossierMedicalPDF } from "@/pdf/dossier-medicalPDF";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createFileRoute } from "@tanstack/react-router";
 import { Calendar1, CalendarDays, Clock, Eye, Printer } from "lucide-react";

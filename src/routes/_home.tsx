@@ -84,7 +84,7 @@ function RouteComponent() {
     return (
       <>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
+          <BreadcrumbLink href="/menu-principal">Accueil</BreadcrumbLink>
         </BreadcrumbItem>
         {currentTitle !== "Accueil" && (
           <>

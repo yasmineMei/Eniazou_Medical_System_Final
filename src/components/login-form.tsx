@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router"; 
+import { useNavigate } from "@tanstack/react-router";
 
 export function LoginForm({
   className,
@@ -32,6 +32,12 @@ export function LoginForm({
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault(); // Empêcher le rechargement de la page
 
+    // Validation des champs
+    if (!email || !password || !role) {
+      setError("Veuillez remplir tous les champs.");
+      return;
+    }
+
     // Simuler une connexion et déterminer le rôle
     let authenticatedRole = "";
     if (email === "admin@example.com" && password === "admin") {
@@ -43,7 +49,7 @@ export function LoginForm({
     } else if (email === "reception@example.com" && password === "reception") {
       authenticatedRole = "receptionist";
     } else {
-      setError("Identifiants incorrects"); 
+      setError("Identifiants incorrects");
       return;
     }
 

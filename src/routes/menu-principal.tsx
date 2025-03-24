@@ -6,13 +6,17 @@ export const Route = createFileRoute("/menu-principal")({
 });
 
 const menuItems = [
-  { title: "OPD", icon: "🏥", path: "/registration" },
-  { title: "IPD", icon: "🛏️", path: "/IPD/ipd" },
-  { title: "Rendez-vous", icon: "📅", path: "/appoitments/appointments" },
+  { title: "OPD", icon: "🏥", path: "/registration-opd" },
+  { title: "IPD", icon: "🛏️", path: "/registration-ipd" },
+  {
+    title: "Rendez-vous",
+    icon: "📅",
+    path: "/dashboard-appointment",
+  },
   { title: "Laboratoire", icon: "🔬", path: "/lab/lab" },
   { title: "Radiologie", icon: "📷", path: "/radiology/radiology" },
   { title: "Infirmier", icon: "💉", path: "/nurse/nurse" },
-  { title: "Médecin", icon: "👨‍⚕️", path: "doctor/doctor" },
+  { title: "Médecin", icon: "👨‍⚕️", path: "/dashboard-doctor" },
   { title: "Stock Médicale", icon: "💊", path: "/medical-stock/medical-stock" },
   { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
 ] as const;

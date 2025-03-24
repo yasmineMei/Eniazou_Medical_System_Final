@@ -28,7 +28,6 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
   },
 
- 
 };
 
 type Props = {
