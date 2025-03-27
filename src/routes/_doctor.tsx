@@ -66,6 +66,8 @@ function RouteComponent() {
       "/dashboard-doctor": "Tableau de bord",
       "/appointment-doctor": "Mes rendez-vous",
       "/patient-doctor": "Patients",
+      "/patientId": "Patients",
+      "/create-record": "Patients",
       "/ordonnance": "Prescriptions & Ordonnances",
       "/setting-doctor": "Paramètres",
 

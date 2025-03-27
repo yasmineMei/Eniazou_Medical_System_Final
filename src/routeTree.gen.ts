@@ -23,7 +23,12 @@ import { Route as HomeImport } from './routes/_home'
 import { Route as DoctorImport } from './routes/_doctor'
 import { Route as AppointmentsImport } from './routes/_appointments'
 import { Route as IndexImport } from './routes/index'
-import { Route as RadiologyRadiologyImport } from './routes/_radiology/radiology'
+import { Route as RadiologySettingRadiologyImport } from './routes/_radiology/setting-radiology'
+import { Route as RadiologyReportRadiologyImport } from './routes/_radiology/report-radiology'
+import { Route as RadiologyProfilRadiologyImport } from './routes/_radiology/profil-radiology'
+import { Route as RadiologyOpdRadiologyImport } from './routes/_radiology/opd-radiology'
+import { Route as RadiologyMessageRadiologyImport } from './routes/_radiology/message-radiology'
+import { Route as RadiologyIpdRadiologyImport } from './routes/_radiology/ipd-radiology'
 import { Route as OpdVaccinImport } from './routes/_opd/vaccin'
 import { Route as OpdSettingOpdImport } from './routes/_opd/setting-opd'
 import { Route as OpdRevisitImport } from './routes/_opd/revisit'
@@ -53,7 +58,9 @@ import { Route as MedicalStockApprovisionnementImport } from './routes/_medical-
 import { Route as MedicalStockAdministrationImport } from './routes/_medical-stock/administration'
 import { Route as LabSettingLabImport } from './routes/_lab/setting-lab'
 import { Route as LabReportLabImport } from './routes/_lab/report-lab'
+import { Route as LabProfilLabImport } from './routes/_lab/profil-lab'
 import { Route as LabOpdRequestImport } from './routes/_lab/opd-request'
+import { Route as LabMessageLabImport } from './routes/_lab/message-lab'
 import { Route as LabIpdRequestImport } from './routes/_lab/ipd-request'
 import { Route as IpdReportIpdImport } from './routes/_ipd/report-ipd'
 import { Route as IpdRegistrationIpdImport } from './routes/_ipd/registration-ipd'
@@ -73,10 +80,12 @@ import { Route as HomeMessageImport } from './routes/_home/message'
 import { Route as HomeDashboardImport } from './routes/_home/dashboard'
 import { Route as DoctorSettingDoctorImport } from './routes/_doctor/setting-doctor'
 import { Route as DoctorProfilDoctorImport } from './routes/_doctor/profil-doctor'
+import { Route as DoctorPatientIdImport } from './routes/_doctor/patientId'
 import { Route as DoctorPatientDoctorImport } from './routes/_doctor/patient-doctor'
 import { Route as DoctorOrdonnanceImport } from './routes/_doctor/ordonnance'
 import { Route as DoctorMessageDoctorImport } from './routes/_doctor/message-doctor'
 import { Route as DoctorDashboardDoctorImport } from './routes/_doctor/dashboard-doctor'
+import { Route as DoctorCreateRecordImport } from './routes/_doctor/create-record'
 import { Route as DoctorAppointmentDoctorImport } from './routes/_doctor/appointment-doctor'
 import { Route as AppointmentsSuiviAppointmentImport } from './routes/_appointments/suiviAppointment'
 import { Route as AppointmentsSettingAppointmentImport } from './routes/_appointments/setting-appointment'
@@ -150,9 +159,39 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const RadiologyRadiologyRoute = RadiologyRadiologyImport.update({
-  id: '/radiology',
-  path: '/radiology',
+const RadiologySettingRadiologyRoute = RadiologySettingRadiologyImport.update({
+  id: '/setting-radiology',
+  path: '/setting-radiology',
+  getParentRoute: () => RadiologyRoute,
+} as any)
+
+const RadiologyReportRadiologyRoute = RadiologyReportRadiologyImport.update({
+  id: '/report-radiology',
+  path: '/report-radiology',
+  getParentRoute: () => RadiologyRoute,
+} as any)
+
+const RadiologyProfilRadiologyRoute = RadiologyProfilRadiologyImport.update({
+  id: '/profil-radiology',
+  path: '/profil-radiology',
+  getParentRoute: () => RadiologyRoute,
+} as any)
+
+const RadiologyOpdRadiologyRoute = RadiologyOpdRadiologyImport.update({
+  id: '/opd-radiology',
+  path: '/opd-radiology',
+  getParentRoute: () => RadiologyRoute,
+} as any)
+
+const RadiologyMessageRadiologyRoute = RadiologyMessageRadiologyImport.update({
+  id: '/message-radiology',
+  path: '/message-radiology',
+  getParentRoute: () => RadiologyRoute,
+} as any)
+
+const RadiologyIpdRadiologyRoute = RadiologyIpdRadiologyImport.update({
+  id: '/ipd-radiology',
+  path: '/ipd-radiology',
   getParentRoute: () => RadiologyRoute,
 } as any)
 
@@ -335,9 +374,21 @@ const LabReportLabRoute = LabReportLabImport.update({
   getParentRoute: () => LabRoute,
 } as any)
 
+const LabProfilLabRoute = LabProfilLabImport.update({
+  id: '/profil-lab',
+  path: '/profil-lab',
+  getParentRoute: () => LabRoute,
+} as any)
+
 const LabOpdRequestRoute = LabOpdRequestImport.update({
   id: '/opd-request',
   path: '/opd-request',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const LabMessageLabRoute = LabMessageLabImport.update({
+  id: '/message-lab',
+  path: '/message-lab',
   getParentRoute: () => LabRoute,
 } as any)
 
@@ -455,6 +506,12 @@ const DoctorProfilDoctorRoute = DoctorProfilDoctorImport.update({
   getParentRoute: () => DoctorRoute,
 } as any)
 
+const DoctorPatientIdRoute = DoctorPatientIdImport.update({
+  id: '/patientId',
+  path: '/patientId',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
 const DoctorPatientDoctorRoute = DoctorPatientDoctorImport.update({
   id: '/patient-doctor',
   path: '/patient-doctor',
@@ -476,6 +533,12 @@ const DoctorMessageDoctorRoute = DoctorMessageDoctorImport.update({
 const DoctorDashboardDoctorRoute = DoctorDashboardDoctorImport.update({
   id: '/dashboard-doctor',
   path: '/dashboard-doctor',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
+const DoctorCreateRecordRoute = DoctorCreateRecordImport.update({
+  id: '/create-record',
+  path: '/create-record',
   getParentRoute: () => DoctorRoute,
 } as any)
 
@@ -664,6 +727,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DoctorAppointmentDoctorImport
       parentRoute: typeof DoctorImport
     }
+    '/_doctor/create-record': {
+      id: '/_doctor/create-record'
+      path: '/create-record'
+      fullPath: '/create-record'
+      preLoaderRoute: typeof DoctorCreateRecordImport
+      parentRoute: typeof DoctorImport
+    }
     '/_doctor/dashboard-doctor': {
       id: '/_doctor/dashboard-doctor'
       path: '/dashboard-doctor'
@@ -690,6 +760,13 @@ declare module '@tanstack/react-router' {
       path: '/patient-doctor'
       fullPath: '/patient-doctor'
       preLoaderRoute: typeof DoctorPatientDoctorImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/patientId': {
+      id: '/_doctor/patientId'
+      path: '/patientId'
+      fullPath: '/patientId'
+      preLoaderRoute: typeof DoctorPatientIdImport
       parentRoute: typeof DoctorImport
     }
     '/_doctor/profil-doctor': {
@@ -825,11 +902,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabIpdRequestImport
       parentRoute: typeof LabImport
     }
+    '/_lab/message-lab': {
+      id: '/_lab/message-lab'
+      path: '/message-lab'
+      fullPath: '/message-lab'
+      preLoaderRoute: typeof LabMessageLabImport
+      parentRoute: typeof LabImport
+    }
     '/_lab/opd-request': {
       id: '/_lab/opd-request'
       path: '/opd-request'
       fullPath: '/opd-request'
       preLoaderRoute: typeof LabOpdRequestImport
+      parentRoute: typeof LabImport
+    }
+    '/_lab/profil-lab': {
+      id: '/_lab/profil-lab'
+      path: '/profil-lab'
+      fullPath: '/profil-lab'
+      preLoaderRoute: typeof LabProfilLabImport
       parentRoute: typeof LabImport
     }
     '/_lab/report-lab': {
@@ -1035,11 +1126,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdVaccinImport
       parentRoute: typeof OpdImport
     }
-    '/_radiology/radiology': {
-      id: '/_radiology/radiology'
-      path: '/radiology'
-      fullPath: '/radiology'
-      preLoaderRoute: typeof RadiologyRadiologyImport
+    '/_radiology/ipd-radiology': {
+      id: '/_radiology/ipd-radiology'
+      path: '/ipd-radiology'
+      fullPath: '/ipd-radiology'
+      preLoaderRoute: typeof RadiologyIpdRadiologyImport
+      parentRoute: typeof RadiologyImport
+    }
+    '/_radiology/message-radiology': {
+      id: '/_radiology/message-radiology'
+      path: '/message-radiology'
+      fullPath: '/message-radiology'
+      preLoaderRoute: typeof RadiologyMessageRadiologyImport
+      parentRoute: typeof RadiologyImport
+    }
+    '/_radiology/opd-radiology': {
+      id: '/_radiology/opd-radiology'
+      path: '/opd-radiology'
+      fullPath: '/opd-radiology'
+      preLoaderRoute: typeof RadiologyOpdRadiologyImport
+      parentRoute: typeof RadiologyImport
+    }
+    '/_radiology/profil-radiology': {
+      id: '/_radiology/profil-radiology'
+      path: '/profil-radiology'
+      fullPath: '/profil-radiology'
+      preLoaderRoute: typeof RadiologyProfilRadiologyImport
+      parentRoute: typeof RadiologyImport
+    }
+    '/_radiology/report-radiology': {
+      id: '/_radiology/report-radiology'
+      path: '/report-radiology'
+      fullPath: '/report-radiology'
+      preLoaderRoute: typeof RadiologyReportRadiologyImport
+      parentRoute: typeof RadiologyImport
+    }
+    '/_radiology/setting-radiology': {
+      id: '/_radiology/setting-radiology'
+      path: '/setting-radiology'
+      fullPath: '/setting-radiology'
+      preLoaderRoute: typeof RadiologySettingRadiologyImport
       parentRoute: typeof RadiologyImport
     }
   }
@@ -1071,20 +1197,24 @@ const AppointmentsRouteWithChildren = AppointmentsRoute._addFileChildren(
 
 interface DoctorRouteChildren {
   DoctorAppointmentDoctorRoute: typeof DoctorAppointmentDoctorRoute
+  DoctorCreateRecordRoute: typeof DoctorCreateRecordRoute
   DoctorDashboardDoctorRoute: typeof DoctorDashboardDoctorRoute
   DoctorMessageDoctorRoute: typeof DoctorMessageDoctorRoute
   DoctorOrdonnanceRoute: typeof DoctorOrdonnanceRoute
   DoctorPatientDoctorRoute: typeof DoctorPatientDoctorRoute
+  DoctorPatientIdRoute: typeof DoctorPatientIdRoute
   DoctorProfilDoctorRoute: typeof DoctorProfilDoctorRoute
   DoctorSettingDoctorRoute: typeof DoctorSettingDoctorRoute
 }
 
 const DoctorRouteChildren: DoctorRouteChildren = {
   DoctorAppointmentDoctorRoute: DoctorAppointmentDoctorRoute,
+  DoctorCreateRecordRoute: DoctorCreateRecordRoute,
   DoctorDashboardDoctorRoute: DoctorDashboardDoctorRoute,
   DoctorMessageDoctorRoute: DoctorMessageDoctorRoute,
   DoctorOrdonnanceRoute: DoctorOrdonnanceRoute,
   DoctorPatientDoctorRoute: DoctorPatientDoctorRoute,
+  DoctorPatientIdRoute: DoctorPatientIdRoute,
   DoctorProfilDoctorRoute: DoctorProfilDoctorRoute,
   DoctorSettingDoctorRoute: DoctorSettingDoctorRoute,
 }
@@ -1142,14 +1272,18 @@ const IpdRouteWithChildren = IpdRoute._addFileChildren(IpdRouteChildren)
 
 interface LabRouteChildren {
   LabIpdRequestRoute: typeof LabIpdRequestRoute
+  LabMessageLabRoute: typeof LabMessageLabRoute
   LabOpdRequestRoute: typeof LabOpdRequestRoute
+  LabProfilLabRoute: typeof LabProfilLabRoute
   LabReportLabRoute: typeof LabReportLabRoute
   LabSettingLabRoute: typeof LabSettingLabRoute
 }
 
 const LabRouteChildren: LabRouteChildren = {
   LabIpdRequestRoute: LabIpdRequestRoute,
+  LabMessageLabRoute: LabMessageLabRoute,
   LabOpdRequestRoute: LabOpdRequestRoute,
+  LabProfilLabRoute: LabProfilLabRoute,
   LabReportLabRoute: LabReportLabRoute,
   LabSettingLabRoute: LabSettingLabRoute,
 }
@@ -1237,11 +1371,21 @@ const OpdRouteChildren: OpdRouteChildren = {
 const OpdRouteWithChildren = OpdRoute._addFileChildren(OpdRouteChildren)
 
 interface RadiologyRouteChildren {
-  RadiologyRadiologyRoute: typeof RadiologyRadiologyRoute
+  RadiologyIpdRadiologyRoute: typeof RadiologyIpdRadiologyRoute
+  RadiologyMessageRadiologyRoute: typeof RadiologyMessageRadiologyRoute
+  RadiologyOpdRadiologyRoute: typeof RadiologyOpdRadiologyRoute
+  RadiologyProfilRadiologyRoute: typeof RadiologyProfilRadiologyRoute
+  RadiologyReportRadiologyRoute: typeof RadiologyReportRadiologyRoute
+  RadiologySettingRadiologyRoute: typeof RadiologySettingRadiologyRoute
 }
 
 const RadiologyRouteChildren: RadiologyRouteChildren = {
-  RadiologyRadiologyRoute: RadiologyRadiologyRoute,
+  RadiologyIpdRadiologyRoute: RadiologyIpdRadiologyRoute,
+  RadiologyMessageRadiologyRoute: RadiologyMessageRadiologyRoute,
+  RadiologyOpdRadiologyRoute: RadiologyOpdRadiologyRoute,
+  RadiologyProfilRadiologyRoute: RadiologyProfilRadiologyRoute,
+  RadiologyReportRadiologyRoute: RadiologyReportRadiologyRoute,
+  RadiologySettingRadiologyRoute: RadiologySettingRadiologyRoute,
 }
 
 const RadiologyRouteWithChildren = RadiologyRoute._addFileChildren(
@@ -1260,10 +1404,12 @@ export interface FileRoutesByFullPath {
   '/setting-appointment': typeof AppointmentsSettingAppointmentRoute
   '/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
   '/appointment-doctor': typeof DoctorAppointmentDoctorRoute
+  '/create-record': typeof DoctorCreateRecordRoute
   '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/message-doctor': typeof DoctorMessageDoctorRoute
   '/ordonnance': typeof DoctorOrdonnanceRoute
   '/patient-doctor': typeof DoctorPatientDoctorRoute
+  '/patientId': typeof DoctorPatientIdRoute
   '/profil-doctor': typeof DoctorProfilDoctorRoute
   '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
@@ -1283,7 +1429,9 @@ export interface FileRoutesByFullPath {
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/report-ipd': typeof IpdReportIpdRoute
   '/ipd-request': typeof LabIpdRequestRoute
+  '/message-lab': typeof LabMessageLabRoute
   '/opd-request': typeof LabOpdRequestRoute
+  '/profil-lab': typeof LabProfilLabRoute
   '/report-lab': typeof LabReportLabRoute
   '/setting-lab': typeof LabSettingLabRoute
   '/administration': typeof MedicalStockAdministrationRoute
@@ -1313,7 +1461,12 @@ export interface FileRoutesByFullPath {
   '/revisit': typeof OpdRevisitRoute
   '/setting-opd': typeof OpdSettingOpdRoute
   '/vaccin': typeof OpdVaccinRoute
-  '/radiology': typeof RadiologyRadiologyRoute
+  '/ipd-radiology': typeof RadiologyIpdRadiologyRoute
+  '/message-radiology': typeof RadiologyMessageRadiologyRoute
+  '/opd-radiology': typeof RadiologyOpdRadiologyRoute
+  '/profil-radiology': typeof RadiologyProfilRadiologyRoute
+  '/report-radiology': typeof RadiologyReportRadiologyRoute
+  '/setting-radiology': typeof RadiologySettingRadiologyRoute
 }
 
 export interface FileRoutesByTo {
@@ -1328,10 +1481,12 @@ export interface FileRoutesByTo {
   '/setting-appointment': typeof AppointmentsSettingAppointmentRoute
   '/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
   '/appointment-doctor': typeof DoctorAppointmentDoctorRoute
+  '/create-record': typeof DoctorCreateRecordRoute
   '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/message-doctor': typeof DoctorMessageDoctorRoute
   '/ordonnance': typeof DoctorOrdonnanceRoute
   '/patient-doctor': typeof DoctorPatientDoctorRoute
+  '/patientId': typeof DoctorPatientIdRoute
   '/profil-doctor': typeof DoctorProfilDoctorRoute
   '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
@@ -1351,7 +1506,9 @@ export interface FileRoutesByTo {
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/report-ipd': typeof IpdReportIpdRoute
   '/ipd-request': typeof LabIpdRequestRoute
+  '/message-lab': typeof LabMessageLabRoute
   '/opd-request': typeof LabOpdRequestRoute
+  '/profil-lab': typeof LabProfilLabRoute
   '/report-lab': typeof LabReportLabRoute
   '/setting-lab': typeof LabSettingLabRoute
   '/administration': typeof MedicalStockAdministrationRoute
@@ -1381,7 +1538,12 @@ export interface FileRoutesByTo {
   '/revisit': typeof OpdRevisitRoute
   '/setting-opd': typeof OpdSettingOpdRoute
   '/vaccin': typeof OpdVaccinRoute
-  '/radiology': typeof RadiologyRadiologyRoute
+  '/ipd-radiology': typeof RadiologyIpdRadiologyRoute
+  '/message-radiology': typeof RadiologyMessageRadiologyRoute
+  '/opd-radiology': typeof RadiologyOpdRadiologyRoute
+  '/profil-radiology': typeof RadiologyProfilRadiologyRoute
+  '/report-radiology': typeof RadiologyReportRadiologyRoute
+  '/setting-radiology': typeof RadiologySettingRadiologyRoute
 }
 
 export interface FileRoutesById {
@@ -1405,10 +1567,12 @@ export interface FileRoutesById {
   '/_appointments/setting-appointment': typeof AppointmentsSettingAppointmentRoute
   '/_appointments/suiviAppointment': typeof AppointmentsSuiviAppointmentRoute
   '/_doctor/appointment-doctor': typeof DoctorAppointmentDoctorRoute
+  '/_doctor/create-record': typeof DoctorCreateRecordRoute
   '/_doctor/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/_doctor/message-doctor': typeof DoctorMessageDoctorRoute
   '/_doctor/ordonnance': typeof DoctorOrdonnanceRoute
   '/_doctor/patient-doctor': typeof DoctorPatientDoctorRoute
+  '/_doctor/patientId': typeof DoctorPatientIdRoute
   '/_doctor/profil-doctor': typeof DoctorProfilDoctorRoute
   '/_doctor/setting-doctor': typeof DoctorSettingDoctorRoute
   '/_home/dashboard': typeof HomeDashboardRoute
@@ -1428,7 +1592,9 @@ export interface FileRoutesById {
   '/_ipd/registration-ipd': typeof IpdRegistrationIpdRoute
   '/_ipd/report-ipd': typeof IpdReportIpdRoute
   '/_lab/ipd-request': typeof LabIpdRequestRoute
+  '/_lab/message-lab': typeof LabMessageLabRoute
   '/_lab/opd-request': typeof LabOpdRequestRoute
+  '/_lab/profil-lab': typeof LabProfilLabRoute
   '/_lab/report-lab': typeof LabReportLabRoute
   '/_lab/setting-lab': typeof LabSettingLabRoute
   '/_medical-stock/administration': typeof MedicalStockAdministrationRoute
@@ -1458,7 +1624,12 @@ export interface FileRoutesById {
   '/_opd/revisit': typeof OpdRevisitRoute
   '/_opd/setting-opd': typeof OpdSettingOpdRoute
   '/_opd/vaccin': typeof OpdVaccinRoute
-  '/_radiology/radiology': typeof RadiologyRadiologyRoute
+  '/_radiology/ipd-radiology': typeof RadiologyIpdRadiologyRoute
+  '/_radiology/message-radiology': typeof RadiologyMessageRadiologyRoute
+  '/_radiology/opd-radiology': typeof RadiologyOpdRadiologyRoute
+  '/_radiology/profil-radiology': typeof RadiologyProfilRadiologyRoute
+  '/_radiology/report-radiology': typeof RadiologyReportRadiologyRoute
+  '/_radiology/setting-radiology': typeof RadiologySettingRadiologyRoute
 }
 
 export interface FileRouteTypes {
@@ -1475,10 +1646,12 @@ export interface FileRouteTypes {
     | '/setting-appointment'
     | '/suiviAppointment'
     | '/appointment-doctor'
+    | '/create-record'
     | '/dashboard-doctor'
     | '/message-doctor'
     | '/ordonnance'
     | '/patient-doctor'
+    | '/patientId'
     | '/profil-doctor'
     | '/setting-doctor'
     | '/dashboard'
@@ -1498,7 +1671,9 @@ export interface FileRouteTypes {
     | '/registration-ipd'
     | '/report-ipd'
     | '/ipd-request'
+    | '/message-lab'
     | '/opd-request'
+    | '/profil-lab'
     | '/report-lab'
     | '/setting-lab'
     | '/administration'
@@ -1528,7 +1703,12 @@ export interface FileRouteTypes {
     | '/revisit'
     | '/setting-opd'
     | '/vaccin'
-    | '/radiology'
+    | '/ipd-radiology'
+    | '/message-radiology'
+    | '/opd-radiology'
+    | '/profil-radiology'
+    | '/report-radiology'
+    | '/setting-radiology'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1542,10 +1722,12 @@ export interface FileRouteTypes {
     | '/setting-appointment'
     | '/suiviAppointment'
     | '/appointment-doctor'
+    | '/create-record'
     | '/dashboard-doctor'
     | '/message-doctor'
     | '/ordonnance'
     | '/patient-doctor'
+    | '/patientId'
     | '/profil-doctor'
     | '/setting-doctor'
     | '/dashboard'
@@ -1565,7 +1747,9 @@ export interface FileRouteTypes {
     | '/registration-ipd'
     | '/report-ipd'
     | '/ipd-request'
+    | '/message-lab'
     | '/opd-request'
+    | '/profil-lab'
     | '/report-lab'
     | '/setting-lab'
     | '/administration'
@@ -1595,7 +1779,12 @@ export interface FileRouteTypes {
     | '/revisit'
     | '/setting-opd'
     | '/vaccin'
-    | '/radiology'
+    | '/ipd-radiology'
+    | '/message-radiology'
+    | '/opd-radiology'
+    | '/profil-radiology'
+    | '/report-radiology'
+    | '/setting-radiology'
   id:
     | '__root__'
     | '/'
@@ -1617,10 +1806,12 @@ export interface FileRouteTypes {
     | '/_appointments/setting-appointment'
     | '/_appointments/suiviAppointment'
     | '/_doctor/appointment-doctor'
+    | '/_doctor/create-record'
     | '/_doctor/dashboard-doctor'
     | '/_doctor/message-doctor'
     | '/_doctor/ordonnance'
     | '/_doctor/patient-doctor'
+    | '/_doctor/patientId'
     | '/_doctor/profil-doctor'
     | '/_doctor/setting-doctor'
     | '/_home/dashboard'
@@ -1640,7 +1831,9 @@ export interface FileRouteTypes {
     | '/_ipd/registration-ipd'
     | '/_ipd/report-ipd'
     | '/_lab/ipd-request'
+    | '/_lab/message-lab'
     | '/_lab/opd-request'
+    | '/_lab/profil-lab'
     | '/_lab/report-lab'
     | '/_lab/setting-lab'
     | '/_medical-stock/administration'
@@ -1670,7 +1863,12 @@ export interface FileRouteTypes {
     | '/_opd/revisit'
     | '/_opd/setting-opd'
     | '/_opd/vaccin'
-    | '/_radiology/radiology'
+    | '/_radiology/ipd-radiology'
+    | '/_radiology/message-radiology'
+    | '/_radiology/opd-radiology'
+    | '/_radiology/profil-radiology'
+    | '/_radiology/report-radiology'
+    | '/_radiology/setting-radiology'
   fileRoutesById: FileRoutesById
 }
 
@@ -1746,10 +1944,12 @@ export const routeTree = rootRoute
       "filePath": "_doctor.tsx",
       "children": [
         "/_doctor/appointment-doctor",
+        "/_doctor/create-record",
         "/_doctor/dashboard-doctor",
         "/_doctor/message-doctor",
         "/_doctor/ordonnance",
         "/_doctor/patient-doctor",
+        "/_doctor/patientId",
         "/_doctor/profil-doctor",
         "/_doctor/setting-doctor"
       ]
@@ -1784,7 +1984,9 @@ export const routeTree = rootRoute
       "filePath": "_lab.tsx",
       "children": [
         "/_lab/ipd-request",
+        "/_lab/message-lab",
         "/_lab/opd-request",
+        "/_lab/profil-lab",
         "/_lab/report-lab",
         "/_lab/setting-lab"
       ]
@@ -1834,7 +2036,12 @@ export const routeTree = rootRoute
     "/_radiology": {
       "filePath": "_radiology.tsx",
       "children": [
-        "/_radiology/radiology"
+        "/_radiology/ipd-radiology",
+        "/_radiology/message-radiology",
+        "/_radiology/opd-radiology",
+        "/_radiology/profil-radiology",
+        "/_radiology/report-radiology",
+        "/_radiology/setting-radiology"
       ]
     },
     "/login": {
@@ -1871,6 +2078,10 @@ export const routeTree = rootRoute
       "filePath": "_doctor/appointment-doctor.tsx",
       "parent": "/_doctor"
     },
+    "/_doctor/create-record": {
+      "filePath": "_doctor/create-record.tsx",
+      "parent": "/_doctor"
+    },
     "/_doctor/dashboard-doctor": {
       "filePath": "_doctor/dashboard-doctor.tsx",
       "parent": "/_doctor"
@@ -1885,6 +2096,10 @@ export const routeTree = rootRoute
     },
     "/_doctor/patient-doctor": {
       "filePath": "_doctor/patient-doctor.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/patientId": {
+      "filePath": "_doctor/patientId.tsx",
       "parent": "/_doctor"
     },
     "/_doctor/profil-doctor": {
@@ -1963,8 +2178,16 @@ export const routeTree = rootRoute
       "filePath": "_lab/ipd-request.tsx",
       "parent": "/_lab"
     },
+    "/_lab/message-lab": {
+      "filePath": "_lab/message-lab.tsx",
+      "parent": "/_lab"
+    },
     "/_lab/opd-request": {
       "filePath": "_lab/opd-request.tsx",
+      "parent": "/_lab"
+    },
+    "/_lab/profil-lab": {
+      "filePath": "_lab/profil-lab.tsx",
       "parent": "/_lab"
     },
     "/_lab/report-lab": {
@@ -2083,8 +2306,28 @@ export const routeTree = rootRoute
       "filePath": "_opd/vaccin.tsx",
       "parent": "/_opd"
     },
-    "/_radiology/radiology": {
-      "filePath": "_radiology/radiology.tsx",
+    "/_radiology/ipd-radiology": {
+      "filePath": "_radiology/ipd-radiology.tsx",
+      "parent": "/_radiology"
+    },
+    "/_radiology/message-radiology": {
+      "filePath": "_radiology/message-radiology.tsx",
+      "parent": "/_radiology"
+    },
+    "/_radiology/opd-radiology": {
+      "filePath": "_radiology/opd-radiology.tsx",
+      "parent": "/_radiology"
+    },
+    "/_radiology/profil-radiology": {
+      "filePath": "_radiology/profil-radiology.tsx",
+      "parent": "/_radiology"
+    },
+    "/_radiology/report-radiology": {
+      "filePath": "_radiology/report-radiology.tsx",
+      "parent": "/_radiology"
+    },
+    "/_radiology/setting-radiology": {
+      "filePath": "_radiology/setting-radiology.tsx",
       "parent": "/_radiology"
     }
   }

@@ -16,11 +16,9 @@ import {
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   ChartNoAxesCombined,
-  User2Icon,
-  ShieldPlus,
-  BookOpen,
-  HeartHandshakeIcon,
   Settings2Icon,
+  BedDouble,
+  FileText,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_radiology")({
@@ -34,34 +32,24 @@ function RouteComponent() {
   // Déclaration des éléments de navigation
   const navMain = [
     {
-      title: "Tableau de bord",
-      url: "/dashboard",
+      title: "Demande consultation",
+      url: "/opd-radiology",
       icon: ChartNoAxesCombined,
       isActive: true,
     },
     {
-      title: "Patients",
-      url: "/patient",
-      icon: User2Icon,
+      title: "Demande hospitalisation",
+      url: "/ipd-radiology",
+      icon: BedDouble,
     },
     {
-      title: "Gestion personnel",
-      url: "/personnel",
-      icon: ShieldPlus,
-    },
-    {
-      title: "Rapports",
-      url: "/report",
-      icon: BookOpen,
-    },
-    {
-      title: "Services médicaux",
-      url: "/service",
-      icon: HeartHandshakeIcon,
+      title: "Rapport Radiologie",
+      url: "/report-radiology",
+      icon: FileText,
     },
     {
       title: "Paramètres",
-      url: "/setting",
+      url: "/setting-radiology",
       icon: Settings2Icon,
     },
   ];
@@ -69,14 +57,13 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/dashboard": "Tableau de bord",
-      "/patient": "Patients",
-      "/personnel": "Gestion du Personnel",
-      "/report": "Rapports",
-      "/service": "Services médicaux",
-      "/setting": "Paramètres",
-      "/profil": "Profil",
-      "/message": "Messagerie",
+      "/opd-radiology": "Demande consultation",
+      "/ipd-radiology": "Demande hospitalisation",
+      "/report-radiology" : "Rapport Radiologie",
+      "/setting-radiology": "Paramètres",
+
+      "/profil-radiology": "Profil",
+      "/message-radiology": "Messagerie",
     };
 
     const currentTitle = breadcrumbs[pathname] || "Accueil";

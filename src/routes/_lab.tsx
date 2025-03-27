@@ -34,24 +34,24 @@ function RouteComponent() {
   const navMain = [
     {
       title: "Demande consultation",
-      url: "/dashboard",
-      icon: ClipboardList, // Une icône de liste pour symboliser les consultations
+      url: "/opd-request",
+      icon: ClipboardList, 
       isActive: true,
     },
     {
       title: "Demande hospitalisation",
-      url: "/patient",
-      icon: BedDouble, // Un lit pour représenter l’hospitalisation
+      url: "/ipd-request",
+      icon: BedDouble, 
     },
     {
       title: "Rapport laboratoire",
-      url: "/report",
-      icon: FileText, // Une icône de document pour symboliser les rapports
+      url: "/report-lab",
+      icon: FileText, 
     },
     {
       title: "Paramètres",
-      url: "/setting",
-      icon: Settings2Icon, // Une icône de réglages
+      url: "/setting-lab",
+      icon: Settings2Icon, 
     },
   ];
 
@@ -59,14 +59,13 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/dashboard": "Tableau de bord",
-      "/patient": "Patients",
-      "/personnel": "Gestion du Personnel",
-      "/report": "Rapports",
-      "/service": "Services médicaux",
-      "/setting": "Paramètres",
-      "/profil": "Profil",
-      "/message": "Messagerie",
+      "/opd-request": "Demande consultation",
+      "/ipd-request": "Demande hospitalisation",
+      "/report-lab": "Rapport laboratoire",
+      "/setting-lab": "Paramètres",
+      
+      "/profil-lab": "Profil",
+      "/message-lab": "Messagerie",
     };
 
     const currentTitle = breadcrumbs[pathname] || "Accueil";
