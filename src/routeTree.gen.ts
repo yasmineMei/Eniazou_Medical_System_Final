@@ -45,7 +45,7 @@ import { Route as NurseReportNurseImport } from './routes/_nurse/report-nurse'
 import { Route as NursePatientMedecineImport } from './routes/_nurse/patient-medecine'
 import { Route as NurseFichePatientImport } from './routes/_nurse/fiche-patient'
 import { Route as NurseDashboardNurseImport } from './routes/_nurse/dashboard-nurse'
-import { Route as NurseChecklistImport } from './routes/_nurse/checklist'
+import { Route as NurseConstantImport } from './routes/_nurse/constant'
 import { Route as MedicalStockSettingStockImport } from './routes/_medical-stock/setting-stock'
 import { Route as MedicalStockProfilStockImport } from './routes/_medical-stock/profil-stock'
 import { Route as MedicalStockMessageStockImport } from './routes/_medical-stock/message-stock'
@@ -72,7 +72,6 @@ import { Route as IpdInvestigationImport } from './routes/_ipd/investigation'
 import { Route as IpdDischargeImport } from './routes/_ipd/discharge'
 import { Route as HomeSettingImport } from './routes/_home/setting'
 import { Route as HomeServiceImport } from './routes/_home/service'
-import { Route as HomeReportImport } from './routes/_home/report'
 import { Route as HomeProfilImport } from './routes/_home/profil'
 import { Route as HomePersonnelImport } from './routes/_home/personnel'
 import { Route as HomePatientImport } from './routes/_home/patient'
@@ -80,8 +79,6 @@ import { Route as HomeMessageImport } from './routes/_home/message'
 import { Route as HomeDashboardImport } from './routes/_home/dashboard'
 import { Route as DoctorSettingDoctorImport } from './routes/_doctor/setting-doctor'
 import { Route as DoctorProfilDoctorImport } from './routes/_doctor/profil-doctor'
-import { Route as DoctorPatientIdImport } from './routes/_doctor/patientId'
-import { Route as DoctorPatientDoctorImport } from './routes/_doctor/patient-doctor'
 import { Route as DoctorOrdonnanceImport } from './routes/_doctor/ordonnance'
 import { Route as DoctorMessageDoctorImport } from './routes/_doctor/message-doctor'
 import { Route as DoctorDashboardDoctorImport } from './routes/_doctor/dashboard-doctor'
@@ -93,6 +90,8 @@ import { Route as AppointmentsProfilAppointmentImport } from './routes/_appointm
 import { Route as AppointmentsPriseAppointmentImport } from './routes/_appointments/priseAppointment'
 import { Route as AppointmentsMessageAppointmentImport } from './routes/_appointments/message-appointment'
 import { Route as AppointmentsDashboardAppointmentImport } from './routes/_appointments/dashboard-appointment'
+import { Route as DoctorPatientDoctorIndexImport } from './routes/_doctor/patient-doctor/index'
+import { Route as DoctorPatientDoctorPatientIdImport } from './routes/_doctor/patient-doctor/$patientId'
 
 // Create/Update Routes
 
@@ -291,9 +290,9 @@ const NurseDashboardNurseRoute = NurseDashboardNurseImport.update({
   getParentRoute: () => NurseRoute,
 } as any)
 
-const NurseChecklistRoute = NurseChecklistImport.update({
-  id: '/checklist',
-  path: '/checklist',
+const NurseConstantRoute = NurseConstantImport.update({
+  id: '/constant',
+  path: '/constant',
   getParentRoute: () => NurseRoute,
 } as any)
 
@@ -458,12 +457,6 @@ const HomeServiceRoute = HomeServiceImport.update({
   getParentRoute: () => HomeRoute,
 } as any)
 
-const HomeReportRoute = HomeReportImport.update({
-  id: '/report',
-  path: '/report',
-  getParentRoute: () => HomeRoute,
-} as any)
-
 const HomeProfilRoute = HomeProfilImport.update({
   id: '/profil',
   path: '/profil',
@@ -503,18 +496,6 @@ const DoctorSettingDoctorRoute = DoctorSettingDoctorImport.update({
 const DoctorProfilDoctorRoute = DoctorProfilDoctorImport.update({
   id: '/profil-doctor',
   path: '/profil-doctor',
-  getParentRoute: () => DoctorRoute,
-} as any)
-
-const DoctorPatientIdRoute = DoctorPatientIdImport.update({
-  id: '/patientId',
-  path: '/patientId',
-  getParentRoute: () => DoctorRoute,
-} as any)
-
-const DoctorPatientDoctorRoute = DoctorPatientDoctorImport.update({
-  id: '/patient-doctor',
-  path: '/patient-doctor',
   getParentRoute: () => DoctorRoute,
 } as any)
 
@@ -588,6 +569,19 @@ const AppointmentsDashboardAppointmentRoute =
     id: '/dashboard-appointment',
     path: '/dashboard-appointment',
     getParentRoute: () => AppointmentsRoute,
+  } as any)
+
+const DoctorPatientDoctorIndexRoute = DoctorPatientDoctorIndexImport.update({
+  id: '/patient-doctor/',
+  path: '/patient-doctor/',
+  getParentRoute: () => DoctorRoute,
+} as any)
+
+const DoctorPatientDoctorPatientIdRoute =
+  DoctorPatientDoctorPatientIdImport.update({
+    id: '/patient-doctor/$patientId',
+    path: '/patient-doctor/$patientId',
+    getParentRoute: () => DoctorRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -755,20 +749,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DoctorOrdonnanceImport
       parentRoute: typeof DoctorImport
     }
-    '/_doctor/patient-doctor': {
-      id: '/_doctor/patient-doctor'
-      path: '/patient-doctor'
-      fullPath: '/patient-doctor'
-      preLoaderRoute: typeof DoctorPatientDoctorImport
-      parentRoute: typeof DoctorImport
-    }
-    '/_doctor/patientId': {
-      id: '/_doctor/patientId'
-      path: '/patientId'
-      fullPath: '/patientId'
-      preLoaderRoute: typeof DoctorPatientIdImport
-      parentRoute: typeof DoctorImport
-    }
     '/_doctor/profil-doctor': {
       id: '/_doctor/profil-doctor'
       path: '/profil-doctor'
@@ -816,13 +796,6 @@ declare module '@tanstack/react-router' {
       path: '/profil'
       fullPath: '/profil'
       preLoaderRoute: typeof HomeProfilImport
-      parentRoute: typeof HomeImport
-    }
-    '/_home/report': {
-      id: '/_home/report'
-      path: '/report'
-      fullPath: '/report'
-      preLoaderRoute: typeof HomeReportImport
       parentRoute: typeof HomeImport
     }
     '/_home/service': {
@@ -1007,11 +980,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MedicalStockSettingStockImport
       parentRoute: typeof MedicalStockImport
     }
-    '/_nurse/checklist': {
-      id: '/_nurse/checklist'
-      path: '/checklist'
-      fullPath: '/checklist'
-      preLoaderRoute: typeof NurseChecklistImport
+    '/_nurse/constant': {
+      id: '/_nurse/constant'
+      path: '/constant'
+      fullPath: '/constant'
+      preLoaderRoute: typeof NurseConstantImport
       parentRoute: typeof NurseImport
     }
     '/_nurse/dashboard-nurse': {
@@ -1168,6 +1141,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RadiologySettingRadiologyImport
       parentRoute: typeof RadiologyImport
     }
+    '/_doctor/patient-doctor/$patientId': {
+      id: '/_doctor/patient-doctor/$patientId'
+      path: '/patient-doctor/$patientId'
+      fullPath: '/patient-doctor/$patientId'
+      preLoaderRoute: typeof DoctorPatientDoctorPatientIdImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_doctor/patient-doctor/': {
+      id: '/_doctor/patient-doctor/'
+      path: '/patient-doctor'
+      fullPath: '/patient-doctor'
+      preLoaderRoute: typeof DoctorPatientDoctorIndexImport
+      parentRoute: typeof DoctorImport
+    }
   }
 }
 
@@ -1201,10 +1188,10 @@ interface DoctorRouteChildren {
   DoctorDashboardDoctorRoute: typeof DoctorDashboardDoctorRoute
   DoctorMessageDoctorRoute: typeof DoctorMessageDoctorRoute
   DoctorOrdonnanceRoute: typeof DoctorOrdonnanceRoute
-  DoctorPatientDoctorRoute: typeof DoctorPatientDoctorRoute
-  DoctorPatientIdRoute: typeof DoctorPatientIdRoute
   DoctorProfilDoctorRoute: typeof DoctorProfilDoctorRoute
   DoctorSettingDoctorRoute: typeof DoctorSettingDoctorRoute
+  DoctorPatientDoctorPatientIdRoute: typeof DoctorPatientDoctorPatientIdRoute
+  DoctorPatientDoctorIndexRoute: typeof DoctorPatientDoctorIndexRoute
 }
 
 const DoctorRouteChildren: DoctorRouteChildren = {
@@ -1213,10 +1200,10 @@ const DoctorRouteChildren: DoctorRouteChildren = {
   DoctorDashboardDoctorRoute: DoctorDashboardDoctorRoute,
   DoctorMessageDoctorRoute: DoctorMessageDoctorRoute,
   DoctorOrdonnanceRoute: DoctorOrdonnanceRoute,
-  DoctorPatientDoctorRoute: DoctorPatientDoctorRoute,
-  DoctorPatientIdRoute: DoctorPatientIdRoute,
   DoctorProfilDoctorRoute: DoctorProfilDoctorRoute,
   DoctorSettingDoctorRoute: DoctorSettingDoctorRoute,
+  DoctorPatientDoctorPatientIdRoute: DoctorPatientDoctorPatientIdRoute,
+  DoctorPatientDoctorIndexRoute: DoctorPatientDoctorIndexRoute,
 }
 
 const DoctorRouteWithChildren =
@@ -1228,7 +1215,6 @@ interface HomeRouteChildren {
   HomePatientRoute: typeof HomePatientRoute
   HomePersonnelRoute: typeof HomePersonnelRoute
   HomeProfilRoute: typeof HomeProfilRoute
-  HomeReportRoute: typeof HomeReportRoute
   HomeServiceRoute: typeof HomeServiceRoute
   HomeSettingRoute: typeof HomeSettingRoute
 }
@@ -1239,7 +1225,6 @@ const HomeRouteChildren: HomeRouteChildren = {
   HomePatientRoute: HomePatientRoute,
   HomePersonnelRoute: HomePersonnelRoute,
   HomeProfilRoute: HomeProfilRoute,
-  HomeReportRoute: HomeReportRoute,
   HomeServiceRoute: HomeServiceRoute,
   HomeSettingRoute: HomeSettingRoute,
 }
@@ -1321,7 +1306,7 @@ const MedicalStockRouteWithChildren = MedicalStockRoute._addFileChildren(
 )
 
 interface NurseRouteChildren {
-  NurseChecklistRoute: typeof NurseChecklistRoute
+  NurseConstantRoute: typeof NurseConstantRoute
   NurseDashboardNurseRoute: typeof NurseDashboardNurseRoute
   NurseFichePatientRoute: typeof NurseFichePatientRoute
   NursePatientMedecineRoute: typeof NursePatientMedecineRoute
@@ -1330,7 +1315,7 @@ interface NurseRouteChildren {
 }
 
 const NurseRouteChildren: NurseRouteChildren = {
-  NurseChecklistRoute: NurseChecklistRoute,
+  NurseConstantRoute: NurseConstantRoute,
   NurseDashboardNurseRoute: NurseDashboardNurseRoute,
   NurseFichePatientRoute: NurseFichePatientRoute,
   NursePatientMedecineRoute: NursePatientMedecineRoute,
@@ -1408,8 +1393,6 @@ export interface FileRoutesByFullPath {
   '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/message-doctor': typeof DoctorMessageDoctorRoute
   '/ordonnance': typeof DoctorOrdonnanceRoute
-  '/patient-doctor': typeof DoctorPatientDoctorRoute
-  '/patientId': typeof DoctorPatientIdRoute
   '/profil-doctor': typeof DoctorProfilDoctorRoute
   '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
@@ -1417,7 +1400,6 @@ export interface FileRoutesByFullPath {
   '/patient': typeof HomePatientRoute
   '/personnel': typeof HomePersonnelRoute
   '/profil': typeof HomeProfilRoute
-  '/report': typeof HomeReportRoute
   '/service': typeof HomeServiceRoute
   '/setting': typeof HomeSettingRoute
   '/discharge': typeof IpdDischargeRoute
@@ -1444,7 +1426,7 @@ export interface FileRoutesByFullPath {
   '/message-stock': typeof MedicalStockMessageStockRoute
   '/profil-stock': typeof MedicalStockProfilStockRoute
   '/setting-stock': typeof MedicalStockSettingStockRoute
-  '/checklist': typeof NurseChecklistRoute
+  '/constant': typeof NurseConstantRoute
   '/dashboard-nurse': typeof NurseDashboardNurseRoute
   '/fiche-patient': typeof NurseFichePatientRoute
   '/patient-medecine': typeof NursePatientMedecineRoute
@@ -1467,6 +1449,8 @@ export interface FileRoutesByFullPath {
   '/profil-radiology': typeof RadiologyProfilRadiologyRoute
   '/report-radiology': typeof RadiologyReportRadiologyRoute
   '/setting-radiology': typeof RadiologySettingRadiologyRoute
+  '/patient-doctor/$patientId': typeof DoctorPatientDoctorPatientIdRoute
+  '/patient-doctor': typeof DoctorPatientDoctorIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -1485,8 +1469,6 @@ export interface FileRoutesByTo {
   '/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/message-doctor': typeof DoctorMessageDoctorRoute
   '/ordonnance': typeof DoctorOrdonnanceRoute
-  '/patient-doctor': typeof DoctorPatientDoctorRoute
-  '/patientId': typeof DoctorPatientIdRoute
   '/profil-doctor': typeof DoctorProfilDoctorRoute
   '/setting-doctor': typeof DoctorSettingDoctorRoute
   '/dashboard': typeof HomeDashboardRoute
@@ -1494,7 +1476,6 @@ export interface FileRoutesByTo {
   '/patient': typeof HomePatientRoute
   '/personnel': typeof HomePersonnelRoute
   '/profil': typeof HomeProfilRoute
-  '/report': typeof HomeReportRoute
   '/service': typeof HomeServiceRoute
   '/setting': typeof HomeSettingRoute
   '/discharge': typeof IpdDischargeRoute
@@ -1521,7 +1502,7 @@ export interface FileRoutesByTo {
   '/message-stock': typeof MedicalStockMessageStockRoute
   '/profil-stock': typeof MedicalStockProfilStockRoute
   '/setting-stock': typeof MedicalStockSettingStockRoute
-  '/checklist': typeof NurseChecklistRoute
+  '/constant': typeof NurseConstantRoute
   '/dashboard-nurse': typeof NurseDashboardNurseRoute
   '/fiche-patient': typeof NurseFichePatientRoute
   '/patient-medecine': typeof NursePatientMedecineRoute
@@ -1544,6 +1525,8 @@ export interface FileRoutesByTo {
   '/profil-radiology': typeof RadiologyProfilRadiologyRoute
   '/report-radiology': typeof RadiologyReportRadiologyRoute
   '/setting-radiology': typeof RadiologySettingRadiologyRoute
+  '/patient-doctor/$patientId': typeof DoctorPatientDoctorPatientIdRoute
+  '/patient-doctor': typeof DoctorPatientDoctorIndexRoute
 }
 
 export interface FileRoutesById {
@@ -1571,8 +1554,6 @@ export interface FileRoutesById {
   '/_doctor/dashboard-doctor': typeof DoctorDashboardDoctorRoute
   '/_doctor/message-doctor': typeof DoctorMessageDoctorRoute
   '/_doctor/ordonnance': typeof DoctorOrdonnanceRoute
-  '/_doctor/patient-doctor': typeof DoctorPatientDoctorRoute
-  '/_doctor/patientId': typeof DoctorPatientIdRoute
   '/_doctor/profil-doctor': typeof DoctorProfilDoctorRoute
   '/_doctor/setting-doctor': typeof DoctorSettingDoctorRoute
   '/_home/dashboard': typeof HomeDashboardRoute
@@ -1580,7 +1561,6 @@ export interface FileRoutesById {
   '/_home/patient': typeof HomePatientRoute
   '/_home/personnel': typeof HomePersonnelRoute
   '/_home/profil': typeof HomeProfilRoute
-  '/_home/report': typeof HomeReportRoute
   '/_home/service': typeof HomeServiceRoute
   '/_home/setting': typeof HomeSettingRoute
   '/_ipd/discharge': typeof IpdDischargeRoute
@@ -1607,7 +1587,7 @@ export interface FileRoutesById {
   '/_medical-stock/message-stock': typeof MedicalStockMessageStockRoute
   '/_medical-stock/profil-stock': typeof MedicalStockProfilStockRoute
   '/_medical-stock/setting-stock': typeof MedicalStockSettingStockRoute
-  '/_nurse/checklist': typeof NurseChecklistRoute
+  '/_nurse/constant': typeof NurseConstantRoute
   '/_nurse/dashboard-nurse': typeof NurseDashboardNurseRoute
   '/_nurse/fiche-patient': typeof NurseFichePatientRoute
   '/_nurse/patient-medecine': typeof NursePatientMedecineRoute
@@ -1630,6 +1610,8 @@ export interface FileRoutesById {
   '/_radiology/profil-radiology': typeof RadiologyProfilRadiologyRoute
   '/_radiology/report-radiology': typeof RadiologyReportRadiologyRoute
   '/_radiology/setting-radiology': typeof RadiologySettingRadiologyRoute
+  '/_doctor/patient-doctor/$patientId': typeof DoctorPatientDoctorPatientIdRoute
+  '/_doctor/patient-doctor/': typeof DoctorPatientDoctorIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -1650,8 +1632,6 @@ export interface FileRouteTypes {
     | '/dashboard-doctor'
     | '/message-doctor'
     | '/ordonnance'
-    | '/patient-doctor'
-    | '/patientId'
     | '/profil-doctor'
     | '/setting-doctor'
     | '/dashboard'
@@ -1659,7 +1639,6 @@ export interface FileRouteTypes {
     | '/patient'
     | '/personnel'
     | '/profil'
-    | '/report'
     | '/service'
     | '/setting'
     | '/discharge'
@@ -1686,7 +1665,7 @@ export interface FileRouteTypes {
     | '/message-stock'
     | '/profil-stock'
     | '/setting-stock'
-    | '/checklist'
+    | '/constant'
     | '/dashboard-nurse'
     | '/fiche-patient'
     | '/patient-medecine'
@@ -1709,6 +1688,8 @@ export interface FileRouteTypes {
     | '/profil-radiology'
     | '/report-radiology'
     | '/setting-radiology'
+    | '/patient-doctor/$patientId'
+    | '/patient-doctor'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1726,8 +1707,6 @@ export interface FileRouteTypes {
     | '/dashboard-doctor'
     | '/message-doctor'
     | '/ordonnance'
-    | '/patient-doctor'
-    | '/patientId'
     | '/profil-doctor'
     | '/setting-doctor'
     | '/dashboard'
@@ -1735,7 +1714,6 @@ export interface FileRouteTypes {
     | '/patient'
     | '/personnel'
     | '/profil'
-    | '/report'
     | '/service'
     | '/setting'
     | '/discharge'
@@ -1762,7 +1740,7 @@ export interface FileRouteTypes {
     | '/message-stock'
     | '/profil-stock'
     | '/setting-stock'
-    | '/checklist'
+    | '/constant'
     | '/dashboard-nurse'
     | '/fiche-patient'
     | '/patient-medecine'
@@ -1785,6 +1763,8 @@ export interface FileRouteTypes {
     | '/profil-radiology'
     | '/report-radiology'
     | '/setting-radiology'
+    | '/patient-doctor/$patientId'
+    | '/patient-doctor'
   id:
     | '__root__'
     | '/'
@@ -1810,8 +1790,6 @@ export interface FileRouteTypes {
     | '/_doctor/dashboard-doctor'
     | '/_doctor/message-doctor'
     | '/_doctor/ordonnance'
-    | '/_doctor/patient-doctor'
-    | '/_doctor/patientId'
     | '/_doctor/profil-doctor'
     | '/_doctor/setting-doctor'
     | '/_home/dashboard'
@@ -1819,7 +1797,6 @@ export interface FileRouteTypes {
     | '/_home/patient'
     | '/_home/personnel'
     | '/_home/profil'
-    | '/_home/report'
     | '/_home/service'
     | '/_home/setting'
     | '/_ipd/discharge'
@@ -1846,7 +1823,7 @@ export interface FileRouteTypes {
     | '/_medical-stock/message-stock'
     | '/_medical-stock/profil-stock'
     | '/_medical-stock/setting-stock'
-    | '/_nurse/checklist'
+    | '/_nurse/constant'
     | '/_nurse/dashboard-nurse'
     | '/_nurse/fiche-patient'
     | '/_nurse/patient-medecine'
@@ -1869,6 +1846,8 @@ export interface FileRouteTypes {
     | '/_radiology/profil-radiology'
     | '/_radiology/report-radiology'
     | '/_radiology/setting-radiology'
+    | '/_doctor/patient-doctor/$patientId'
+    | '/_doctor/patient-doctor/'
   fileRoutesById: FileRoutesById
 }
 
@@ -1948,10 +1927,10 @@ export const routeTree = rootRoute
         "/_doctor/dashboard-doctor",
         "/_doctor/message-doctor",
         "/_doctor/ordonnance",
-        "/_doctor/patient-doctor",
-        "/_doctor/patientId",
         "/_doctor/profil-doctor",
-        "/_doctor/setting-doctor"
+        "/_doctor/setting-doctor",
+        "/_doctor/patient-doctor/$patientId",
+        "/_doctor/patient-doctor/"
       ]
     },
     "/_home": {
@@ -1962,7 +1941,6 @@ export const routeTree = rootRoute
         "/_home/patient",
         "/_home/personnel",
         "/_home/profil",
-        "/_home/report",
         "/_home/service",
         "/_home/setting"
       ]
@@ -2009,7 +1987,7 @@ export const routeTree = rootRoute
     "/_nurse": {
       "filePath": "_nurse.tsx",
       "children": [
-        "/_nurse/checklist",
+        "/_nurse/constant",
         "/_nurse/dashboard-nurse",
         "/_nurse/fiche-patient",
         "/_nurse/patient-medecine",
@@ -2094,14 +2072,6 @@ export const routeTree = rootRoute
       "filePath": "_doctor/ordonnance.tsx",
       "parent": "/_doctor"
     },
-    "/_doctor/patient-doctor": {
-      "filePath": "_doctor/patient-doctor.tsx",
-      "parent": "/_doctor"
-    },
-    "/_doctor/patientId": {
-      "filePath": "_doctor/patientId.tsx",
-      "parent": "/_doctor"
-    },
     "/_doctor/profil-doctor": {
       "filePath": "_doctor/profil-doctor.tsx",
       "parent": "/_doctor"
@@ -2128,10 +2098,6 @@ export const routeTree = rootRoute
     },
     "/_home/profil": {
       "filePath": "_home/profil.tsx",
-      "parent": "/_home"
-    },
-    "/_home/report": {
-      "filePath": "_home/report.tsx",
       "parent": "/_home"
     },
     "/_home/service": {
@@ -2238,8 +2204,8 @@ export const routeTree = rootRoute
       "filePath": "_medical-stock/setting-stock.tsx",
       "parent": "/_medical-stock"
     },
-    "/_nurse/checklist": {
-      "filePath": "_nurse/checklist.tsx",
+    "/_nurse/constant": {
+      "filePath": "_nurse/constant.tsx",
       "parent": "/_nurse"
     },
     "/_nurse/dashboard-nurse": {
@@ -2329,6 +2295,14 @@ export const routeTree = rootRoute
     "/_radiology/setting-radiology": {
       "filePath": "_radiology/setting-radiology.tsx",
       "parent": "/_radiology"
+    },
+    "/_doctor/patient-doctor/$patientId": {
+      "filePath": "_doctor/patient-doctor/$patientId.tsx",
+      "parent": "/_doctor"
+    },
+    "/_doctor/patient-doctor/": {
+      "filePath": "_doctor/patient-doctor/index.tsx",
+      "parent": "/_doctor"
     }
   }
 }

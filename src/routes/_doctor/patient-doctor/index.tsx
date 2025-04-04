@@ -1,4 +1,4 @@
-import { createFileRoute, Link, /*useNavigate*/ } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,17 +22,26 @@ import {
 import { useState } from "react";
 import { Patient } from "@/types/patient";
 import { patientsData } from "@/data/patients";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination";
 
-export const Route = createFileRoute("/_doctor/patient-doctor")({
+export const Route = createFileRoute("/_doctor/patient-doctor/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  //const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [patientToDelete, setPatientToDelete] = useState<string | null>(null);
   const [patients, setPatients] = useState<Patient[]>(patientsData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   // Filtrer les patients selon la recherche
   const filteredPatients = patients.filter((patient) => {
@@ -44,10 +53,29 @@ function RouteComponent() {
     );
   });
 
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPatients = filteredPatients.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
+
+  const paginate = (pageNumber: number) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
   // Supprimer un patient
   const handleDeletePatient = (id: string) => {
     setPatients(patients.filter((patient) => patient.id !== id));
     setDeleteDialogOpen(false);
+    // Reset à la première page si nécessaire
+    if (currentPatients.length === 1 && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   // Formater la date
@@ -83,7 +111,10 @@ function RouteComponent() {
             placeholder="Rechercher par nom, prénom ou numéro de dossier..."
             className="pl-8"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // Reset à la première page lors d'une nouvelle recherche
+            }}
           />
         </div>
       </div>
@@ -106,8 +137,8 @@ function RouteComponent() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredPatients.length > 0 ? (
-                filteredPatients.map((patient) => (
+              {currentPatients.length > 0 ? (
+                currentPatients.map((patient) => (
                   <TableRow key={patient.id}>
                     <TableCell>{patient.nom}</TableCell>
                     <TableCell>{patient.prenom}</TableCell>
@@ -116,7 +147,7 @@ function RouteComponent() {
                     <TableCell>{patient.genre}</TableCell>
                     <TableCell className="flex justify-end gap-2">
                       <Link
-                        to="/patientId"
+                        to="/patient-doctor/$patientId"
                         params={{ patientId: patient.id }}
                       >
                         <Button variant="outline" size="sm">
@@ -185,6 +216,65 @@ function RouteComponent() {
               )}
             </TableBody>
           </Table>
+
+          {/* Pagination */}
+          {filteredPatients.length > itemsPerPage && (
+            <div className="mt-4 flex justify-center">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => paginate(currentPage - 1)}
+                      className={
+                        currentPage === 1
+                          ? "pointer-events-none opacity-50"
+                          : "cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+
+                  {/* Affichage des numéros de page */}
+                  {Array.from({ length: totalPages }).map((_, index) => {
+                    // Pour ne pas afficher toutes les pages si trop nombreuses
+                    if (
+                      index === 0 ||
+                      index === totalPages - 1 ||
+                      (index >= currentPage - 2 && index <= currentPage + 2)
+                    ) {
+                      return (
+                        <PaginationItem key={index}>
+                          <PaginationLink
+                            onClick={() => paginate(index + 1)}
+                            isActive={currentPage === index + 1}
+                            className="cursor-pointer"
+                          >
+                            {index + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      );
+                    } else if (
+                      (index === 1 && currentPage > 4) ||
+                      (index === totalPages - 2 && currentPage < totalPages - 3)
+                    ) {
+                      return <PaginationItem key={index}>...</PaginationItem>;
+                    }
+                    return null;
+                  })}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => paginate(currentPage + 1)}
+                      className={
+                        currentPage === totalPages
+                          ? "pointer-events-none opacity-50"
+                          : "cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

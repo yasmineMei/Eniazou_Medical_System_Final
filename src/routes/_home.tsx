@@ -50,11 +50,6 @@ function RouteComponent() {
       icon: ShieldPlus,
     },
     {
-      title: "Rapports",
-      url: "/report",
-      icon: BookOpen,
-    },
-    {
       title: "Services médicaux",
       url: "/service",
       icon: HeartHandshakeIcon,
@@ -72,7 +67,6 @@ function RouteComponent() {
       "/dashboard": "Tableau de bord",
       "/patient": "Patients",
       "/personnel": "Gestion du Personnel",
-      "/report": "Rapports",
       "/service": "Services médicaux",
       "/setting": "Paramètres",
       "/profil": "Profil",

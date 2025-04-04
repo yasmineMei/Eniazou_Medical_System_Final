@@ -17,10 +17,10 @@ import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   ChartNoAxesCombined,
   User2Icon,
-  ShieldPlus,
-  BookOpen,
-  HeartHandshakeIcon,
   Settings2Icon,
+  Syringe,
+  Pill,
+  ClipboardSignature,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_nurse")({
@@ -40,24 +40,24 @@ function RouteComponent() {
       isActive: true,
     },
     {
-      title: "Fiche Patient",
+      title: "Patient",
       url: "/fiche-patient",
       icon: User2Icon,
     },
     {
-      title: "Gestion des médicaments",
+      title: "Soins & Constantes",
+      url: "/constant",
+      icon: Syringe,
+    },
+    {
+      title: "Médicaments",
       url: "/patient-medecine",
-      icon: ShieldPlus,
+      icon: Pill,
     },
     {
-      title: "Tâches infirmières",
-      url: "/checklist",
-      icon: BookOpen,
-    },
-    {
-      title: "Rapports quotidiens",
+      title: "Rapports infirmiers",
       url: "/report-nurse",
-      icon: HeartHandshakeIcon,
+      icon: ClipboardSignature,
     },
     {
       title: "Paramètres",
@@ -70,9 +70,9 @@ function RouteComponent() {
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
       "/dashboard-nurse": "Tableau de bord",
-      "/fiche-patient": "Fiche Patient",
-      "/patient-medecine": "Gestion des médicaments", // ❗ Attention à l'incohérence de nommage
-      "/checklist": "Tâches infirmières",
+      "/fiche-patient": "Patient",
+      "/constant": "Soins & Constantes",
+      "/patient-medecine": "Médicaments", 
       "/report-nurse": "Rapports quotidiens",
       "/setting-nurse": "Paramètres",
 

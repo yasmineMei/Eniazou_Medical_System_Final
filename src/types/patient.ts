@@ -1,4 +1,6 @@
-// types/patient.ts
+export type BloodType = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+export type Gender = "Homme" | "Femme";
+
 export interface Antecedents {
   diabete: boolean;
   cancer: boolean;
@@ -40,8 +42,8 @@ export interface Patient {
   numberPhone: string;
   poids: string;
   taille: string;
-  blood: string;
-  genre: "Homme" | "Femme";
+  blood: BloodType;
+  genre: Gender;
   dossierMedical: string;
   age: number;
   antecedents: Antecedents;

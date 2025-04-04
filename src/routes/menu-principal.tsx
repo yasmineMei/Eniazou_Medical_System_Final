@@ -36,10 +36,10 @@ function RouteComponent() {
     const toKeep: MenuTitle[] = ["Médecin", "Laboratoire", "Radiologie"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   } else if (role === "nurse") {
-    const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire", "Consultation"];
+    const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   } else if (role === "receptionist") {
-    const toKeep: MenuTitle[] = ["Hospitalisation", "Rendez-vous"];
+    const toKeep: MenuTitle[] = ["Hospitalisation", "Rendez-vous","Consultation"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   }
 
