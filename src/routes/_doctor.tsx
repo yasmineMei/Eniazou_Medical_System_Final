@@ -17,7 +17,6 @@ import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Settings2Icon,
   Calendar,
-  LayoutDashboard,
   Pill,
   Users,
 } from "lucide-react";
@@ -33,18 +32,13 @@ function RouteComponent() {
   // Déclaration des éléments de navigation
   const navMain = [
     {
-      title: "Tableau de bord",
-      url: "/dashboard-doctor",
-      icon: LayoutDashboard,
-      isActive: true,
-    },
-    {
       title: "Mes Rendez-vous",
       url: "/appointment-doctor",
       icon: Calendar,
+      isActive: true,
     },
     {
-      title: "Patients",
+      title: "Mes patients",
       url: "/patient-doctor",
       icon: Users,
     },
@@ -63,9 +57,8 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/dashboard-doctor": "Tableau de bord",
       "/appointment-doctor": "Mes rendez-vous",
-      "/patient-doctor": "Patients",
+      "/patient-doctor": "Mes patients",
       "/patient-doctor/$patientId": "Patients",
       "/create-record": "Patients",
       "/ordonnance": "Prescriptions & Ordonnances",

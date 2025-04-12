@@ -16,7 +16,7 @@ const menuItems = [
   { title: "Laboratoire", icon: "🔬", path: "/opd-request" },
   { title: "Radiologie", icon: "📷", path: "/opd-radiology" },
   { title: "Infirmier", icon: "💉", path: "/dashboard-nurse" },
-  { title: "Médecin", icon: "👨‍⚕️", path: "/dashboard-doctor" },
+  { title: "Médecin", icon: "👨‍⚕️", path: "/appointment-doctor" },
   { title: "Stock Médicale", icon: "💊", path: "/administration" },
   { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
 ] as const;

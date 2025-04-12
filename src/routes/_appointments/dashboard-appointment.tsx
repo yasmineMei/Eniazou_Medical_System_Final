@@ -1,309 +1,352 @@
+"use client";
+
+import * as React from "react";
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const Route = createFileRoute("/_appointments/dashboard-appointment")({
   component: RouteComponent,
 });
 
-// Mock data
-const appointments = [
-  {
-    id: "1",
-    patient: "Jean Dupont",
-    specialty: "Cardiologie",
-    doctor: "Dr. Martin",
-    date: new Date(Date.now() + 3600000 * 2), // In 2 hours
-    status: "confirmed",
-    type: "Nouvelle consultation",
-  },
-  {
-    id: "2",
-    patient: "Marie Lambert",
-    specialty: "Dermatologie",
-    doctor: "Dr. Lefèvre",
-    date: new Date(Date.now() + 86400000), // Tomorrow
-    status: "confirmed",
-    type: "Suivi",
-  },
-  {
-    id: "3",
-    patient: "Pierre Garnier",
-    specialty: "Pédiatrie",
-    doctor: "Dr. Petit",
-    date: new Date(Date.now() - 3600000), // 1 hour ago
-    status: "completed",
-    type: "Vaccination",
-  },
-];
+// Types
+type Department = {
+  id: string;
+  name: string;
+};
 
-const notifications = [
-  {
-    id: "1",
-    type: "reminder",
-    content: "Rappel: Rendez-vous avec Dr. Martin dans 2 heures",
-    date: new Date(),
-    read: false,
-  },
-  {
-    id: "2",
-    type: "confirmation",
-    content: "Le Dr. Lefèvre a confirmé votre rendez-vous de demain",
-    date: new Date(Date.now() - 3600000 * 3),
-    read: false,
-  },
-  {
-    id: "3",
-    type: "cancellation",
-    content: "Le Dr. Bernard a annulé votre rendez-vous du 15/11",
-    date: new Date(Date.now() - 86400000),
-    read: true,
-  },
-];
+type Doctor = {
+  id: string;
+  name: string;
+  departmentId: string;
+};
+
+type TimeSlot = {
+  id: string;
+  time: string;
+  available: boolean;
+};
+
+type PatientInfo = {
+  fullName: string;
+  phone: string;
+  email: string;
+  notes: string;
+};
 
 function RouteComponent() {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [currentTime] = useState(new Date());
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [selectedDepartment, setSelectedDepartment] = useState<string>();
+  const [selectedDoctor, setSelectedDoctor] = useState<string>();
+  const [selectedTime, setSelectedTime] = useState<string>();
+  const [patientInfo, setPatientInfo] = useState<PatientInfo>({
+    fullName: "",
+    phone: "",
+    email: "",
+    notes: "",
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // Update time every minute and check for notifications
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-      // In a real app, you would fetch new notifications here
-    }, 60000);
+  // Données de la clinique
+  const departments: Department[] = [
+    { id: "ophtalmologie", name: "Ophtalmologie" },
+    { id: "chirurgie", name: "Chirurgie" },
+    { id: "radiologie", name: "Radiologie" },
+    { id: "maternite", name: "Maternité" },
+  ];
 
-    // Count unread notifications
-    setUnreadNotifications(notifications.filter((n) => !n.read).length);
+  const doctors: Doctor[] = [
+    { id: "dr-kengani", name: "Dr. Kengani", departmentId: "ophtalmologie" },
+    { id: "dr-loba", name: "Dr. Loba", departmentId: "chirurgie" },
+    { id: "echographe", name: "Échographe", departmentId: "radiologie" },
+    { id: "dr-sow", name: "Dr. Sow", departmentId: "ophtalmologie" },
+    { id: "dr-diallo", name: "Dr. Diallo", departmentId: "maternite" },
+  ];
 
-    return () => clearInterval(timer);
-  }, []);
+  const timeSlots: TimeSlot[] = [
+    { id: "1", time: "08:00", available: true },
+    { id: "2", time: "09:00", available: true },
+    { id: "3", time: "10:00", available: false },
+    { id: "4", time: "11:00", available: true },
+    { id: "5", time: "14:00", available: true },
+    { id: "6", time: "15:00", available: true },
+    { id: "7", time: "16:00", available: true },
+    { id: "8", time: "17:00", available: true },
+  ];
 
-  // Calculate KPIs
-  const todaysAppointments = appointments.filter(
-    (app) =>
-      format(app.date, "yyyy-MM-dd") === format(currentTime, "yyyy-MM-dd")
-  ).length;
+  // Filtrer les médecins par département sélectionné
+  const filteredDoctors = selectedDepartment
+    ? doctors.filter((doctor) => doctor.departmentId === selectedDepartment)
+    : [];
 
-  const upcomingAppointments = appointments.filter(
-    (app) => app.date > currentTime && app.status === "confirmed"
-  ).length;
-
-  const occupancyRate = Math.round(
-    (appointments.filter((app) => app.status === "completed").length /
-      appointments.length) *
-      100
-  );
-
-  const markAsRead = (id: string) => {
-    // In a real app, this would call an API
-    const notification = notifications.find((n) => n.id === id);
-    if (notification) notification.read = true;
-    setUnreadNotifications(unreadNotifications - 1);
-  };
-
-  const getNotificationBadge = (type: string) => {
-    switch (type) {
-      case "reminder":
-        return <Badge variant="secondary">Rappel</Badge>;
-      case "confirmation":
-        return <Badge className="bg-green-500">Confirmation</Badge>;
-      case "cancellation":
-        return <Badge variant="destructive">Annulation</Badge>;
-      default:
-        return <Badge>Notification</Badge>;
-    }
+  // Gérer la soumission du formulaire
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Ici vous ajouterez la logique pour enregistrer le rendez-vous
+    console.log({
+      date,
+      department: selectedDepartment,
+      doctor: selectedDoctor,
+      time: selectedTime,
+      patientInfo,
+    });
+    setIsDialogOpen(false);
+    // Réinitialiser les champs
+    setPatientInfo({
+      fullName: "",
+      phone: "",
+      email: "",
+      notes: "",
+    });
+    setSelectedTime(undefined);
   };
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-4 pt-0 max-w-6xl mx-auto">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Tableau de bord</h1>
+        <h1 className="text-2xl font-bold text-[#018787]">
+          Gestion des Rendez-vous
+        </h1>
         <div className="text-sm text-muted-foreground">
           {format(currentTime, "PPPPp", { locale: fr })}
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">
-              RDV aujourd'hui
-            </CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M8 2v4M16 2v4M3 10h18M5 2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{todaysAppointments}</div>
-            <p className="text-xs text-muted-foreground">
-              {todaysAppointments > 0
-                ? `${todaysAppointments} rendez-vous programmés`
-                : "Aucun rendez-vous aujourd'hui"}
-            </p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Calendrier */}
+        <div className="md:col-span-1">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border shadow"
+            locale={fr}
+            fromDate={new Date()}
+          />
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">RDV à venir</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
+        {/* Sélection du département et médecin */}
+        <div className="md:col-span-2 space-y-4">
+          <div className="flex gap-4">
+            <Select
+              value={selectedDepartment}
+              onValueChange={(value) => {
+                setSelectedDepartment(value);
+                setSelectedDoctor(undefined); // Réinitialiser le médecin quand on change de département
+              }}
             >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{upcomingAppointments}</div>
-            <p className="text-xs text-muted-foreground">
-              Prochains rendez-vous confirmés
-            </p>
-          </CardContent>
-        </Card>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sélectionner un département" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Départements</SelectLabel>
+                  {departments.map((dept) => (
+                    <SelectItem key={dept.id} value={dept.id}>
+                      {dept.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">
-              Taux d'occupation
-            </CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
+            <Select
+              value={selectedDoctor}
+              onValueChange={setSelectedDoctor}
+              disabled={!selectedDepartment}
             >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{occupancyRate}%</div>
-            <p className="text-xs text-muted-foreground">
-              Sur les 30 derniers jours
-            </p>
-          </CardContent>
-        </Card>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sélectionner un médecin" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Médecins</SelectLabel>
+                  {filteredDoctors.map((doctor) => (
+                    <SelectItem key={doctor.id} value={doctor.id}>
+                      {doctor.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Sélection de l'heure */}
+          {selectedDoctor && date && (
+            <div className="space-y-2">
+              <h3 className="font-medium">Heures disponibles</h3>
+              <div className="grid grid-cols-3 gap-2">
+                {timeSlots.map((slot) => (
+                  <Button
+                    key={slot.id}
+                    variant={selectedTime === slot.time ? "default" : "outline"}
+                    disabled={!slot.available}
+                    onClick={() => setSelectedTime(slot.time)}
+                  >
+                    {slot.time}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Bouton de réservation */}
+          {selectedTime && (
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="w-full">Réserver ce rendez-vous</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Informations du patient</DialogTitle>
+                  <DialogDescription>
+                    Veuillez remplir les informations du patient pour confirmer
+                    le rendez-vous.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit}>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="fullName" className="text-right">
+                        Nom complet
+                      </Label>
+                      <Input
+                        id="fullName"
+                        value={patientInfo.fullName}
+                        onChange={(e) =>
+                          setPatientInfo({
+                            ...patientInfo,
+                            fullName: e.target.value,
+                          })
+                        }
+                        className="col-span-3"
+                        required
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="phone" className="text-right">
+                        Téléphone
+                      </Label>
+                      <Input
+                        id="phone"
+                        value={patientInfo.phone}
+                        onChange={(e) =>
+                          setPatientInfo({
+                            ...patientInfo,
+                            phone: e.target.value,
+                          })
+                        }
+                        className="col-span-3"
+                        required
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="email" className="text-right">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={patientInfo.email}
+                        onChange={(e) =>
+                          setPatientInfo({
+                            ...patientInfo,
+                            email: e.target.value,
+                          })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="notes" className="text-right">
+                        Notes
+                      </Label>
+                      <Input
+                        id="notes"
+                        value={patientInfo.notes}
+                        onChange={(e) =>
+                          setPatientInfo({
+                            ...patientInfo,
+                            notes: e.target.value,
+                          })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit">Confirmer le rendez-vous</Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+          )}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Upcoming appointments */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Prochains rendez-vous</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {appointments
-              .filter(
-                (app) => app.date > currentTime && app.status === "confirmed"
-              )
-              .sort((a, b) => a.date.getTime() - b.date.getTime())
-              .slice(0, 5)
-              .map((appointment) => (
-                <div
-                  key={appointment.id}
-                  className="flex items-center py-3 border-b last:border-b-0"
-                >
-                  <div className="flex-shrink-0 mr-4">
-                    <div className="text-lg font-medium">
-                      {format(appointment.date, "HH:mm")}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {format(appointment.date, "dd/MM")}
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">
-                      {appointment.patient}
-                    </p>
-                    <p className="text-sm text-muted-foreground truncate">
-                      {appointment.specialty} - {appointment.doctor}
-                    </p>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    Détails
-                  </Button>
-                </div>
-              ))}
-
-            {appointments.filter((app) => app.date > currentTime).length ===
-              0 && (
-              <p className="text-center text-muted-foreground py-6">
-                Aucun rendez-vous à venir
-              </p>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Notifications */}
-        <Card>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle>Notifications</CardTitle>
-              {unreadNotifications > 0 && (
-                <Badge variant="default">{unreadNotifications} non lus</Badge>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent>
-            {notifications
-              .sort((a, b) => b.date.getTime() - a.date.getTime())
-              .slice(0, 5)
-              .map((notification) => (
-                <div
-                  key={notification.id}
-                  className={`flex items-start py-3 border-b last:border-b-0 ${!notification.read ? "bg-muted/50" : ""}`}
-                >
-                  <div className="flex-shrink-0 mr-3 mt-1">
-                    {getNotificationBadge(notification.type)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm">{notification.content}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {format(notification.date, "PPPPp", { locale: fr })}
-                    </p>
-                  </div>
-                  {!notification.read && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => markAsRead(notification.id)}
-                    >
-                      Marquer comme lu
-                    </Button>
-                  )}
-                </div>
-              ))}
-
-            {notifications.length === 0 && (
-              <p className="text-center text-muted-foreground py-6">
-                Aucune notification
-              </p>
-            )}
-          </CardContent>
-        </Card>
+      {/* Liste des rendez-vous du jour */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Rendez-vous du jour</h2>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Heure</TableHead>
+              <TableHead>Patient</TableHead>
+              <TableHead>Médecin</TableHead>
+              <TableHead>Département</TableHead>
+              <TableHead>Contact</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {/* Exemple de données - à remplacer par vos vraies données */}
+            <TableRow>
+              <TableCell>09:00</TableCell>
+              <TableCell>Moussa Diop</TableCell>
+              <TableCell>Dr. Kengani</TableCell>
+              <TableCell>Ophtalmologie</TableCell>
+              <TableCell>77 123 45 67</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>11:00</TableCell>
+              <TableCell>Aminata Sow</TableCell>
+              <TableCell>Dr. Diallo</TableCell>
+              <TableCell>Maternité</TableCell>
+              <TableCell>76 234 56 78</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
