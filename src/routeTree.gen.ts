@@ -89,7 +89,6 @@ import { Route as AppointmentsSettingAppointmentImport } from './routes/_appoint
 import { Route as AppointmentsProfilAppointmentImport } from './routes/_appointments/profil-appointment'
 import { Route as AppointmentsPriseAppointmentImport } from './routes/_appointments/priseAppointment'
 import { Route as AppointmentsMessageAppointmentImport } from './routes/_appointments/message-appointment'
-import { Route as AppointmentsMachineAppointmentImport } from './routes/_appointments/machine-appointment'
 import { Route as AppointmentsDoctorLeaveImport } from './routes/_appointments/doctor-leave'
 import { Route as AppointmentsDashboardAppointmentImport } from './routes/_appointments/dashboard-appointment'
 import { Route as AppointmentsClinicTarifImport } from './routes/_appointments/clinic-tarif'
@@ -568,13 +567,6 @@ const AppointmentsMessageAppointmentRoute =
     getParentRoute: () => AppointmentsRoute,
   } as any)
 
-const AppointmentsMachineAppointmentRoute =
-  AppointmentsMachineAppointmentImport.update({
-    id: '/machine-appointment',
-    path: '/machine-appointment',
-    getParentRoute: () => AppointmentsRoute,
-  } as any)
-
 const AppointmentsDoctorLeaveRoute = AppointmentsDoctorLeaveImport.update({
   id: '/doctor-leave',
   path: '/doctor-leave',
@@ -728,13 +720,6 @@ declare module '@tanstack/react-router' {
       path: '/doctor-leave'
       fullPath: '/doctor-leave'
       preLoaderRoute: typeof AppointmentsDoctorLeaveImport
-      parentRoute: typeof AppointmentsImport
-    }
-    '/_appointments/machine-appointment': {
-      id: '/_appointments/machine-appointment'
-      path: '/machine-appointment'
-      fullPath: '/machine-appointment'
-      preLoaderRoute: typeof AppointmentsMachineAppointmentImport
       parentRoute: typeof AppointmentsImport
     }
     '/_appointments/message-appointment': {
@@ -1223,7 +1208,6 @@ interface AppointmentsRouteChildren {
   AppointmentsClinicTarifRoute: typeof AppointmentsClinicTarifRoute
   AppointmentsDashboardAppointmentRoute: typeof AppointmentsDashboardAppointmentRoute
   AppointmentsDoctorLeaveRoute: typeof AppointmentsDoctorLeaveRoute
-  AppointmentsMachineAppointmentRoute: typeof AppointmentsMachineAppointmentRoute
   AppointmentsMessageAppointmentRoute: typeof AppointmentsMessageAppointmentRoute
   AppointmentsPriseAppointmentRoute: typeof AppointmentsPriseAppointmentRoute
   AppointmentsProfilAppointmentRoute: typeof AppointmentsProfilAppointmentRoute
@@ -1236,7 +1220,6 @@ const AppointmentsRouteChildren: AppointmentsRouteChildren = {
   AppointmentsClinicTarifRoute: AppointmentsClinicTarifRoute,
   AppointmentsDashboardAppointmentRoute: AppointmentsDashboardAppointmentRoute,
   AppointmentsDoctorLeaveRoute: AppointmentsDoctorLeaveRoute,
-  AppointmentsMachineAppointmentRoute: AppointmentsMachineAppointmentRoute,
   AppointmentsMessageAppointmentRoute: AppointmentsMessageAppointmentRoute,
   AppointmentsPriseAppointmentRoute: AppointmentsPriseAppointmentRoute,
   AppointmentsProfilAppointmentRoute: AppointmentsProfilAppointmentRoute,
@@ -1452,7 +1435,6 @@ export interface FileRoutesByFullPath {
   '/clinic-tarif': typeof AppointmentsClinicTarifRoute
   '/dashboard-appointment': typeof AppointmentsDashboardAppointmentRoute
   '/doctor-leave': typeof AppointmentsDoctorLeaveRoute
-  '/machine-appointment': typeof AppointmentsMachineAppointmentRoute
   '/message-appointment': typeof AppointmentsMessageAppointmentRoute
   '/priseAppointment': typeof AppointmentsPriseAppointmentRoute
   '/profil-appointment': typeof AppointmentsProfilAppointmentRoute
@@ -1532,7 +1514,6 @@ export interface FileRoutesByTo {
   '/clinic-tarif': typeof AppointmentsClinicTarifRoute
   '/dashboard-appointment': typeof AppointmentsDashboardAppointmentRoute
   '/doctor-leave': typeof AppointmentsDoctorLeaveRoute
-  '/machine-appointment': typeof AppointmentsMachineAppointmentRoute
   '/message-appointment': typeof AppointmentsMessageAppointmentRoute
   '/priseAppointment': typeof AppointmentsPriseAppointmentRoute
   '/profil-appointment': typeof AppointmentsProfilAppointmentRoute
@@ -1621,7 +1602,6 @@ export interface FileRoutesById {
   '/_appointments/clinic-tarif': typeof AppointmentsClinicTarifRoute
   '/_appointments/dashboard-appointment': typeof AppointmentsDashboardAppointmentRoute
   '/_appointments/doctor-leave': typeof AppointmentsDoctorLeaveRoute
-  '/_appointments/machine-appointment': typeof AppointmentsMachineAppointmentRoute
   '/_appointments/message-appointment': typeof AppointmentsMessageAppointmentRoute
   '/_appointments/priseAppointment': typeof AppointmentsPriseAppointmentRoute
   '/_appointments/profil-appointment': typeof AppointmentsProfilAppointmentRoute
@@ -1703,7 +1683,6 @@ export interface FileRouteTypes {
     | '/clinic-tarif'
     | '/dashboard-appointment'
     | '/doctor-leave'
-    | '/machine-appointment'
     | '/message-appointment'
     | '/priseAppointment'
     | '/profil-appointment'
@@ -1782,7 +1761,6 @@ export interface FileRouteTypes {
     | '/clinic-tarif'
     | '/dashboard-appointment'
     | '/doctor-leave'
-    | '/machine-appointment'
     | '/message-appointment'
     | '/priseAppointment'
     | '/profil-appointment'
@@ -1869,7 +1847,6 @@ export interface FileRouteTypes {
     | '/_appointments/clinic-tarif'
     | '/_appointments/dashboard-appointment'
     | '/_appointments/doctor-leave'
-    | '/_appointments/machine-appointment'
     | '/_appointments/message-appointment'
     | '/_appointments/priseAppointment'
     | '/_appointments/profil-appointment'
@@ -2005,7 +1982,6 @@ export const routeTree = rootRoute
         "/_appointments/clinic-tarif",
         "/_appointments/dashboard-appointment",
         "/_appointments/doctor-leave",
-        "/_appointments/machine-appointment",
         "/_appointments/message-appointment",
         "/_appointments/priseAppointment",
         "/_appointments/profil-appointment",
@@ -2136,10 +2112,6 @@ export const routeTree = rootRoute
     },
     "/_appointments/doctor-leave": {
       "filePath": "_appointments/doctor-leave.tsx",
-      "parent": "/_appointments"
-    },
-    "/_appointments/machine-appointment": {
-      "filePath": "_appointments/machine-appointment.tsx",
       "parent": "/_appointments"
     },
     "/_appointments/message-appointment": {

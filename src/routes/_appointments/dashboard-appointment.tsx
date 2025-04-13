@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/_appointments/dashboard-appointment")({
   component: RouteComponent,
@@ -65,6 +66,16 @@ type PatientInfo = {
   notes: string;
 };
 
+type Appointment = {
+  id: string;
+  time: string;
+  patientName: string;
+  doctor: string;
+  department: string;
+  contact: string;
+  status: "confirmed" | "pending" | "cancelled";
+};
+
 function RouteComponent() {
   const [currentTime] = useState(new Date());
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -78,22 +89,101 @@ function RouteComponent() {
     notes: "",
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const appointmentsPerPage = 5;
 
   // Données de la clinique
-  const departments: Department[] = [
-    { id: "ophtalmologie", name: "Ophtalmologie" },
-    { id: "chirurgie", name: "Chirurgie" },
-    { id: "radiologie", name: "Radiologie" },
-    { id: "maternite", name: "Maternité" },
-  ];
+ const departments: Department[] = [
+   { id: "medecine-generale", name: "Médecine générale" },
+   { id: "pediatrie", name: "Pédiatrie" },
+   { id: "gynecologie-obstetrique", name: "Gynécologie-obstétrique" },
+   { id: "ophtalmologie", name: "Ophtalmologie" },
+   { id: "chirurgie-generale", name: "Chirurgie générale" },
+   { id: "radiologie", name: "Radiologie" },
+   { id: "laboratoire", name: "Laboratoire" },
+   { id: "soins-infirmiers", name: "Soins infirmiers" },
+ ];
+
 
   const doctors: Doctor[] = [
-    { id: "dr-kengani", name: "Dr. Kengani", departmentId: "ophtalmologie" },
-    { id: "dr-loba", name: "Dr. Loba", departmentId: "chirurgie" },
-    { id: "echographe", name: "Échographe", departmentId: "radiologie" },
-    { id: "dr-sow", name: "Dr. Sow", departmentId: "ophtalmologie" },
-    { id: "dr-diallo", name: "Dr. Diallo", departmentId: "maternite" },
+    {
+      id: "dr-kengani-medecine",
+      name: "Dr. Kengani",
+      departmentId: "medecine-generale",
+    },
+    {
+      id: "dr-kengani-chirurgie",
+      name: "Dr. Kengani",
+      departmentId: "chirurgie-generale",
+    },
+    {
+      id: "dr-kengani-pediatrie",
+      name: "Dr. Kengani",
+      departmentId: "pediatrie",
+    },
+    {
+      id: "dr-loba",
+      name: "Dr. Loba",
+      departmentId: "ophtalmologie",
+    },
+    {
+      id: "dr-meite",
+      name: "Dr. Meite",
+      departmentId: "radiologie",
+    },
+    {
+      id: "dr-diallo",
+      name: "Dr. Diallo",
+      departmentId: "gynecologie-obstetrique",
+    },
+    {
+      id: "dr-traore",
+      name: "Dr. Traoré",
+      departmentId: "laboratoire",
+    },
+    {
+      id: "dr-kouame",
+      name: "Dr. Kouamé",
+      departmentId: "laboratoire",
+    },
+    {
+      id: "infirmier-konan",
+      name: "M. Konan",
+      departmentId: "soins-infirmiers",
+    },
+    {
+      id: "infirmiere-koffi",
+      name: "Mme Koffi",
+      departmentId: "soins-infirmiers",
+    },
+    {
+      id: "infirmier-doumbia",
+      name: "M. Doumbia",
+      departmentId: "soins-infirmiers",
+    },
+    {
+      id: "infirmiere-kone",
+      name: "Mme Koné",
+      departmentId: "soins-infirmiers",
+    },
+    {
+      id: "infirmier-bamba",
+      name: "M. Bamba",
+      departmentId: "soins-infirmiers",
+    },
+    {
+      id: "infirmiere-yao",
+      name: "Mme Yao",
+      departmentId: "soins-infirmiers",
+    },
+    {
+      id: "infirmier-adi",
+      name: "M. Adi",
+      departmentId: "soins-infirmiers",
+    },
   ];
+
 
   const timeSlots: TimeSlot[] = [
     { id: "1", time: "08:00", available: true },
@@ -106,15 +196,112 @@ function RouteComponent() {
     { id: "8", time: "17:00", available: true },
   ];
 
+  const appointmentsData: Appointment[] = [
+    {
+      id: "1",
+      time: "09:00",
+      patientName: "Moussa Diop",
+      doctor: "Dr. Kengani",
+      department: "Ophtalmologie",
+      contact: "77 123 45 67",
+      status: "confirmed",
+    },
+    {
+      id: "2",
+      time: "11:00",
+      patientName: "Aminata Sow",
+      doctor: "Dr. Diallo",
+      department: "Maternité",
+      contact: "76 234 56 78",
+      status: "pending",
+    },
+    {
+      id: "3",
+      time: "14:00",
+      patientName: "Jean Dupont",
+      doctor: "Dr. Loba",
+      department: "Chirurgie",
+      contact: "70 345 67 89",
+      status: "confirmed",
+    },
+    {
+      id: "4",
+      time: "15:00",
+      patientName: "Marie Fall",
+      doctor: "Dr. Sow",
+      department: "Ophtalmologie",
+      contact: "78 456 78 90",
+      status: "cancelled",
+    },
+    {
+      id: "5",
+      time: "16:00",
+      patientName: "Paul Martin",
+      doctor: "Échographe",
+      department: "Radiologie",
+      contact: "77 567 89 01",
+      status: "confirmed",
+    },
+    {
+      id: "6",
+      time: "17:00",
+      patientName: "Sophie Diagne",
+      doctor: "Dr. Diallo",
+      department: "Maternité",
+      contact: "76 678 90 12",
+      status: "pending",
+    },
+  ];
+
   // Filtrer les médecins par département sélectionné
   const filteredDoctors = selectedDepartment
     ? doctors.filter((doctor) => doctor.departmentId === selectedDepartment)
     : [];
 
+  // Filtrer les rendez-vous selon le terme de recherche
+  const filteredAppointments = useMemo(() => {
+    return appointmentsData.filter((appointment) => {
+      return (
+        appointment.patientName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        appointment.doctor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        appointment.department
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        appointment.contact.includes(searchTerm)
+      );
+    });
+  }, [searchTerm]);
+
+  // Pagination
+  const indexOfLastAppointment = currentPage * appointmentsPerPage;
+  const indexOfFirstAppointment = indexOfLastAppointment - appointmentsPerPage;
+  const currentAppointments = filteredAppointments.slice(
+    indexOfFirstAppointment,
+    indexOfLastAppointment
+  );
+  const totalPages = Math.ceil(
+    filteredAppointments.length / appointmentsPerPage
+  );
+
+  // Fonction pour obtenir la classe CSS selon le statut
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case "confirmed":
+        return "bg-green-100 text-green-800";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "cancelled":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   // Gérer la soumission du formulaire
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Ici vous ajouterez la logique pour enregistrer le rendez-vous
     console.log({
       date,
       department: selectedDepartment,
@@ -123,7 +310,6 @@ function RouteComponent() {
       patientInfo,
     });
     setIsDialogOpen(false);
-    // Réinitialiser les champs
     setPatientInfo({
       fullName: "",
       phone: "",
@@ -164,7 +350,7 @@ function RouteComponent() {
               value={selectedDepartment}
               onValueChange={(value) => {
                 setSelectedDepartment(value);
-                setSelectedDoctor(undefined); // Réinitialiser le médecin quand on change de département
+                setSelectedDoctor(undefined);
               }}
             >
               <SelectTrigger className="w-full">
@@ -316,37 +502,106 @@ function RouteComponent() {
         </div>
       </div>
 
-      {/* Liste des rendez-vous du jour */}
+      {/* Liste des rendez-vous du jour avec recherche et pagination */}
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Rendez-vous du jour</h2>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Heure</TableHead>
-              <TableHead>Patient</TableHead>
-              <TableHead>Médecin</TableHead>
-              <TableHead>Département</TableHead>
-              <TableHead>Contact</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {/* Exemple de données - à remplacer par vos vraies données */}
-            <TableRow>
-              <TableCell>09:00</TableCell>
-              <TableCell>Moussa Diop</TableCell>
-              <TableCell>Dr. Kengani</TableCell>
-              <TableCell>Ophtalmologie</TableCell>
-              <TableCell>77 123 45 67</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>11:00</TableCell>
-              <TableCell>Aminata Sow</TableCell>
-              <TableCell>Dr. Diallo</TableCell>
-              <TableCell>Maternité</TableCell>
-              <TableCell>76 234 56 78</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+          <h2 className="text-xl font-semibold">Rendez-vous du jour</h2>
+
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Rechercher..."
+              className="pl-10"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="rounded-md border shadow-sm overflow-hidden">
+          <Table>
+            <TableHeader className="bg-[#018787] hover:bg-[#018787]">
+              <TableRow className="hover:bg-[#018787]">
+                <TableHead className="text-white">Heure</TableHead>
+                <TableHead className="text-white">Patient</TableHead>
+                <TableHead className="text-white">Médecin</TableHead>
+                <TableHead className="text-white">Département</TableHead>
+                <TableHead className="text-white">Contact</TableHead>
+                <TableHead className="text-white">Statut</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {currentAppointments.length > 0 ? (
+                currentAppointments.map((appointment) => (
+                  <TableRow key={appointment.id}>
+                    <TableCell className="font-medium">
+                      {appointment.time}
+                    </TableCell>
+                    <TableCell>{appointment.patientName}</TableCell>
+                    <TableCell>{appointment.doctor}</TableCell>
+                    <TableCell>{appointment.department}</TableCell>
+                    <TableCell>{appointment.contact}</TableCell>
+                    <TableCell>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusClass(appointment.status)}`}
+                      >
+                        {appointment.status === "confirmed" && "Confirmé"}
+                        {appointment.status === "pending" && "En attente"}
+                        {appointment.status === "cancelled" && "Annulé"}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-8 text-muted-foreground"
+                  >
+                    Aucun rendez-vous trouvé
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Pagination */}
+        {filteredAppointments.length > 0 && (
+          <div className="flex items-center justify-between mt-4">
+            <div className="text-sm text-muted-foreground">
+              Affichage de {indexOfFirstAppointment + 1} à{" "}
+              {Math.min(indexOfLastAppointment, filteredAppointments.length)}{" "}
+              sur {filteredAppointments.length} rendez-vous
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-sm font-medium">
+                Page {currentPage} sur {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

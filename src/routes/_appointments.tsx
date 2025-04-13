@@ -17,7 +17,6 @@ import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Calendar,
   LayoutDashboard,
-  List,
   Settings,
   Stethoscope,
   Wallet,
@@ -44,11 +43,6 @@ function RouteComponent() {
       icon: Calendar,
     },
     {
-      title: "Rendez-vous machines",
-      url: "/machine-appointment",
-      icon: List,
-    },
-    {
       title: "Congé Médical",
       url: "/doctor-leave",
       icon: Stethoscope,
@@ -70,7 +64,6 @@ function RouteComponent() {
     const breadcrumbMap: Record<string, { title: string; href?: string }> = {
       "/dashboard-appointment": { title: "Rendez-vous" },
       "/appointment-list": { title: "Liste des rendez-vous" },
-      "/machine-appointment": { title: "Rendez-vous machines" },
       "/doctor-leave": { title: "Congé Médical" },
       "/clinic-tarif": { title: "Tarifs Clinique" },
       "/setting-appointment": { title: "Paramètres" },
@@ -84,7 +77,7 @@ function RouteComponent() {
     return (
       <>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
+          <BreadcrumbLink href="/menu-principal">Accueil</BreadcrumbLink>
         </BreadcrumbItem>
 
         {currentPath.title !== "Accueil" && (
