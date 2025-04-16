@@ -1,6 +1,19 @@
+"use client";
+
 import { createFileRoute } from "@tanstack/react-router";
-import { Bell, Calendar, Home } from "lucide-react";
+import {
+  Bell,
+  Calendar,
+  Home,
+  ClipboardList,
+  Syringe,
+  Pill,
+  AlertTriangle,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 
 export const Route = createFileRoute("/_nurse/dashboard-nurse")({
   component: DashboardComponent,
@@ -10,91 +23,236 @@ function DashboardComponent() {
   // Données simulées
   const urgentAlerts = 3;
   const todayPatients = 12;
+  const completedTasks = 7;
   const pendingTasks = 5;
+  const totalTasks = completedTasks + pendingTasks;
+  const completionRate = Math.round((completedTasks / totalTasks) * 100);
+
+  // Tâches en attente
+  const pendingTasksList = [
+    {
+      id: 1,
+      type: "Pansement",
+      patient: "M. Dupont",
+      room: "Ch. 204",
+      time: "14h30",
+    },
+    {
+      id: 2,
+      type: "Prise de sang",
+      patient: "Mme. Diallo",
+      room: "Ch. 112",
+      time: "15h15",
+    },
+    {
+      id: 3,
+      type: "Administration médicaments",
+      patient: "M. Sow",
+      room: "Ch. 305",
+      time: "16h00",
+    },
+    {
+      id: 4,
+      type: "Contrôle tension",
+      patient: "Mme. Fall",
+      room: "Ch. 208",
+      time: "10h00",
+    },
+    {
+      id: 5,
+      type: "Préparation intervention",
+      patient: "M. Diop",
+      room: "Bloc 2",
+      time: "08h45",
+    },
+  ];
+
+  // Alertes urgentes
+  const alertsList = [
+    { id: 1, type: "Tension élevée", patient: "Ch. 204", severity: "high" },
+    {
+      id: 2,
+      type: "Allergie détectée",
+      patient: "Ch. 112",
+      severity: "medium",
+    },
+    {
+      id: 3,
+      type: "Médicament en rupture",
+      patient: "Pharmacie",
+      severity: "low",
+    },
+  ];
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-6">
       {/* En-tête */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Tableau de Bord Infirmier</h1>
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+        <div>
+          <h1 className="text-2xl font-bold">Tableau de Bord Infirmier</h1>
+          <p className="text-muted-foreground">
+            Aperçu de vos activités quotidiennes
+          </p>
+        </div>
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="gap-2">
             <Calendar className="h-4 w-4" />
-            {new Date().toLocaleDateString("fr-FR")}
+            {new Date().toLocaleDateString("fr-FR", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+            })}
           </Badge>
+          <Button variant="outline" size="sm">
+            Voir planning complet
+          </Button>
         </div>
       </div>
 
       {/* Cartes de statistiques */}
       <div className="grid gap-4 md:grid-cols-3">
-        {/* Carte Accueil */}
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="rounded-full bg-primary/10 p-3">
-              <Home className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-medium">Patients aujourd'hui</h3>
-              <p className="text-2xl font-bold">{todayPatients}</p>
-            </div>
-          </div>
-        </div>
+        {/* Carte Patients */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">
+              Patients aujourd'hui
+            </CardTitle>
+            <Home className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{todayPatients}</div>
+            <p className="text-xs text-muted-foreground">+2 depuis hier</p>
+          </CardContent>
+        </Card>
 
         {/* Carte Alertes */}
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="rounded-full bg-destructive/10 p-3">
-              <Bell className="h-6 w-6 text-destructive" />
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">
+              Alertes urgentes
+            </CardTitle>
+            <Bell className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{urgentAlerts}</div>
+            <div className="flex gap-1 mt-1">
+              <Badge variant="destructive" className="px-1 py-0 text-xs">
+                3 critiques
+              </Badge>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-medium">Alertes urgentes</h3>
-                {urgentAlerts > 0 && (
-                  <Badge variant="destructive">{urgentAlerts}</Badge>
-                )}
-              </div>
-              <p className="text-2xl font-bold">{urgentAlerts}</p>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        {/* Carte Planning */}
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="rounded-full bg-blue-500/10 p-3">
-              <Calendar className="h-6 w-6 text-blue-500" />
+        {/* Carte Tâches */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Tâches</CardTitle>
+            <ClipboardList className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {completedTasks}
+              <span className="text-muted-foreground">/{totalTasks}</span>
             </div>
-            <div>
-              <h3 className="font-medium">Prochaine garde</h3>
-              <p className="text-2xl font-bold">Demain 20h</p>
-            </div>
-          </div>
-        </div>
+            <Progress value={completionRate} className="h-2 mt-2" />
+            <p className="text-xs text-muted-foreground mt-1">
+              {completionRate}% complétées
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Section Tâches */}
-      <div className="rounded-lg border bg-card p-6 shadow-sm">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Tâches en attente</h2>
-          <Badge variant="outline">{pendingTasks} non terminées</Badge>
-        </div>
-
-        <div className="space-y-4">
-          {Array.from({ length: pendingTasks }).map((_, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-between rounded border p-4"
-            >
-              <div>
-                <h4 className="font-medium">Pansement - Ch. 204</h4>
-                <p className="text-sm text-muted-foreground">
-                  M. Dupont - 14h30
-                </p>
-              </div>
-              <Badge variant="secondary">À faire</Badge>
+      {/* Grille inférieure */}
+      <div className="grid gap-4 md:grid-cols-2">
+        {/* Section Tâches */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Tâches en attente</CardTitle>
+              <Badge variant="outline">{pendingTasks} non terminées</Badge>
             </div>
-          ))}
-        </div>
+          </CardHeader>
+          <CardContent className="grid gap-3">
+            {pendingTasksList.map((task) => (
+              <div
+                key={task.id}
+                className="flex items-center gap-4 p-3 border rounded-lg"
+              >
+                <div
+                  className={`p-2 rounded-full ${
+                    task.type.includes("Pansement")
+                      ? "bg-purple-100 text-purple-600"
+                      : task.type.includes("sang")
+                        ? "bg-red-100 text-red-600"
+                        : task.type.includes("médicaments")
+                          ? "bg-blue-100 text-blue-600"
+                          : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {task.type.includes("Pansement") ? (
+                    <Syringe className="h-4 w-4" />
+                  ) : task.type.includes("sang") ? (
+                    <Pill className="h-4 w-4" />
+                  ) : (
+                    <ClipboardList className="h-4 w-4" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium">{task.type}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {task.patient} • {task.room} • {task.time}
+                  </p>
+                </div>
+                <Button variant="outline" size="sm">
+                  Marquer comme fait
+                </Button>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Section Alertes */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Alertes récentes</CardTitle>
+              <Badge variant="destructive">{urgentAlerts} non lues</Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="grid gap-3">
+            {alertsList.map((alert) => (
+              <div
+                key={alert.id}
+                className="flex items-start gap-3 p-3 border rounded-lg"
+              >
+                <div
+                  className={`mt-1 p-2 rounded-full ${
+                    alert.severity === "high"
+                      ? "bg-red-100 text-red-600"
+                      : alert.severity === "medium"
+                        ? "bg-orange-100 text-orange-600"
+                        : "bg-yellow-100 text-yellow-600"
+                  }`}
+                >
+                  <AlertTriangle className="h-4 w-4" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium">{alert.type}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {alert.patient}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground"
+                >
+                  Voir
+                </Button>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

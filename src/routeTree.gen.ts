@@ -33,7 +33,6 @@ import { Route as OpdVaccinImport } from './routes/_opd/vaccin'
 import { Route as OpdSettingOpdImport } from './routes/_opd/setting-opd'
 import { Route as OpdRevisitImport } from './routes/_opd/revisit'
 import { Route as OpdRegistrationOpdImport } from './routes/_opd/registration-opd'
-import { Route as OpdQueueImport } from './routes/_opd/queue'
 import { Route as OpdProfilOpdImport } from './routes/_opd/profil-opd'
 import { Route as OpdMessageOpdImport } from './routes/_opd/message-opd'
 import { Route as OpdInvestigationOpdImport } from './routes/_opd/investigation-opd'
@@ -218,12 +217,6 @@ const OpdRevisitRoute = OpdRevisitImport.update({
 const OpdRegistrationOpdRoute = OpdRegistrationOpdImport.update({
   id: '/registration-opd',
   path: '/registration-opd',
-  getParentRoute: () => OpdRoute,
-} as any)
-
-const OpdQueueRoute = OpdQueueImport.update({
-  id: '/queue',
-  path: '/queue',
   getParentRoute: () => OpdRoute,
 } as any)
 
@@ -1107,13 +1100,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdProfilOpdImport
       parentRoute: typeof OpdImport
     }
-    '/_opd/queue': {
-      id: '/_opd/queue'
-      path: '/queue'
-      fullPath: '/queue'
-      preLoaderRoute: typeof OpdQueueImport
-      parentRoute: typeof OpdImport
-    }
     '/_opd/registration-opd': {
       id: '/_opd/registration-opd'
       path: '/registration-opd'
@@ -1381,7 +1367,6 @@ interface OpdRouteChildren {
   OpdInvestigationOpdRoute: typeof OpdInvestigationOpdRoute
   OpdMessageOpdRoute: typeof OpdMessageOpdRoute
   OpdProfilOpdRoute: typeof OpdProfilOpdRoute
-  OpdQueueRoute: typeof OpdQueueRoute
   OpdRegistrationOpdRoute: typeof OpdRegistrationOpdRoute
   OpdRevisitRoute: typeof OpdRevisitRoute
   OpdSettingOpdRoute: typeof OpdSettingOpdRoute
@@ -1395,7 +1380,6 @@ const OpdRouteChildren: OpdRouteChildren = {
   OpdInvestigationOpdRoute: OpdInvestigationOpdRoute,
   OpdMessageOpdRoute: OpdMessageOpdRoute,
   OpdProfilOpdRoute: OpdProfilOpdRoute,
-  OpdQueueRoute: OpdQueueRoute,
   OpdRegistrationOpdRoute: OpdRegistrationOpdRoute,
   OpdRevisitRoute: OpdRevisitRoute,
   OpdSettingOpdRoute: OpdSettingOpdRoute,
@@ -1490,7 +1474,6 @@ export interface FileRoutesByFullPath {
   '/investigation-opd': typeof OpdInvestigationOpdRoute
   '/message-opd': typeof OpdMessageOpdRoute
   '/profil-opd': typeof OpdProfilOpdRoute
-  '/queue': typeof OpdQueueRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
   '/revisit': typeof OpdRevisitRoute
   '/setting-opd': typeof OpdSettingOpdRoute
@@ -1569,7 +1552,6 @@ export interface FileRoutesByTo {
   '/investigation-opd': typeof OpdInvestigationOpdRoute
   '/message-opd': typeof OpdMessageOpdRoute
   '/profil-opd': typeof OpdProfilOpdRoute
-  '/queue': typeof OpdQueueRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
   '/revisit': typeof OpdRevisitRoute
   '/setting-opd': typeof OpdSettingOpdRoute
@@ -1657,7 +1639,6 @@ export interface FileRoutesById {
   '/_opd/investigation-opd': typeof OpdInvestigationOpdRoute
   '/_opd/message-opd': typeof OpdMessageOpdRoute
   '/_opd/profil-opd': typeof OpdProfilOpdRoute
-  '/_opd/queue': typeof OpdQueueRoute
   '/_opd/registration-opd': typeof OpdRegistrationOpdRoute
   '/_opd/revisit': typeof OpdRevisitRoute
   '/_opd/setting-opd': typeof OpdSettingOpdRoute
@@ -1738,7 +1719,6 @@ export interface FileRouteTypes {
     | '/investigation-opd'
     | '/message-opd'
     | '/profil-opd'
-    | '/queue'
     | '/registration-opd'
     | '/revisit'
     | '/setting-opd'
@@ -1816,7 +1796,6 @@ export interface FileRouteTypes {
     | '/investigation-opd'
     | '/message-opd'
     | '/profil-opd'
-    | '/queue'
     | '/registration-opd'
     | '/revisit'
     | '/setting-opd'
@@ -1902,7 +1881,6 @@ export interface FileRouteTypes {
     | '/_opd/investigation-opd'
     | '/_opd/message-opd'
     | '/_opd/profil-opd'
-    | '/_opd/queue'
     | '/_opd/registration-opd'
     | '/_opd/revisit'
     | '/_opd/setting-opd'
@@ -2074,7 +2052,6 @@ export const routeTree = rootRoute
         "/_opd/investigation-opd",
         "/_opd/message-opd",
         "/_opd/profil-opd",
-        "/_opd/queue",
         "/_opd/registration-opd",
         "/_opd/revisit",
         "/_opd/setting-opd",
@@ -2332,10 +2309,6 @@ export const routeTree = rootRoute
     },
     "/_opd/profil-opd": {
       "filePath": "_opd/profil-opd.tsx",
-      "parent": "/_opd"
-    },
-    "/_opd/queue": {
-      "filePath": "_opd/queue.tsx",
       "parent": "/_opd"
     },
     "/_opd/registration-opd": {

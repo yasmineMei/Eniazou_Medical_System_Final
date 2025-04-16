@@ -6,11 +6,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   Baby,
   Calendar,
-  Eye,
   Heart,
   MapPin,
   Phone,
-  Printer,
   Save,
   Search,
   User,
@@ -47,11 +45,9 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationLink,
-  PaginationEllipsis,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PaymentPDF from "@/pdf/paymentPDF";
+
 
 // Types pour les données du nouveau-né
 type NewBorn = {
@@ -147,13 +143,7 @@ function RouteComponent() {
     alert("Nouveau-né enregistré avec succès !");
   };
 
-  const handlePrint = (newBorn: NewBorn) => {
-    toast.success(`Impression du nouveau-né ${newBorn.namebaby}`);
-  };
-
-  const handleView = (newBorn: NewBorn) => {
-    toast.success(`Visualisation du nouveau-né ${newBorn.namebaby}`);
-  };
+  
 
   // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;

@@ -16,13 +16,12 @@ import {
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Settings2Icon,
-  CheckCircle,
   ClipboardList,
-  Clock,
   FileText,
   HeartPulse,
   Microscope,
   Baby,
+  SyringeIcon,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_opd")({
@@ -42,11 +41,6 @@ function RouteComponent() {
       isActive: true,
     },
     {
-      title: "File d'attente",
-      url: "/queue",
-      icon: Clock,
-    },
-    {
       title: "Examens médicaux",
       url: "/investigation-opd",
       icon: Microscope,
@@ -62,13 +56,13 @@ function RouteComponent() {
       icon: Baby,
     },
     {
-      title: "Consultations de suivi",
-      url: "/revisit",
-      icon: CheckCircle,
+      title: "Vaccination",
+      url: "/vaccin",
+      icon: SyringeIcon,
     },
     {
       title: "Certificats",
-      url: "/certificat",
+      url: "/certificate",
       icon: FileText,
     },
     {
@@ -82,12 +76,11 @@ function RouteComponent() {
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
       "/registration-opd": "Consultation",
-      "/queue": "File d'attente",
       "/investigation-opd": "Examens médicaux ",
       "/dayCare": "Soins ambulatoires",
       "/birth-registration": "Naissances ",
-      "/revisit": "Consultations de suivi",
-      "/certificat": "Certificats",
+      "/vaccin": "Vaccination",
+      "/certificate": "Certificats",
       "/setting-opd": "Paramètres",
       
       "/profil-opd": "Profil",
