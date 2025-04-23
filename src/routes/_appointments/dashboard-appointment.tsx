@@ -186,9 +186,9 @@ function RouteComponent() {
 
 
   const timeSlots: TimeSlot[] = [
-    { id: "1", time: "08:00", available: true },
-    { id: "2", time: "09:00", available: true },
-    { id: "3", time: "10:00", available: false },
+    { id: "1", time: "08:00", available: true,},
+    { id: "2", time: "09:00", available: true,},
+    { id: "3", time: "10:00", available: false,},
     { id: "4", time: "11:00", available: true },
     { id: "5", time: "14:00", available: true },
     { id: "6", time: "15:00", available: true },

@@ -1,4 +1,3 @@
-//import React from "react";
 import {
   Page,
   Text,
@@ -7,9 +6,8 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import logo from "@/images/logo.png"; // Assure-toi que le chemin est correct
+import logo from "@/images/logo.png";
 
-// Styles pour le PDF
 const styles = StyleSheet.create({
   page: {
     padding: 40,
@@ -74,165 +72,120 @@ const styles = StyleSheet.create({
   },
 });
 
-// Type pour les données du paiement
-type Payment = {
+type PatientPDFData = {
   id: number;
-  patient: {
-    numerofacture: string;
-    uhid: string;
-    nom: string;
-    prenom: string;
-    dateNaissance: string;
-    sexe: string;
-    telephone: string;
-    adresse: string;
-    date: string;
-    heure: string;
-    departement: string;
-    doctor: string;
-  };
-  clinique: {
-    nom: string;
-    adresse: string;
-    telephone: string;
-    email: string;
-  };
-  paiement?: {
-    cout: number;
-    mode: string;
-    statut: string;
-  };
+  uhid: string;
+  queue: string;
+  name: string;
+  phone: string;
+  date: string;
+  time: string;
+  department: string;
+  gender: string;
+  doctor: string;
+  fees: string;
+  paymentMode: string;
+  amount: number;
+  transactionId?: string;
 };
 
-// Props pour le composant PaymentPDF
-type PaymentPDFProps = {
-  payment: Payment;
-};
-
-// Composant PaymentPDF
-export const PaymentPDF = ({ payment }: PaymentPDFProps) => (
+export const PaymentPDF = ({ patient }: { patient: PatientPDFData }) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      {/* En-tête avec le logo et les informations de la clinique */}
       <View style={styles.header}>
         <Image src={logo} style={styles.logo} />
         <View style={styles.clinicInfo}>
-          <Text>{payment.clinique.nom}</Text>
-          <Text>{payment.clinique.adresse}</Text>
-          <Text>Tél: {payment.clinique.telephone}</Text>
-          <Text>Email: {payment.clinique.email}</Text>
+          <Text>Clinique Médicale Eniazou</Text>
+          <Text>Abidjan, Côte d'Ivoire</Text>
+          <Text>Tél: +225 XX XX XX XX</Text>
+          <Text>Email: contact@clinique.ci</Text>
         </View>
       </View>
 
-      {/* Titre du document */}
       <View style={styles.section}>
-        <Text style={styles.title}>Reçu de Paiement</Text>
+        <Text style={styles.title}>Facture de Consultation</Text>
       </View>
 
-      {/* Informations du patient */}
       <View style={styles.section}>
         <Text style={styles.heading}>Informations du Patient</Text>
         <View style={styles.grid}>
           <View style={styles.column}>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Numéro de Facture:</Text>{" "}
-              {payment.patient.numerofacture}
+              <Text style={{ fontWeight: "bold" }}>Nom:</Text> {patient.name}
             </Text>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>UHID:</Text>{" "}
-              {payment.patient.uhid}
+              <Text style={{ fontWeight: "bold" }}>UHID:</Text> {patient.uhid}
             </Text>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Nom:</Text>{" "}
-              {payment.patient.nom}
+              <Text style={{ fontWeight: "bold" }}>File d'attente:</Text>{" "}
+              {patient.queue}
             </Text>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Prénom:</Text>{" "}
-              {payment.patient.prenom}
-            </Text>
-            <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Date de Naissance:</Text>{" "}
-              {payment.patient.dateNaissance}
+              <Text style={{ fontWeight: "bold" }}>Téléphone:</Text>{" "}
+              {patient.phone}
             </Text>
           </View>
           <View style={styles.column}>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Sexe:</Text>{" "}
-              {payment.patient.sexe}
+              <Text style={{ fontWeight: "bold" }}>Date:</Text> {patient.date}
             </Text>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Téléphone:</Text>{" "}
-              {payment.patient.telephone}
+              <Text style={{ fontWeight: "bold" }}>Heure:</Text> {patient.time}
             </Text>
             <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Adresse:</Text>{" "}
-              {payment.patient.adresse}
-            </Text>
-            <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Date:</Text>{" "}
-              {payment.patient.date}
-            </Text>
-            <Text style={styles.text}>
-              <Text style={{ fontWeight: "bold" }}>Heure:</Text>{" "}
-              {payment.patient.heure}
+              <Text style={{ fontWeight: "bold" }}>Genre:</Text>{" "}
+              {patient.gender}
             </Text>
           </View>
         </View>
       </View>
 
-      {/* Informations du département et du médecin */}
       <View style={styles.section}>
-        <Text style={styles.heading}>Informations Médicales</Text>
+        <Text style={styles.heading}>Détails Médicaux</Text>
         <View style={styles.grid}>
           <View style={styles.column}>
             <Text style={styles.text}>
               <Text style={{ fontWeight: "bold" }}>Département:</Text>{" "}
-              {payment.patient.departement}
+              {patient.department}
             </Text>
           </View>
           <View style={styles.column}>
             <Text style={styles.text}>
               <Text style={{ fontWeight: "bold" }}>Médecin:</Text>{" "}
-              {payment.patient.doctor}
+              {patient.doctor}
             </Text>
           </View>
         </View>
       </View>
 
-      {/* Informations de paiement */}
-      {payment.paiement && (
-        <View style={styles.section}>
-          <Text style={styles.heading}>Informations de Paiement</Text>
-          <View style={styles.grid}>
-            <View style={styles.column}>
-              <Text style={styles.text}>
-                <Text style={{ fontWeight: "bold" }}>Coût:</Text>{" "}
-                {payment.paiement.cout} FCFA
-              </Text>
-            </View>
-            <View style={styles.column}>
-              <Text style={styles.text}>
-                <Text style={{ fontWeight: "bold" }}>Mode de Paiement:</Text>{" "}
-                {payment.paiement.mode}
-              </Text>
-            </View>
-            <View style={styles.column}>
-              <Text style={styles.text}>
-                <Text style={{ fontWeight: "bold" }}>Statut:</Text>{" "}
-                {payment.paiement.statut}
-              </Text>
-            </View>
+      <View style={styles.section}>
+        <Text style={styles.heading}>Détails de Paiement</Text>
+        <View style={styles.grid}>
+          <View style={styles.column}>
+            <Text style={styles.text}>
+              <Text style={{ fontWeight: "bold" }}>Montant:</Text>{" "}
+              {patient.amount} FCFA
+            </Text>
+          </View>
+          <View style={styles.column}>
+            <Text style={styles.text}>
+              <Text style={{ fontWeight: "bold" }}>Mode de Paiement:</Text>{" "}
+              {patient.paymentMode}
+            </Text>
           </View>
         </View>
-      )}
+        {patient.transactionId && (
+          <Text style={styles.text}>
+            <Text style={{ fontWeight: "bold" }}>ID Transaction:</Text>{" "}
+            {patient.transactionId}
+          </Text>
+        )}
+      </View>
 
-      {/* Pied de page */}
       <View style={styles.footer}>
-        <Text>{payment.clinique.nom} - Tous droits réservés © 2023</Text>
+        <Text>Merci pour votre confiance</Text>
         <Text>Page 1 sur 1</Text>
       </View>
     </Page>
   </Document>
 );
-
-export default PaymentPDF;

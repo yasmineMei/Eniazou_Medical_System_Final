@@ -15,12 +15,9 @@ import {
 } from "@/components/ui/sidebar";
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
-  BarChart,
   Bed,
   CreditCard,
   LogOut,
-  Microscope,
-  Pill,
   Scissors,
   Settings2,
 } from "lucide-react";
@@ -44,16 +41,6 @@ function RouteComponent() {
       isActive: true,
     },
     {
-      title: "Gestion des médicaments",
-      url: "/medecines",
-      icon: Pill, 
-    },
-    {
-      title: "Examens médicaux",
-      url: "/investigation",
-      icon: Microscope,
-    },
-    {
       title: "Opérations & Chirurgie",
       url: "/oT",
       icon: Scissors, 
@@ -67,11 +54,6 @@ function RouteComponent() {
       title: "Facturation",
       url: "/payment",
       icon: CreditCard, 
-    },
-    {
-      title: "Rapports et Statistiques",
-      url: "/report-ipd",
-      icon: BarChart, 
     },
     {
       title: "Paramètres",
@@ -90,7 +72,6 @@ function RouteComponent() {
       "/oT": "Opérations & Chirurgie",
       "/discharge": "Sortie des patients",
       "/payment": "Facturation",
-      "/report-ipd": "Rapports et Statistiques",
       "/setting-opd": "Paramètres",
       
       "/profil-opd": "Profil",

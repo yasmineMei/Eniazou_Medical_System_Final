@@ -35,8 +35,6 @@ import { Route as OpdRevisitImport } from './routes/_opd/revisit'
 import { Route as OpdRegistrationOpdImport } from './routes/_opd/registration-opd'
 import { Route as OpdProfilOpdImport } from './routes/_opd/profil-opd'
 import { Route as OpdMessageOpdImport } from './routes/_opd/message-opd'
-import { Route as OpdInvestigationOpdImport } from './routes/_opd/investigation-opd'
-import { Route as OpdDayCareImport } from './routes/_opd/dayCare'
 import { Route as OpdCertificateImport } from './routes/_opd/certificate'
 import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registration'
 import { Route as NurseSettingNurseImport } from './routes/_nurse/setting-nurse'
@@ -229,18 +227,6 @@ const OpdProfilOpdRoute = OpdProfilOpdImport.update({
 const OpdMessageOpdRoute = OpdMessageOpdImport.update({
   id: '/message-opd',
   path: '/message-opd',
-  getParentRoute: () => OpdRoute,
-} as any)
-
-const OpdInvestigationOpdRoute = OpdInvestigationOpdImport.update({
-  id: '/investigation-opd',
-  path: '/investigation-opd',
-  getParentRoute: () => OpdRoute,
-} as any)
-
-const OpdDayCareRoute = OpdDayCareImport.update({
-  id: '/dayCare',
-  path: '/dayCare',
   getParentRoute: () => OpdRoute,
 } as any)
 
@@ -1072,20 +1058,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdCertificateImport
       parentRoute: typeof OpdImport
     }
-    '/_opd/dayCare': {
-      id: '/_opd/dayCare'
-      path: '/dayCare'
-      fullPath: '/dayCare'
-      preLoaderRoute: typeof OpdDayCareImport
-      parentRoute: typeof OpdImport
-    }
-    '/_opd/investigation-opd': {
-      id: '/_opd/investigation-opd'
-      path: '/investigation-opd'
-      fullPath: '/investigation-opd'
-      preLoaderRoute: typeof OpdInvestigationOpdImport
-      parentRoute: typeof OpdImport
-    }
     '/_opd/message-opd': {
       id: '/_opd/message-opd'
       path: '/message-opd'
@@ -1363,8 +1335,6 @@ const NurseRouteWithChildren = NurseRoute._addFileChildren(NurseRouteChildren)
 interface OpdRouteChildren {
   OpdBirthRegistrationRoute: typeof OpdBirthRegistrationRoute
   OpdCertificateRoute: typeof OpdCertificateRoute
-  OpdDayCareRoute: typeof OpdDayCareRoute
-  OpdInvestigationOpdRoute: typeof OpdInvestigationOpdRoute
   OpdMessageOpdRoute: typeof OpdMessageOpdRoute
   OpdProfilOpdRoute: typeof OpdProfilOpdRoute
   OpdRegistrationOpdRoute: typeof OpdRegistrationOpdRoute
@@ -1376,8 +1346,6 @@ interface OpdRouteChildren {
 const OpdRouteChildren: OpdRouteChildren = {
   OpdBirthRegistrationRoute: OpdBirthRegistrationRoute,
   OpdCertificateRoute: OpdCertificateRoute,
-  OpdDayCareRoute: OpdDayCareRoute,
-  OpdInvestigationOpdRoute: OpdInvestigationOpdRoute,
   OpdMessageOpdRoute: OpdMessageOpdRoute,
   OpdProfilOpdRoute: OpdProfilOpdRoute,
   OpdRegistrationOpdRoute: OpdRegistrationOpdRoute,
@@ -1470,8 +1438,6 @@ export interface FileRoutesByFullPath {
   '/setting-nurse': typeof NurseSettingNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/certificate': typeof OpdCertificateRoute
-  '/dayCare': typeof OpdDayCareRoute
-  '/investigation-opd': typeof OpdInvestigationOpdRoute
   '/message-opd': typeof OpdMessageOpdRoute
   '/profil-opd': typeof OpdProfilOpdRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
@@ -1548,8 +1514,6 @@ export interface FileRoutesByTo {
   '/setting-nurse': typeof NurseSettingNurseRoute
   '/birth-registration': typeof OpdBirthRegistrationRoute
   '/certificate': typeof OpdCertificateRoute
-  '/dayCare': typeof OpdDayCareRoute
-  '/investigation-opd': typeof OpdInvestigationOpdRoute
   '/message-opd': typeof OpdMessageOpdRoute
   '/profil-opd': typeof OpdProfilOpdRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
@@ -1635,8 +1599,6 @@ export interface FileRoutesById {
   '/_nurse/setting-nurse': typeof NurseSettingNurseRoute
   '/_opd/birth-registration': typeof OpdBirthRegistrationRoute
   '/_opd/certificate': typeof OpdCertificateRoute
-  '/_opd/dayCare': typeof OpdDayCareRoute
-  '/_opd/investigation-opd': typeof OpdInvestigationOpdRoute
   '/_opd/message-opd': typeof OpdMessageOpdRoute
   '/_opd/profil-opd': typeof OpdProfilOpdRoute
   '/_opd/registration-opd': typeof OpdRegistrationOpdRoute
@@ -1715,8 +1677,6 @@ export interface FileRouteTypes {
     | '/setting-nurse'
     | '/birth-registration'
     | '/certificate'
-    | '/dayCare'
-    | '/investigation-opd'
     | '/message-opd'
     | '/profil-opd'
     | '/registration-opd'
@@ -1792,8 +1752,6 @@ export interface FileRouteTypes {
     | '/setting-nurse'
     | '/birth-registration'
     | '/certificate'
-    | '/dayCare'
-    | '/investigation-opd'
     | '/message-opd'
     | '/profil-opd'
     | '/registration-opd'
@@ -1877,8 +1835,6 @@ export interface FileRouteTypes {
     | '/_nurse/setting-nurse'
     | '/_opd/birth-registration'
     | '/_opd/certificate'
-    | '/_opd/dayCare'
-    | '/_opd/investigation-opd'
     | '/_opd/message-opd'
     | '/_opd/profil-opd'
     | '/_opd/registration-opd'
@@ -2048,8 +2004,6 @@ export const routeTree = rootRoute
       "children": [
         "/_opd/birth-registration",
         "/_opd/certificate",
-        "/_opd/dayCare",
-        "/_opd/investigation-opd",
         "/_opd/message-opd",
         "/_opd/profil-opd",
         "/_opd/registration-opd",
@@ -2293,14 +2247,6 @@ export const routeTree = rootRoute
     },
     "/_opd/certificate": {
       "filePath": "_opd/certificate.tsx",
-      "parent": "/_opd"
-    },
-    "/_opd/dayCare": {
-      "filePath": "_opd/dayCare.tsx",
-      "parent": "/_opd"
-    },
-    "/_opd/investigation-opd": {
-      "filePath": "_opd/investigation-opd.tsx",
       "parent": "/_opd"
     },
     "/_opd/message-opd": {

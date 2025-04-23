@@ -1,3 +1,5 @@
+
+
 import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 
@@ -14,9 +16,9 @@ const menuItems = [
     path: "/dashboard-appointment",
   },
   { title: "Laboratoire", icon: "🔬", path: "/opd-request" },
-  { title: "Radiologie", icon: "📷", path: "/opd-radiology" },
+  { title: "Imagerie Médicale", icon: "📷", path: "/opd-radiology" },
   { title: "Infirmier", icon: "💉", path: "/dashboard-nurse" },
-  { title: "Médecin", icon: "👨‍⚕️", path: "/appointment-doctor" },
+  { title: "Patient", icon: "🧍", path: "/patient-doctor" },
   { title: "Stock Médicale", icon: "💊", path: "/administration" },
   { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
 ] as const;
@@ -33,7 +35,7 @@ function RouteComponent() {
   let menu = [...menuItems];
 
   if (role === "doctor") {
-    const toKeep: MenuTitle[] = ["Médecin", "Laboratoire", "Radiologie"];
+    const toKeep: MenuTitle[] = ["Patient", "Laboratoire", "Imagerie Médicale"];
     menu = menu.filter((x) => toKeep.includes(x.title));
   } else if (role === "nurse") {
     const toKeep: MenuTitle[] = ["Infirmier", "Laboratoire"];

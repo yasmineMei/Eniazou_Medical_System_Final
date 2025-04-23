@@ -153,7 +153,7 @@ function RouteComponent() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="p-6 space-y-6 bg-gradient-to-r from-blue-50 to-purple-50 min-h-screen">
+    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#018a8c] to-[#016a6c]">
           Enregistrement des nouveau-nés

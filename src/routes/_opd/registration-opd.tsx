@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { useState, useReducer, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import {
   Search,
   User,
@@ -15,8 +16,11 @@ import {
   Save,
   Printer,
   Edit,
-  ClipboardPlus,
+  Trash2,
 } from "lucide-react";
+
+// Components
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
@@ -51,16 +55,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { toast } from "sonner";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { PaymentPDF } from "@/pdf/paymentPDF";
-import { UHIDPDF } from "@/pdf/uhidPDF";
 
-// Types pour les données du patient
+// PDF Components
+import { PaymentPDF } from "@/pdf/paymentPDF";
+
+// Types
 type Patient = {
   id: number;
   uhid: string;
-  opdId: string;
+  queue: string;
   name: string;
   phone: string;
   dateTime: string;
@@ -77,7 +80,26 @@ type Patient = {
   transactionId: string;
 };
 
-// Données fictives pour les patients
+type PatientState = {
+  patients: Patient[];
+  formData: Patient;
+  currentPage: number;
+  paymentMethod: string;
+  isEditing: boolean;
+};
+
+type PatientAction =
+  | { type: "SET_FIELD"; field: keyof Patient; value: string }
+  | { type: "RESET_FORM" }
+  | { type: "ADD_PATIENT"; patient: Patient }
+  | { type: "UPDATE_PATIENT"; patient: Patient }
+  | { type: "DELETE_PATIENT"; id: number }
+  | { type: "SET_PATIENT"; patient: Patient }
+  | { type: "SET_PAGE"; page: number }
+  | { type: "SET_PAYMENT_METHOD"; method: string }
+  | { type: "SET_EDITING"; isEditing: boolean };
+
+// Initial data
 const initialPatients: Patient[] = [
   {
     id: 1,
@@ -90,22 +112,19 @@ const initialPatients: Patient[] = [
     bloodGroup: "A+",
     email: "jean.dupont@example.com",
     patientImage: "",
-    opdId: "OPD123",
+    queue: "1",
     doctor: "Dr. Martin",
     fees: "15000 FCFA",
     paymentMode: "Espèces",
-    dob: "",
-    resident: "",
+    dob: "1980-01-01",
+    resident: "Abidjan, Cocody",
     transactionId: "",
   },
 ];
 
-export const Route = createFileRoute("/_opd/registration-opd")({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
-  const [formData, setFormData] = useState<Patient>({
+const initialState: PatientState = {
+  patients: initialPatients,
+  formData: {
     id: 0,
     uhid: "",
     name: "",
@@ -116,110 +135,232 @@ function RouteComponent() {
     bloodGroup: "",
     email: "",
     patientImage: "",
-    opdId: "",
+    queue: "",
     doctor: "",
     fees: "",
     paymentMode: "",
     dob: "",
     resident: "",
     transactionId: "",
-  });
+  },
+  currentPage: 1,
+  paymentMethod: "Espèces",
+  isEditing: false,
+};
 
-  const [patients, setPatients] = useState<Patient[]>(initialPatients);
-  const [paymentMethod, setPaymentMethod] = useState("Espèces");
-  const [currentPage, setCurrentPage] = useState(1); // Pagination
-  const itemsPerPage = 5; // Nombre d'éléments par page
+// Reducer
+function patientReducer(
+  state: PatientState,
+  action: PatientAction
+): PatientState {
+  switch (action.type) {
+    case "SET_FIELD":
+      return {
+        ...state,
+        formData: { ...state.formData, [action.field]: action.value },
+      };
+    case "RESET_FORM":
+      return {
+        ...state,
+        formData: initialState.formData,
+        isEditing: false,
+      };
+    case "ADD_PATIENT":
+      return {
+        ...state,
+        patients: [...state.patients, action.patient],
+        formData: initialState.formData,
+        isEditing: false,
+      };
+    case "UPDATE_PATIENT":
+      return {
+        ...state,
+        patients: state.patients.map((patient) =>
+          patient.id === action.patient.id ? action.patient : patient
+        ),
+        formData: initialState.formData,
+        isEditing: false,
+      };
+    case "DELETE_PATIENT":
+      return {
+        ...state,
+        patients: state.patients.filter((patient) => patient.id !== action.id),
+      };
+    case "SET_PATIENT":
+      return {
+        ...state,
+        formData: action.patient,
+        isEditing: true,
+      };
+    case "SET_PAGE":
+      return { ...state, currentPage: action.page };
+    case "SET_PAYMENT_METHOD":
+      return {
+        ...state,
+        paymentMethod: action.method,
+        formData: { ...state.formData, paymentMode: action.method },
+      };
+    case "SET_EDITING":
+      return {
+        ...state,
+        isEditing: action.isEditing,
+      };
+    default:
+      return state;
+  }
+}
 
+export const Route = createFileRoute("/_opd/registration-opd")({
+  component: RegistrationPage,
+});
+
+function RegistrationPage() {
+  const [state, dispatch] = useReducer(patientReducer, initialState);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5;
+
+  // Filter and paginate patients
+  const { currentPatients, totalPages } = useMemo(() => {
+    const filteredPatients = state.patients.filter(
+      (patient) =>
+        patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.uhid.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.queue.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const indexOfLastItem = state.currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentPatients = filteredPatients.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+    const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
+    return { currentPatients, totalPages, filteredPatients };
+  }, [state.patients, state.currentPage, searchTerm]);
+
+  // Handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
+    dispatch({ type: "SET_FIELD", field: id as keyof Patient, value });
   };
 
-  const handleSelectChange = (id: keyof Patient, value: string) => {
-    setFormData((prev) => ({ ...prev, [id]: value }));
+  const handleSelectChange = (field: keyof Patient, value: string) => {
+    dispatch({ type: "SET_FIELD", field, value });
   };
 
-  const handlePaymentMethodChange = (value: string) => {
-    setPaymentMethod(value); // Met à jour l'état local
-    setFormData((prev) => ({ ...prev, paymentMode: value })); // Met à jour formData
+  const handlePaymentMethodChange = (method: string) => {
+    dispatch({ type: "SET_PAYMENT_METHOD", method });
   };
 
   const handleSave = () => {
-    const requiredFields: (keyof Patient)[] = [
-      "name",
-      "phone",
-      "dateTime",
-      "paymentMode",
-    ];
-    if (paymentMethod === "Espèces") {
-      requiredFields.push("fees");
-    } else if (paymentMethod === "Enligne") {
-      requiredFields.push("transactionId");
-    }
-
-    const missingFields = requiredFields.filter((field) => !formData[field]);
-
-    if (missingFields.length > 0) {
-      toast.error(
-        `Veuillez remplir les champs obligatoires: ${missingFields.join(", ")}`
-      );
+    // Validation des champs obligatoires
+    if (
+      !state.formData.name ||
+      !state.formData.phone ||
+      !state.formData.dateTime
+    ) {
+      toast.error("Veuillez remplir tous les champs obligatoires");
       return;
     }
 
-    const newPatient = { ...formData, id: patients.length + 1 };
-    setPatients((prev) => [...prev, newPatient]);
-    toast.success("Patient enregistré avec succès !");
-    setFormData({
-      id: 0,
-      uhid: "",
-      name: "",
-      phone: "",
-      dateTime: "",
-      department: "",
-      gender: "",
-      bloodGroup: "",
-      email: "",
-      patientImage: "",
-      opdId: "",
-      doctor: "",
-      fees: "",
-      paymentMode: "",
-      dob: "",
-      resident: "",
-      transactionId: "",
-    });
+    if (state.paymentMethod === "Espèces" && !state.formData.fees) {
+      toast.error("Veuillez entrer les frais de consultation");
+      return;
+    }
+
+    if (state.paymentMethod === "Enligne" && !state.formData.transactionId) {
+      toast.error("Veuillez entrer l'ID de transaction");
+      return;
+    }
+
+    // Génération du numéro de file d'attente si vide
+    const queue = state.formData.queue || `${state.patients.length + 1}`;
+
+    const patientData = {
+      ...state.formData,
+      queue,
+      paymentMode: state.paymentMethod,
+      fees: state.formData.fees ? `${state.formData.fees} FCFA` : "0 FCFA",
+    };
+
+    if (state.isEditing) {
+      // Mise à jour patient existant
+      dispatch({ type: "UPDATE_PATIENT", patient: patientData });
+      toast.success("Patient mis à jour avec succès !");
+    } else {
+      // Nouveau patient
+      const newPatient: Patient = {
+        ...patientData,
+        id:
+          state.patients.length > 0
+            ? Math.max(...state.patients.map((p) => p.id)) + 1
+            : 1,
+      };
+      dispatch({ type: "ADD_PATIENT", patient: newPatient });
+      toast.success("Patient enregistré avec succès !");
+    }
   };
 
   const handleUpdate = (patient: Patient) => {
-    setFormData(patient); // Remplir le formulaire avec les données du patient sélectionné
+    dispatch({ type: "SET_PATIENT", patient });
+    dispatch({ type: "SET_PAYMENT_METHOD", method: patient.paymentMode });
     toast.info(`Modification du patient ${patient.name}`);
   };
 
-  // Pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPatients = patients.slice(indexOfFirstItem, indexOfLastItem);
+  const handleDelete = (id: number) => {
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce patient ?")) {
+      dispatch({ type: "DELETE_PATIENT", id });
+      toast.success("Patient supprimé avec succès");
+    }
+  };
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const handleCancel = () => {
+    dispatch({ type: "RESET_FORM" });
+  };
+
+  const handlePageChange = (page: number) => {
+    dispatch({ type: "SET_PAGE", page });
+  };
+
+  // Function to prepare patient data for PDF
+  const preparePatientForPDF = (patient: Patient) => {
+    const [date, time] = patient.dateTime.split("T");
+    return {
+      ...patient,
+      date: new Date(date).toLocaleDateString(),
+      time: time.substring(0, 5),
+      amount: patient.fees ? parseFloat(patient.fees.replace(" FCFA", "")) : 0,
+    };
+  };
+
+  // Styles
+  const styles = {
+    input:
+      "border-[#018a8c] focus:border-[#016a6c] focus-visible:ring-[#018a8c]",
+    button:
+      "bg-gradient-to-r from-[#018a8c] to-[#016a6c] hover:from-[#016a6c] hover:to-[#018a8c] text-white",
+    card: "shadow-lg border border-gray-100 rounded-xl",
+  };
 
   return (
-    <div className="p-6 space-y-6 bg-gradient-to-r from-blue-50 to-purple-50 min-h-screen">
+    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+      {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#018a8c] to-[#016a6c]">
           Enregistrement des Patients
         </h1>
       </div>
 
-      <Card className="shadow-lg">
+      {/* Patient Form */}
+      <Card className={styles.card}>
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-[#018a8c]">
             Informations du Patient
           </CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/** Informations personnelles */}
+          {/* Personal Information Column */}
           <div>
-            {/* UHID */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="uhid"
@@ -230,13 +371,28 @@ function RouteComponent() {
               <Input
                 id="uhid"
                 placeholder="Entrer UHID"
-                value={formData.uhid}
+                value={state.formData.uhid}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
               />
             </div>
 
-            {/* Nom du Patient */}
+            <div className="space-y-2 mb-4">
+              <Label
+                htmlFor="queue"
+                className="flex items-center gap-2 text-[#018a8c]"
+              >
+                <User className="h-4 w-4" /> Numéro de file d'attente
+              </Label>
+              <Input
+                id="queue"
+                placeholder="Numéro de file"
+                value={state.formData.queue}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            </div>
+
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="name"
@@ -247,13 +403,13 @@ function RouteComponent() {
               <Input
                 id="name"
                 placeholder="Entrer le nom du patient"
-                value={formData.name}
+                value={state.formData.name}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
+                required
               />
             </div>
 
-            {/* Numéro de Téléphone */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="phone"
@@ -264,13 +420,13 @@ function RouteComponent() {
               <Input
                 id="phone"
                 placeholder="Entrer le numéro de téléphone"
-                value={formData.phone}
+                value={state.formData.phone}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
+                required
               />
             </div>
 
-            {/* Email */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="email"
@@ -282,13 +438,12 @@ function RouteComponent() {
                 id="email"
                 type="email"
                 placeholder="Entrer l'email"
-                value={formData.email}
+                value={state.formData.email}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
               />
             </div>
 
-            {/* Residence */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="resident"
@@ -300,16 +455,15 @@ function RouteComponent() {
                 id="resident"
                 type="text"
                 placeholder="Entrer la residence"
-                value={formData.resident}
+                value={state.formData.resident}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
               />
             </div>
           </div>
 
-          {/** Informations médicales */}
+          {/* Medical Information Column */}
           <div>
-            {/* Date de naissance */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="dob"
@@ -320,13 +474,12 @@ function RouteComponent() {
               <Input
                 id="dob"
                 type="date"
-                value={formData.dob}
+                value={state.formData.dob}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
               />
             </div>
 
-            {/* Groupe Sanguin */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="bloodGroup"
@@ -338,9 +491,9 @@ function RouteComponent() {
                 onValueChange={(value) =>
                   handleSelectChange("bloodGroup", value)
                 }
-                value={formData.bloodGroup}
+                value={state.formData.bloodGroup}
               >
-                <SelectTrigger className="border-[#018a8c] focus:border-[#016a6c]">
+                <SelectTrigger className={styles.input}>
                   <SelectValue placeholder="Sélectionnez un groupe sanguin" />
                 </SelectTrigger>
                 <SelectContent>
@@ -357,7 +510,6 @@ function RouteComponent() {
               </Select>
             </div>
 
-            {/* Genre */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="gender"
@@ -367,9 +519,9 @@ function RouteComponent() {
               </Label>
               <Select
                 onValueChange={(value) => handleSelectChange("gender", value)}
-                value={formData.gender}
+                value={state.formData.gender}
               >
-                <SelectTrigger className="border-[#018a8c] focus:border-[#016a6c]">
+                <SelectTrigger className={styles.input}>
                   <SelectValue placeholder="Sélectionnez un genre" />
                 </SelectTrigger>
                 <SelectContent>
@@ -380,7 +532,6 @@ function RouteComponent() {
               </Select>
             </div>
 
-            {/* Département */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="department"
@@ -392,9 +543,9 @@ function RouteComponent() {
                 onValueChange={(value) =>
                   handleSelectChange("department", value)
                 }
-                value={formData.department}
+                value={state.formData.department}
               >
-                <SelectTrigger className="border-[#018a8c] focus:border-[#016a6c]">
+                <SelectTrigger className={styles.input}>
                   <SelectValue placeholder="Sélectionnez un département" />
                 </SelectTrigger>
                 <SelectContent>
@@ -414,10 +565,9 @@ function RouteComponent() {
               </Select>
             </div>
 
-            {/* Medecin traitant */}
             <div className="space-y-2 mb-4">
               <Label
-                htmlFor="refered"
+                htmlFor="doctor"
                 className="flex items-center gap-2 text-[#018a8c]"
               >
                 <User className="h-4 w-4" /> Médecin traitant
@@ -426,16 +576,15 @@ function RouteComponent() {
                 id="doctor"
                 type="text"
                 placeholder=""
-                value={formData.doctor}
+                value={state.formData.doctor}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
               />
             </div>
           </div>
 
-          {/** Details du rendez-vous */}
+          {/* Appointment and Payment Column */}
           <div>
-            {/* Date et Heure */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="dateTime"
@@ -446,13 +595,13 @@ function RouteComponent() {
               <Input
                 id="dateTime"
                 type="datetime-local"
-                value={formData.dateTime}
+                value={state.formData.dateTime}
                 onChange={handleInputChange}
-                className="border-[#018a8c] focus:border-[#016a6c]"
+                className={styles.input}
+                required
               />
             </div>
 
-            {/* Paiement */}
             <div className="space-y-2 mb-4">
               <Label
                 htmlFor="paymentMode"
@@ -462,161 +611,150 @@ function RouteComponent() {
               </Label>
               <Select
                 onValueChange={handlePaymentMethodChange}
-                value={paymentMethod}
+                value={state.paymentMethod}
               >
-                <SelectTrigger className="border-[#018a8c] focus:border-[#016a6c]">
-                  <SelectValue placeholder="Espèces" />
+                <SelectTrigger className={styles.input}>
+                  <SelectValue placeholder="Mode de paiement" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Espèces">Espèces</SelectItem>
                   <SelectItem value="Enligne">En ligne</SelectItem>
                 </SelectContent>
               </Select>
-
-              {paymentMethod === "Espèces" && (
-                <div className="space-y-2">
-                  <Label htmlFor="fees" className="text-[#018a8c]">
-                    Frais
-                  </Label>
-                  <Input
-                    id="fees"
-                    placeholder="Entrez les frais"
-                    value={formData.fees}
-                    onChange={handleInputChange}
-                    className="border-[#018a8c]"
-                  />
-                </div>
-              )}
-
-              {paymentMethod === "Enligne" && (
-                <div className="space-y-2">
-                  <Label htmlFor="transactionId" className="text-[#018a8c]">
-                    ID. Transaction
-                  </Label>
-                  <Input
-                    id="transactionId"
-                    placeholder="Entrez l'ID de la transaction"
-                    value={formData.transactionId}
-                    onChange={handleInputChange}
-                    className="border-[#018a8c]"
-                  />
-                </div>
-              )}
             </div>
+
+            {state.paymentMethod === "Espèces" && (
+              <div className="space-y-2">
+                <Label htmlFor="fees" className="text-[#018a8c]">
+                  Frais (FCFA)
+                </Label>
+                <Input
+                  id="fees"
+                  type="number"
+                  placeholder="Entrez les frais"
+                  value={state.formData.fees}
+                  onChange={handleInputChange}
+                  className={styles.input}
+                  required
+                />
+              </div>
+            )}
+
+            {state.paymentMethod === "Enligne" && (
+              <div className="space-y-2">
+                <Label htmlFor="transactionId" className="text-[#018a8c]">
+                  ID. Transaction
+                </Label>
+                <Input
+                  id="transactionId"
+                  placeholder="Entrez l'ID de la transaction"
+                  value={state.formData.transactionId}
+                  onChange={handleInputChange}
+                  className={styles.input}
+                  required
+                />
+              </div>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex justify-end gap-4">
           <Button
             variant="outline"
             className="border-[#018a8c] text-[#018a8c] hover:bg-[#018a8c] hover:text-white"
+            onClick={handleCancel}
           >
             Annuler
           </Button>
-          <Button
-            className="bg-gradient-to-r from-[#018a8c] to-[#016a6c] hover:from-[#016a6c] hover:to-[#018a8c] text-white"
-            onClick={handleSave}
-          >
-            <Save className="mr-2 h-4 w-4" /> Enregistrer
+          <Button className={styles.button} onClick={handleSave}>
+            <Save className="mr-2 h-4 w-4" />
+            {state.isEditing ? "Mettre à jour" : "Enregistrer"}
           </Button>
         </CardFooter>
       </Card>
 
-      {/* Tableau des Patients */}
-      <Card className="shadow-lg">
+      {/* Patients Table */}
+      <Card className={styles.card}>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-[#018a8c]"></CardTitle>
+          <CardTitle className="text-2xl font-bold text-[#018a8c]">
+            Liste des Patients
+          </CardTitle>
+          <div className="pt-4">
+            <Input
+              placeholder="Rechercher par nom, UHID ou numéro de file..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="max-w-md"
+            />
+          </div>
         </CardHeader>
         <CardContent>
           <Table>
             <TableCaption>Liste des patients enregistrés</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-center">S.No</TableHead>
                 <TableHead className="text-center">File d'attente</TableHead>
-                <TableHead className="text-center">OPD ID</TableHead>
                 <TableHead className="text-center">UHID</TableHead>
                 <TableHead>Nom Patient</TableHead>
                 <TableHead>Département</TableHead>
                 <TableHead>Médecin</TableHead>
                 <TableHead>Frais</TableHead>
-                <TableHead>Mode</TableHead>
-                <TableHead>Processus</TableHead>
+                <TableHead>Mode Paiement</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentPatients.map((patient) => (
                 <TableRow key={patient.id}>
-                  <TableCell className="text-center">{patient.id}</TableCell>
-                  <TableCell className="text-center">001</TableCell>
-                  <TableCell className="text-center">{patient.opdId}</TableCell>
-                  <TableCell className="text-center">
-                    {patient.uhid}{" "}
-                    <PDFDownloadLink
-                      document={<UHIDPDF patient={patient} />}
-                      fileName={`patient_${patient.id}.pdf`}
-                      className="inline-block"
-                    >
-                      <Button
-                        variant="ghost"
-                        className="text-[#018a8c] hover:text-[#016a6c]"
-                      >
-                        <Printer className="h-4 w-4" />
-                      </Button>
-                    </PDFDownloadLink>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      className="text-[#018a8c] hover:text-[#016a6c]"
-                      onClick={() => handleUpdate(patient)}
-                    >
-                      <Edit className="h-4 w-4"></Edit>
-                    </Button>
-
-                    {patient.name}
-                  </TableCell>
+                  <TableCell className="text-center">{patient.queue}</TableCell>
+                  <TableCell className="text-center">{patient.uhid}</TableCell>
+                  <TableCell>{patient.name}</TableCell>
                   <TableCell>{patient.department}</TableCell>
                   <TableCell>{patient.doctor}</TableCell>
-                  <TableCell>
+                  <TableCell>{patient.fees || "Non spécifié"}</TableCell>
+                  <TableCell>{patient.paymentMode}</TableCell>
+                  <TableCell className="flex items-center gap-2">
                     <Button
                       variant="ghost"
+                      size="sm"
                       className="text-[#018a8c] hover:text-[#016a6c]"
                       onClick={() => handleUpdate(patient)}
                     >
-                      <Edit className="h-4 w-4"></Edit>
+                      <Edit className="h-4 w-4" />
                     </Button>
-                    {patient.fees}
-                  </TableCell>
-                  <TableCell>
-                    {patient.paymentMode}
-                    {/* Impression PDF */}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-600 hover:text-red-800"
+                      onClick={() => handleDelete(patient.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                     <PDFDownloadLink
-                      document={<PaymentPDF patient={patient} />}
-                      fileName={`payment_${patient.id}.pdf`}
-                      className="inline-block"
+                      document={
+                        <PaymentPDF patient={preparePatientForPDF(patient)} />
+                      }
+                      fileName={`facture_${patient.name}_${patient.id}.pdf`}
+                      className="ml-2 inline-block"
                     >
                       {({ loading }) => (
                         <Button
                           variant="ghost"
-                          className="text-[#018a8c] hover:text-[#016a6c]"
+                          size="sm"
                           disabled={loading}
+                          className="text-[#018a8c] hover:text-[#016a6c]"
                         >
                           <Printer className="h-4 w-4" />
-                          {loading ? "Chargement..." : ""}
                         </Button>
                       )}
                     </PDFDownloadLink>
-                  </TableCell>
-                  <TableCell>
-                    <ClipboardPlus />
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={11} className="text-center">
-                  Total Patients: {patients.length}
+                <TableCell colSpan={8} className="text-center">
+                  Total Patients: {state.patients.length}
                 </TableCell>
               </TableRow>
             </TableFooter>
@@ -624,104 +762,40 @@ function RouteComponent() {
         </CardContent>
 
         {/* Pagination */}
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => paginate(currentPage - 1)}
-                className="text-[#018a8c] hover:text-[#016a6c]"
-                disabled={currentPage === 1}
-              />
-            </PaginationItem>
-            {Array.from({
-              length: Math.ceil(patients.length / itemsPerPage),
-            }).map((_, index) => (
-              <PaginationItem key={index}>
-                <PaginationLink
-                  onClick={() => paginate(index + 1)}
-                  isActive={currentPage === index + 1}
+        {totalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => handlePageChange(state.currentPage - 1)}
                   className="text-[#018a8c] hover:text-[#016a6c]"
-                >
-                  {index + 1}
-                </PaginationLink>
+                  disabled={state.currentPage === 1}
+                />
               </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationNext
-                onClick={() => paginate(currentPage + 1)}
-                className="text-[#018a8c] hover:text-[#016a6c]"
-                disabled={
-                  currentPage === Math.ceil(patients.length / itemsPerPage)
-                }
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <PaginationItem key={index}>
+                  <PaginationLink
+                    onClick={() => handlePageChange(index + 1)}
+                    isActive={state.currentPage === index + 1}
+                    className="text-[#018a8c] hover:text-[#016a6c]"
+                  >
+                    {index + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => handlePageChange(state.currentPage + 1)}
+                  className="text-[#018a8c] hover:text-[#016a6c]"
+                  disabled={state.currentPage === totalPages}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
       </Card>
     </div>
   );
-}
-
-// Fonction pour transformer les données du patient en format de paiement
-const transformPatientToPayment = (patient: Patient): Payment => {
-  const [date, heure] = patient.dateTime.split("T"); // Séparer la date et l'heure
-
-  return {
-    id: patient.id,
-    patient: {
-      numerofacture: patient.opdId,
-      uhid: patient.uhid,
-      nom: patient.name,
-      prenom: "",
-      dateNaissance: patient.dob,
-      sexe: patient.gender,
-      telephone: patient.phone,
-      adresse: patient.resident,
-      date: date,
-      heure: heure,
-      departement: patient.department,
-      doctor: patient.doctor,
-    },
-    clinique: {
-      nom: "Clinique Médicale Eniazou",
-      adresse: "123 Rue de la Santé, Abidjan",
-      telephone: "+225 01 23 45 67 89",
-      email: "contact@cliniquexyz.com",
-    },
-    paiement: {
-      cout: parseFloat(patient.fees.replace(" FCFA", "")) || 0, // Convertir les frais en nombre
-      mode: patient.paymentMode,
-      statut: "Payé",
-    },
-  };
-};
-
-// Interface Payment
-interface Payment {
-  id: number;
-  patient: {
-    numerofacture: string;
-    uhid: string;
-    nom: string;
-    prenom: string;
-    dateNaissance: string;
-    sexe: string;
-    telephone: string;
-    adresse: string;
-    date: string;
-    heure: string;
-    departement: string;
-    doctor: string;
-  };
-  clinique: {
-    nom: string;
-    adresse: string;
-    telephone: string;
-    email: string;
-  };
-  paiement: {
-    cout: number;
-    mode: string;
-    statut: string;
-  };
 }

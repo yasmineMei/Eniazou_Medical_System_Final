@@ -1,3 +1,8 @@
+/**
+ * Le module Médecin est remplacer par le module Patient
+ * Patient comporte la liste des patients de la clinique avec leur informations médicaux
+ * ce module permet aussi la création des ordonnances et prescriptions des patients et de la imprimer  */
+
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -14,12 +19,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
-import {
-  Settings2Icon,
-  Calendar,
-  Pill,
-  Users,
-} from "lucide-react";
+import { Settings2Icon, Pill, Users } from "lucide-react";
 
 export const Route = createFileRoute("/_doctor")({
   component: RouteComponent,
@@ -32,15 +32,10 @@ function RouteComponent() {
   // Déclaration des éléments de navigation
   const navMain = [
     {
-      title: "Mes Rendez-vous",
-      url: "/appointment-doctor",
-      icon: Calendar,
-      isActive: true,
-    },
-    {
       title: "Mes patients",
       url: "/patient-doctor",
       icon: Users,
+      isActive: true,
     },
     {
       title: "Prescriptions & Ordonnances",
@@ -57,7 +52,6 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/appointment-doctor": "Mes rendez-vous",
       "/patient-doctor": "Mes patients",
       "/patient-doctor/$patientId": "Patients",
       "/create-record": "Patients",

@@ -18,8 +18,6 @@ import {
   Settings2Icon,
   ClipboardList,
   FileText,
-  HeartPulse,
-  Microscope,
   Baby,
   SyringeIcon,
 } from "lucide-react";
@@ -39,16 +37,6 @@ function RouteComponent() {
       url: "/registration-opd",
       icon: ClipboardList,
       isActive: true,
-    },
-    {
-      title: "Examens médicaux",
-      url: "/investigation-opd",
-      icon: Microscope,
-    },
-    {
-      title: "Soins ambulatoires",
-      url: "/dayCare",
-      icon: HeartPulse,
     },
     {
       title: "Naissances",
@@ -76,8 +64,6 @@ function RouteComponent() {
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
       "/registration-opd": "Consultation",
-      "/investigation-opd": "Examens médicaux ",
-      "/dayCare": "Soins ambulatoires",
       "/birth-registration": "Naissances ",
       "/vaccin": "Vaccination",
       "/certificate": "Certificats",
