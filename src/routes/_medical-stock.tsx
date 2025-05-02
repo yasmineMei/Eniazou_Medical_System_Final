@@ -17,12 +17,11 @@ import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Settings2Icon,
 
-  LayoutDashboard,
-  ClipboardList,
+
+
   Package,
   ShoppingCart,
   Truck,
-  Wrench,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_medical-stock")({
@@ -37,20 +36,10 @@ function RouteComponent() {
 
   const navMain = [
     {
-      title: "Administration",
-      url: "/administration",
-      icon: LayoutDashboard,
-      isActive: true,
-    },
-    {
       title: "Articles Médicaux",
       url: "/article",
       icon: Package, // Icône représentant des boîtes de médicaments
-    },
-    {
-      title: "Inventaire",
-      url: "/inventaire",
-      icon: ClipboardList, // Icône représentant une liste d'éléments
+      isActive: true,
     },
     {
       title: "Commandes d'Achat",
@@ -58,19 +47,14 @@ function RouteComponent() {
       icon: ShoppingCart, // Icône pour les achats et commandes
     },
     {
-      title: "Approvisionnement",
-      url: "/approvisionnement",
+      title: "Fournisseur",
+      url: "/fournisseur",
       icon: Truck, // Icône de camion pour la gestion des livraisons
-    },
-    {
-      title: "Maintenance",
-      url: "/maintenance",
-      icon: Wrench, // Icône représentant les outils de réparation
     },
     {
       title: "Paramètres",
       url: "/setting-stock",
-      icon: Settings2Icon, 
+      icon: Settings2Icon,
     },
   ];
 
@@ -79,12 +63,9 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/administration": "Administration",
       "/article": "Articles Médicaux",
-      "/inventaire": "Inventaire",
       "/commande": "Commandes d'Achat",
-      "/approvisionnement": "Approvisionnement",
-      "/maintenance": "Maintenance",
+      "/fournisseur": "Fournisseur",
       "/setting-stock": "Paramètres",
 
       "/profil-stock": "Profil",

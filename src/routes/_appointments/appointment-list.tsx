@@ -4,7 +4,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import {
   Search,
-  Plus,
   ChevronLeft,
   ChevronRight,
   Edit,
@@ -164,15 +163,7 @@ function AppointmentListPage() {
     "Ophtalmologie",
   ];
 
-  // Ouvrir le dialogue pour un nouveau rendez-vous
-  const openNewAppointmentDialog = () => {
-    setCurrentAppointment({
-      date: new Date(),
-      time: "09:00",
-      status: "en attente",
-    });
-    setIsDialogOpen(true);
-  };
+  
 
   // Ouvrir le dialogue pour modifier un rendez-vous
   const openEditDialog = (appointment: Appointment) => {
@@ -267,10 +258,7 @@ function AppointmentListPage() {
             />
           </div>
 
-          <Button onClick={openNewAppointmentDialog}>
-            <Plus className="h-4 w-4 mr-2" />
-            Nouveau rendez-vous
-          </Button>
+          
         </div>
       </div>
 

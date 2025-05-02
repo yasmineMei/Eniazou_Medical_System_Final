@@ -19,7 +19,7 @@ const menuItems = [
   { title: "Imagerie Médicale", icon: "📷", path: "/opd-radiology" },
   { title: "Infirmier", icon: "💉", path: "/dashboard-nurse" },
   { title: "Patient", icon: "🧍", path: "/patient-doctor" },
-  { title: "Stock Médicale", icon: "💊", path: "/administration" },
+  { title: "Stock Médicale", icon: "💊", path: "/article" },
   { title: "Administrateur", icon: "👨‍💼", path: "/dashboard" },
 ] as const;
 

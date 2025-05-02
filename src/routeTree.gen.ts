@@ -46,13 +46,9 @@ import { Route as NurseConstantImport } from './routes/_nurse/constant'
 import { Route as MedicalStockSettingStockImport } from './routes/_medical-stock/setting-stock'
 import { Route as MedicalStockProfilStockImport } from './routes/_medical-stock/profil-stock'
 import { Route as MedicalStockMessageStockImport } from './routes/_medical-stock/message-stock'
-import { Route as MedicalStockMaintenanceImport } from './routes/_medical-stock/maintenance'
-import { Route as MedicalStockInventaireImport } from './routes/_medical-stock/inventaire'
-import { Route as MedicalStockDashboardStockImport } from './routes/_medical-stock/dashboard-stock'
+import { Route as MedicalStockFournisseurImport } from './routes/_medical-stock/fournisseur'
 import { Route as MedicalStockCommandeImport } from './routes/_medical-stock/commande'
 import { Route as MedicalStockArticleImport } from './routes/_medical-stock/article'
-import { Route as MedicalStockApprovisionnementImport } from './routes/_medical-stock/approvisionnement'
-import { Route as MedicalStockAdministrationImport } from './routes/_medical-stock/administration'
 import { Route as LabSettingLabImport } from './routes/_lab/setting-lab'
 import { Route as LabReportLabImport } from './routes/_lab/report-lab'
 import { Route as LabProfilLabImport } from './routes/_lab/profil-lab'
@@ -296,25 +292,11 @@ const MedicalStockMessageStockRoute = MedicalStockMessageStockImport.update({
   getParentRoute: () => MedicalStockRoute,
 } as any)
 
-const MedicalStockMaintenanceRoute = MedicalStockMaintenanceImport.update({
-  id: '/maintenance',
-  path: '/maintenance',
+const MedicalStockFournisseurRoute = MedicalStockFournisseurImport.update({
+  id: '/fournisseur',
+  path: '/fournisseur',
   getParentRoute: () => MedicalStockRoute,
 } as any)
-
-const MedicalStockInventaireRoute = MedicalStockInventaireImport.update({
-  id: '/inventaire',
-  path: '/inventaire',
-  getParentRoute: () => MedicalStockRoute,
-} as any)
-
-const MedicalStockDashboardStockRoute = MedicalStockDashboardStockImport.update(
-  {
-    id: '/dashboard-stock',
-    path: '/dashboard-stock',
-    getParentRoute: () => MedicalStockRoute,
-  } as any,
-)
 
 const MedicalStockCommandeRoute = MedicalStockCommandeImport.update({
   id: '/commande',
@@ -327,21 +309,6 @@ const MedicalStockArticleRoute = MedicalStockArticleImport.update({
   path: '/article',
   getParentRoute: () => MedicalStockRoute,
 } as any)
-
-const MedicalStockApprovisionnementRoute =
-  MedicalStockApprovisionnementImport.update({
-    id: '/approvisionnement',
-    path: '/approvisionnement',
-    getParentRoute: () => MedicalStockRoute,
-  } as any)
-
-const MedicalStockAdministrationRoute = MedicalStockAdministrationImport.update(
-  {
-    id: '/administration',
-    path: '/administration',
-    getParentRoute: () => MedicalStockRoute,
-  } as any,
-)
 
 const LabSettingLabRoute = LabSettingLabImport.update({
   id: '/setting-lab',
@@ -932,20 +899,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabSettingLabImport
       parentRoute: typeof LabImport
     }
-    '/_medical-stock/administration': {
-      id: '/_medical-stock/administration'
-      path: '/administration'
-      fullPath: '/administration'
-      preLoaderRoute: typeof MedicalStockAdministrationImport
-      parentRoute: typeof MedicalStockImport
-    }
-    '/_medical-stock/approvisionnement': {
-      id: '/_medical-stock/approvisionnement'
-      path: '/approvisionnement'
-      fullPath: '/approvisionnement'
-      preLoaderRoute: typeof MedicalStockApprovisionnementImport
-      parentRoute: typeof MedicalStockImport
-    }
     '/_medical-stock/article': {
       id: '/_medical-stock/article'
       path: '/article'
@@ -960,25 +913,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MedicalStockCommandeImport
       parentRoute: typeof MedicalStockImport
     }
-    '/_medical-stock/dashboard-stock': {
-      id: '/_medical-stock/dashboard-stock'
-      path: '/dashboard-stock'
-      fullPath: '/dashboard-stock'
-      preLoaderRoute: typeof MedicalStockDashboardStockImport
-      parentRoute: typeof MedicalStockImport
-    }
-    '/_medical-stock/inventaire': {
-      id: '/_medical-stock/inventaire'
-      path: '/inventaire'
-      fullPath: '/inventaire'
-      preLoaderRoute: typeof MedicalStockInventaireImport
-      parentRoute: typeof MedicalStockImport
-    }
-    '/_medical-stock/maintenance': {
-      id: '/_medical-stock/maintenance'
-      path: '/maintenance'
-      fullPath: '/maintenance'
-      preLoaderRoute: typeof MedicalStockMaintenanceImport
+    '/_medical-stock/fournisseur': {
+      id: '/_medical-stock/fournisseur'
+      path: '/fournisseur'
+      fullPath: '/fournisseur'
+      preLoaderRoute: typeof MedicalStockFournisseurImport
       parentRoute: typeof MedicalStockImport
     }
     '/_medical-stock/message-stock': {
@@ -1283,26 +1222,18 @@ const LabRouteChildren: LabRouteChildren = {
 const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
 
 interface MedicalStockRouteChildren {
-  MedicalStockAdministrationRoute: typeof MedicalStockAdministrationRoute
-  MedicalStockApprovisionnementRoute: typeof MedicalStockApprovisionnementRoute
   MedicalStockArticleRoute: typeof MedicalStockArticleRoute
   MedicalStockCommandeRoute: typeof MedicalStockCommandeRoute
-  MedicalStockDashboardStockRoute: typeof MedicalStockDashboardStockRoute
-  MedicalStockInventaireRoute: typeof MedicalStockInventaireRoute
-  MedicalStockMaintenanceRoute: typeof MedicalStockMaintenanceRoute
+  MedicalStockFournisseurRoute: typeof MedicalStockFournisseurRoute
   MedicalStockMessageStockRoute: typeof MedicalStockMessageStockRoute
   MedicalStockProfilStockRoute: typeof MedicalStockProfilStockRoute
   MedicalStockSettingStockRoute: typeof MedicalStockSettingStockRoute
 }
 
 const MedicalStockRouteChildren: MedicalStockRouteChildren = {
-  MedicalStockAdministrationRoute: MedicalStockAdministrationRoute,
-  MedicalStockApprovisionnementRoute: MedicalStockApprovisionnementRoute,
   MedicalStockArticleRoute: MedicalStockArticleRoute,
   MedicalStockCommandeRoute: MedicalStockCommandeRoute,
-  MedicalStockDashboardStockRoute: MedicalStockDashboardStockRoute,
-  MedicalStockInventaireRoute: MedicalStockInventaireRoute,
-  MedicalStockMaintenanceRoute: MedicalStockMaintenanceRoute,
+  MedicalStockFournisseurRoute: MedicalStockFournisseurRoute,
   MedicalStockMessageStockRoute: MedicalStockMessageStockRoute,
   MedicalStockProfilStockRoute: MedicalStockProfilStockRoute,
   MedicalStockSettingStockRoute: MedicalStockSettingStockRoute,
@@ -1420,13 +1351,9 @@ export interface FileRoutesByFullPath {
   '/profil-lab': typeof LabProfilLabRoute
   '/report-lab': typeof LabReportLabRoute
   '/setting-lab': typeof LabSettingLabRoute
-  '/administration': typeof MedicalStockAdministrationRoute
-  '/approvisionnement': typeof MedicalStockApprovisionnementRoute
   '/article': typeof MedicalStockArticleRoute
   '/commande': typeof MedicalStockCommandeRoute
-  '/dashboard-stock': typeof MedicalStockDashboardStockRoute
-  '/inventaire': typeof MedicalStockInventaireRoute
-  '/maintenance': typeof MedicalStockMaintenanceRoute
+  '/fournisseur': typeof MedicalStockFournisseurRoute
   '/message-stock': typeof MedicalStockMessageStockRoute
   '/profil-stock': typeof MedicalStockProfilStockRoute
   '/setting-stock': typeof MedicalStockSettingStockRoute
@@ -1496,13 +1423,9 @@ export interface FileRoutesByTo {
   '/profil-lab': typeof LabProfilLabRoute
   '/report-lab': typeof LabReportLabRoute
   '/setting-lab': typeof LabSettingLabRoute
-  '/administration': typeof MedicalStockAdministrationRoute
-  '/approvisionnement': typeof MedicalStockApprovisionnementRoute
   '/article': typeof MedicalStockArticleRoute
   '/commande': typeof MedicalStockCommandeRoute
-  '/dashboard-stock': typeof MedicalStockDashboardStockRoute
-  '/inventaire': typeof MedicalStockInventaireRoute
-  '/maintenance': typeof MedicalStockMaintenanceRoute
+  '/fournisseur': typeof MedicalStockFournisseurRoute
   '/message-stock': typeof MedicalStockMessageStockRoute
   '/profil-stock': typeof MedicalStockProfilStockRoute
   '/setting-stock': typeof MedicalStockSettingStockRoute
@@ -1581,13 +1504,9 @@ export interface FileRoutesById {
   '/_lab/profil-lab': typeof LabProfilLabRoute
   '/_lab/report-lab': typeof LabReportLabRoute
   '/_lab/setting-lab': typeof LabSettingLabRoute
-  '/_medical-stock/administration': typeof MedicalStockAdministrationRoute
-  '/_medical-stock/approvisionnement': typeof MedicalStockApprovisionnementRoute
   '/_medical-stock/article': typeof MedicalStockArticleRoute
   '/_medical-stock/commande': typeof MedicalStockCommandeRoute
-  '/_medical-stock/dashboard-stock': typeof MedicalStockDashboardStockRoute
-  '/_medical-stock/inventaire': typeof MedicalStockInventaireRoute
-  '/_medical-stock/maintenance': typeof MedicalStockMaintenanceRoute
+  '/_medical-stock/fournisseur': typeof MedicalStockFournisseurRoute
   '/_medical-stock/message-stock': typeof MedicalStockMessageStockRoute
   '/_medical-stock/profil-stock': typeof MedicalStockProfilStockRoute
   '/_medical-stock/setting-stock': typeof MedicalStockSettingStockRoute
@@ -1659,13 +1578,9 @@ export interface FileRouteTypes {
     | '/profil-lab'
     | '/report-lab'
     | '/setting-lab'
-    | '/administration'
-    | '/approvisionnement'
     | '/article'
     | '/commande'
-    | '/dashboard-stock'
-    | '/inventaire'
-    | '/maintenance'
+    | '/fournisseur'
     | '/message-stock'
     | '/profil-stock'
     | '/setting-stock'
@@ -1734,13 +1649,9 @@ export interface FileRouteTypes {
     | '/profil-lab'
     | '/report-lab'
     | '/setting-lab'
-    | '/administration'
-    | '/approvisionnement'
     | '/article'
     | '/commande'
-    | '/dashboard-stock'
-    | '/inventaire'
-    | '/maintenance'
+    | '/fournisseur'
     | '/message-stock'
     | '/profil-stock'
     | '/setting-stock'
@@ -1817,13 +1728,9 @@ export interface FileRouteTypes {
     | '/_lab/profil-lab'
     | '/_lab/report-lab'
     | '/_lab/setting-lab'
-    | '/_medical-stock/administration'
-    | '/_medical-stock/approvisionnement'
     | '/_medical-stock/article'
     | '/_medical-stock/commande'
-    | '/_medical-stock/dashboard-stock'
-    | '/_medical-stock/inventaire'
-    | '/_medical-stock/maintenance'
+    | '/_medical-stock/fournisseur'
     | '/_medical-stock/message-stock'
     | '/_medical-stock/profil-stock'
     | '/_medical-stock/setting-stock'
@@ -1976,13 +1883,9 @@ export const routeTree = rootRoute
     "/_medical-stock": {
       "filePath": "_medical-stock.tsx",
       "children": [
-        "/_medical-stock/administration",
-        "/_medical-stock/approvisionnement",
         "/_medical-stock/article",
         "/_medical-stock/commande",
-        "/_medical-stock/dashboard-stock",
-        "/_medical-stock/inventaire",
-        "/_medical-stock/maintenance",
+        "/_medical-stock/fournisseur",
         "/_medical-stock/message-stock",
         "/_medical-stock/profil-stock",
         "/_medical-stock/setting-stock"
@@ -2177,14 +2080,6 @@ export const routeTree = rootRoute
       "filePath": "_lab/setting-lab.tsx",
       "parent": "/_lab"
     },
-    "/_medical-stock/administration": {
-      "filePath": "_medical-stock/administration.tsx",
-      "parent": "/_medical-stock"
-    },
-    "/_medical-stock/approvisionnement": {
-      "filePath": "_medical-stock/approvisionnement.tsx",
-      "parent": "/_medical-stock"
-    },
     "/_medical-stock/article": {
       "filePath": "_medical-stock/article.tsx",
       "parent": "/_medical-stock"
@@ -2193,16 +2088,8 @@ export const routeTree = rootRoute
       "filePath": "_medical-stock/commande.tsx",
       "parent": "/_medical-stock"
     },
-    "/_medical-stock/dashboard-stock": {
-      "filePath": "_medical-stock/dashboard-stock.tsx",
-      "parent": "/_medical-stock"
-    },
-    "/_medical-stock/inventaire": {
-      "filePath": "_medical-stock/inventaire.tsx",
-      "parent": "/_medical-stock"
-    },
-    "/_medical-stock/maintenance": {
-      "filePath": "_medical-stock/maintenance.tsx",
+    "/_medical-stock/fournisseur": {
+      "filePath": "_medical-stock/fournisseur.tsx",
       "parent": "/_medical-stock"
     },
     "/_medical-stock/message-stock": {
