@@ -57,7 +57,7 @@ function RouteComponent() {
     },
     {
       title: "Paramètres",
-      url: "/setting-opd",
+      url: "/setting-ipd",
       icon: Settings2, 
     },
   ];
@@ -72,10 +72,10 @@ function RouteComponent() {
       "/oT": "Opérations & Chirurgie",
       "/discharge": "Sortie des patients",
       "/payment": "Facturation",
-      "/setting-opd": "Paramètres",
+      "/setting-ipd": "Paramètres",
       
-      "/profil-opd": "Profil",
-      "/message-opd": "Messagerie",
+      "/profil-ipd": "Profil",
+      "/message-ipd": "Messagerie",
     };
 
     const currentTitle = breadcrumbs[pathname] || "Accueil";

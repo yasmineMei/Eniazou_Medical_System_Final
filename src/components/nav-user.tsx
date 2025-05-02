@@ -39,15 +39,106 @@ export function NavUser({
 
   // Détermine le module actif en fonction du chemin courant
   const getActiveModule = () => {
-    if (currentPath.includes("registration-opd")) return "Consultation";
-    if (currentPath.includes("registration-ipd")) return "Hospitalisation";
-    if (currentPath.includes("dashboard-appointment")) return "Rendez-vous";
-    if (currentPath.includes("opd-request")) return "Laboratoire";
-    if (currentPath.includes("opd-radiology")) return "Imagerie Médicale";
-    if (currentPath.includes("dashboard-nurse")) return "Infirmier";
-    if (currentPath.includes("patient-doctor")) return "Patient";
-    if (currentPath.includes("article")) return "Stock Médicale";
-    if (currentPath.includes("dashboard")) return "Administrateur";
+    // Consultation
+    if (
+      currentPath.includes("registration-opd") ||
+      currentPath.includes("birth-registration") ||
+      currentPath.includes("vaccin") ||
+      currentPath.includes("certificate") ||
+      currentPath.includes("setting-opd") ||
+      currentPath.includes("profil-opd") ||
+      currentPath.includes("message-opd")
+    ) {
+      return "Consultation";
+    }
+
+    // Hospitalisation
+    if (
+      currentPath.includes("registration-ipd") ||
+      currentPath.includes("oT") ||
+      currentPath.includes("discharge") ||
+      currentPath.includes("payment") ||
+      currentPath.includes("setting-ipd") ||
+      currentPath.includes("profil-ipd") ||
+      currentPath.includes("message-ipd")
+    ) {
+      return "Hospitalisation";
+    }
+
+    // Rendez-vous
+    if (
+      currentPath.includes("dashboard-appointment") ||
+      currentPath.includes("appointment-list") ||
+      currentPath.includes("doctor-leave") ||
+      currentPath.includes("clini-tarif") ||
+      currentPath.includes("setting-appointment") ||
+      currentPath.includes("profil-appointment") ||
+      currentPath.includes("message-appointment")
+    ) {
+      return "Rendez-vous";
+    }
+
+    // Laboratoire
+    if (
+      currentPath.includes("opd-request") ||
+      currentPath.includes("ipd-request") ||
+      currentPath.includes("report-lab")  ||
+      currentPath.includes("setting-lab") ||
+      currentPath.includes("profil-lab")  ||
+      currentPath.includes("message-lab")
+    ) {
+      return "Laboratoire";
+    }
+
+    // Imagerie Médicale
+    if (
+      currentPath.includes("opd-radiology") ||
+      currentPath.includes("ipd-radiology") ||
+      currentPath.includes("report-radiology") ||
+      currentPath.includes("setting-radiology") ||
+      currentPath.includes("profil-radiology") ||
+      currentPath.includes("message-radiology")
+    ) {
+      return "Imagerie Médicale";
+    }
+
+    // Infirmier
+    if (
+      currentPath.includes("dashboard-nurse") ||
+      currentPath.includes("fiche-patient") ||
+      currentPath.includes("constant") ||
+      currentPath.includes("patient-medecine") ||
+      currentPath.includes("report-nurse") ||
+      currentPath.includes("setting-nurse") ||
+      currentPath.includes("profil-nurse") ||
+      currentPath.includes("message-nurse")
+    ) {
+      return "Infirmier";
+    }
+
+    // Patient
+    if (
+      currentPath.includes("patient-doctor") ||
+      currentPath.includes("ordonnance") ||
+      currentPath.includes("setting-doctor") ||
+      currentPath.includes("profil-doctor") ||
+      currentPath.includes("message-doctor")
+    ) {
+      return "Patient";
+    }
+
+    // Stock Médicale
+    if (
+      currentPath.includes("article") ||
+      currentPath.includes("commande") ||
+      currentPath.includes("fournisseur") ||
+      currentPath.includes("setting-stock") ||
+      currentPath.includes("profil-stock") ||
+      currentPath.includes("message-stock")
+    ) {
+      return "Stock Médicale";
+    }
+
     return null;
   };
 
@@ -61,11 +152,14 @@ export function NavUser({
       case "Hospitalisation":
         return { profile: "/profil-ipd", messages: "/message-ipd" };
       case "Rendez-vous":
-        return { profile: "/profil-rdv", messages: "/message-rdv" };
+        return {
+          profile: "/profil-appointment",
+          messages: "/message-appointment",
+        };
       case "Laboratoire":
         return { profile: "/profil-lab", messages: "/message-lab" };
       case "Imagerie Médicale":
-        return { profile: "/profil-rad", messages: "/message-rad" };
+        return { profile: "/profil-radiology", messages: "/message-radiology" };
       case "Infirmier":
         return { profile: "/profil-nurse", messages: "/message-nurse" };
       case "Patient":
@@ -151,7 +245,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
-              <Link to="/" className="flex items-center">
+              <Link to="/logout" className="flex items-center">
                 <LogOut className="mr-2 size-4" />
                 Déconnexion
               </Link>

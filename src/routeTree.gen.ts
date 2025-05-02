@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as MenuPrincipalImport } from './routes/menu-principal'
+import { Route as LogoutImport } from './routes/logout'
 import { Route as LoginImport } from './routes/login'
 import { Route as RadiologyImport } from './routes/_radiology'
 import { Route as OpdImport } from './routes/_opd'
@@ -31,7 +32,6 @@ import { Route as RadiologyMessageRadiologyImport } from './routes/_radiology/me
 import { Route as RadiologyIpdRadiologyImport } from './routes/_radiology/ipd-radiology'
 import { Route as OpdVaccinImport } from './routes/_opd/vaccin'
 import { Route as OpdSettingOpdImport } from './routes/_opd/setting-opd'
-import { Route as OpdRevisitImport } from './routes/_opd/revisit'
 import { Route as OpdRegistrationOpdImport } from './routes/_opd/registration-opd'
 import { Route as OpdProfilOpdImport } from './routes/_opd/profil-opd'
 import { Route as OpdMessageOpdImport } from './routes/_opd/message-opd'
@@ -40,6 +40,7 @@ import { Route as OpdBirthRegistrationImport } from './routes/_opd/birth-registr
 import { Route as NurseSettingNurseImport } from './routes/_nurse/setting-nurse'
 import { Route as NurseReportNurseImport } from './routes/_nurse/report-nurse'
 import { Route as NursePatientMedecineImport } from './routes/_nurse/patient-medecine'
+import { Route as NurseMessageNurseImport } from './routes/_nurse/message-nurse'
 import { Route as NurseFichePatientImport } from './routes/_nurse/fiche-patient'
 import { Route as NurseDashboardNurseImport } from './routes/_nurse/dashboard-nurse'
 import { Route as NurseConstantImport } from './routes/_nurse/constant'
@@ -55,13 +56,12 @@ import { Route as LabProfilLabImport } from './routes/_lab/profil-lab'
 import { Route as LabOpdRequestImport } from './routes/_lab/opd-request'
 import { Route as LabMessageLabImport } from './routes/_lab/message-lab'
 import { Route as LabIpdRequestImport } from './routes/_lab/ipd-request'
-import { Route as IpdReportIpdImport } from './routes/_ipd/report-ipd'
+import { Route as IpdSettingIpdImport } from './routes/_ipd/setting-ipd'
 import { Route as IpdRegistrationIpdImport } from './routes/_ipd/registration-ipd'
+import { Route as IpdProfilIpdImport } from './routes/_ipd/profil-ipd'
 import { Route as IpdPaymentImport } from './routes/_ipd/payment'
 import { Route as IpdOTImport } from './routes/_ipd/oT'
-import { Route as IpdMedecinesImport } from './routes/_ipd/medecines'
-import { Route as IpdIpdImport } from './routes/_ipd/ipd'
-import { Route as IpdInvestigationImport } from './routes/_ipd/investigation'
+import { Route as IpdMessageIpdImport } from './routes/_ipd/message-ipd'
 import { Route as IpdDischargeImport } from './routes/_ipd/discharge'
 import { Route as HomeSettingImport } from './routes/_home/setting'
 import { Route as HomeServiceImport } from './routes/_home/service'
@@ -94,6 +94,12 @@ import { Route as DoctorPatientDoctorPatientIdImport } from './routes/_doctor/pa
 const MenuPrincipalRoute = MenuPrincipalImport.update({
   id: '/menu-principal',
   path: '/menu-principal',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LogoutRoute = LogoutImport.update({
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -202,12 +208,6 @@ const OpdSettingOpdRoute = OpdSettingOpdImport.update({
   getParentRoute: () => OpdRoute,
 } as any)
 
-const OpdRevisitRoute = OpdRevisitImport.update({
-  id: '/revisit',
-  path: '/revisit',
-  getParentRoute: () => OpdRoute,
-} as any)
-
 const OpdRegistrationOpdRoute = OpdRegistrationOpdImport.update({
   id: '/registration-opd',
   path: '/registration-opd',
@@ -253,6 +253,12 @@ const NurseReportNurseRoute = NurseReportNurseImport.update({
 const NursePatientMedecineRoute = NursePatientMedecineImport.update({
   id: '/patient-medecine',
   path: '/patient-medecine',
+  getParentRoute: () => NurseRoute,
+} as any)
+
+const NurseMessageNurseRoute = NurseMessageNurseImport.update({
+  id: '/message-nurse',
+  path: '/message-nurse',
   getParentRoute: () => NurseRoute,
 } as any)
 
@@ -346,15 +352,21 @@ const LabIpdRequestRoute = LabIpdRequestImport.update({
   getParentRoute: () => LabRoute,
 } as any)
 
-const IpdReportIpdRoute = IpdReportIpdImport.update({
-  id: '/report-ipd',
-  path: '/report-ipd',
+const IpdSettingIpdRoute = IpdSettingIpdImport.update({
+  id: '/setting-ipd',
+  path: '/setting-ipd',
   getParentRoute: () => IpdRoute,
 } as any)
 
 const IpdRegistrationIpdRoute = IpdRegistrationIpdImport.update({
   id: '/registration-ipd',
   path: '/registration-ipd',
+  getParentRoute: () => IpdRoute,
+} as any)
+
+const IpdProfilIpdRoute = IpdProfilIpdImport.update({
+  id: '/profil-ipd',
+  path: '/profil-ipd',
   getParentRoute: () => IpdRoute,
 } as any)
 
@@ -370,21 +382,9 @@ const IpdOTRoute = IpdOTImport.update({
   getParentRoute: () => IpdRoute,
 } as any)
 
-const IpdMedecinesRoute = IpdMedecinesImport.update({
-  id: '/medecines',
-  path: '/medecines',
-  getParentRoute: () => IpdRoute,
-} as any)
-
-const IpdIpdRoute = IpdIpdImport.update({
-  id: '/ipd',
-  path: '/ipd',
-  getParentRoute: () => IpdRoute,
-} as any)
-
-const IpdInvestigationRoute = IpdInvestigationImport.update({
-  id: '/investigation',
-  path: '/investigation',
+const IpdMessageIpdRoute = IpdMessageIpdImport.update({
+  id: '/message-ipd',
+  path: '/message-ipd',
   getParentRoute: () => IpdRoute,
 } as any)
 
@@ -633,6 +633,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutImport
+      parentRoute: typeof rootRoute
+    }
     '/menu-principal': {
       id: '/menu-principal'
       path: '/menu-principal'
@@ -808,25 +815,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IpdDischargeImport
       parentRoute: typeof IpdImport
     }
-    '/_ipd/investigation': {
-      id: '/_ipd/investigation'
-      path: '/investigation'
-      fullPath: '/investigation'
-      preLoaderRoute: typeof IpdInvestigationImport
-      parentRoute: typeof IpdImport
-    }
-    '/_ipd/ipd': {
-      id: '/_ipd/ipd'
-      path: '/ipd'
-      fullPath: '/ipd'
-      preLoaderRoute: typeof IpdIpdImport
-      parentRoute: typeof IpdImport
-    }
-    '/_ipd/medecines': {
-      id: '/_ipd/medecines'
-      path: '/medecines'
-      fullPath: '/medecines'
-      preLoaderRoute: typeof IpdMedecinesImport
+    '/_ipd/message-ipd': {
+      id: '/_ipd/message-ipd'
+      path: '/message-ipd'
+      fullPath: '/message-ipd'
+      preLoaderRoute: typeof IpdMessageIpdImport
       parentRoute: typeof IpdImport
     }
     '/_ipd/oT': {
@@ -843,6 +836,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IpdPaymentImport
       parentRoute: typeof IpdImport
     }
+    '/_ipd/profil-ipd': {
+      id: '/_ipd/profil-ipd'
+      path: '/profil-ipd'
+      fullPath: '/profil-ipd'
+      preLoaderRoute: typeof IpdProfilIpdImport
+      parentRoute: typeof IpdImport
+    }
     '/_ipd/registration-ipd': {
       id: '/_ipd/registration-ipd'
       path: '/registration-ipd'
@@ -850,11 +850,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IpdRegistrationIpdImport
       parentRoute: typeof IpdImport
     }
-    '/_ipd/report-ipd': {
-      id: '/_ipd/report-ipd'
-      path: '/report-ipd'
-      fullPath: '/report-ipd'
-      preLoaderRoute: typeof IpdReportIpdImport
+    '/_ipd/setting-ipd': {
+      id: '/_ipd/setting-ipd'
+      path: '/setting-ipd'
+      fullPath: '/setting-ipd'
+      preLoaderRoute: typeof IpdSettingIpdImport
       parentRoute: typeof IpdImport
     }
     '/_lab/ipd-request': {
@@ -962,6 +962,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NurseFichePatientImport
       parentRoute: typeof NurseImport
     }
+    '/_nurse/message-nurse': {
+      id: '/_nurse/message-nurse'
+      path: '/message-nurse'
+      fullPath: '/message-nurse'
+      preLoaderRoute: typeof NurseMessageNurseImport
+      parentRoute: typeof NurseImport
+    }
     '/_nurse/patient-medecine': {
       id: '/_nurse/patient-medecine'
       path: '/patient-medecine'
@@ -1016,13 +1023,6 @@ declare module '@tanstack/react-router' {
       path: '/registration-opd'
       fullPath: '/registration-opd'
       preLoaderRoute: typeof OpdRegistrationOpdImport
-      parentRoute: typeof OpdImport
-    }
-    '/_opd/revisit': {
-      id: '/_opd/revisit'
-      path: '/revisit'
-      fullPath: '/revisit'
-      preLoaderRoute: typeof OpdRevisitImport
       parentRoute: typeof OpdImport
     }
     '/_opd/setting-opd': {
@@ -1179,24 +1179,22 @@ const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
 
 interface IpdRouteChildren {
   IpdDischargeRoute: typeof IpdDischargeRoute
-  IpdInvestigationRoute: typeof IpdInvestigationRoute
-  IpdIpdRoute: typeof IpdIpdRoute
-  IpdMedecinesRoute: typeof IpdMedecinesRoute
+  IpdMessageIpdRoute: typeof IpdMessageIpdRoute
   IpdOTRoute: typeof IpdOTRoute
   IpdPaymentRoute: typeof IpdPaymentRoute
+  IpdProfilIpdRoute: typeof IpdProfilIpdRoute
   IpdRegistrationIpdRoute: typeof IpdRegistrationIpdRoute
-  IpdReportIpdRoute: typeof IpdReportIpdRoute
+  IpdSettingIpdRoute: typeof IpdSettingIpdRoute
 }
 
 const IpdRouteChildren: IpdRouteChildren = {
   IpdDischargeRoute: IpdDischargeRoute,
-  IpdInvestigationRoute: IpdInvestigationRoute,
-  IpdIpdRoute: IpdIpdRoute,
-  IpdMedecinesRoute: IpdMedecinesRoute,
+  IpdMessageIpdRoute: IpdMessageIpdRoute,
   IpdOTRoute: IpdOTRoute,
   IpdPaymentRoute: IpdPaymentRoute,
+  IpdProfilIpdRoute: IpdProfilIpdRoute,
   IpdRegistrationIpdRoute: IpdRegistrationIpdRoute,
-  IpdReportIpdRoute: IpdReportIpdRoute,
+  IpdSettingIpdRoute: IpdSettingIpdRoute,
 }
 
 const IpdRouteWithChildren = IpdRoute._addFileChildren(IpdRouteChildren)
@@ -1247,6 +1245,7 @@ interface NurseRouteChildren {
   NurseConstantRoute: typeof NurseConstantRoute
   NurseDashboardNurseRoute: typeof NurseDashboardNurseRoute
   NurseFichePatientRoute: typeof NurseFichePatientRoute
+  NurseMessageNurseRoute: typeof NurseMessageNurseRoute
   NursePatientMedecineRoute: typeof NursePatientMedecineRoute
   NurseReportNurseRoute: typeof NurseReportNurseRoute
   NurseSettingNurseRoute: typeof NurseSettingNurseRoute
@@ -1256,6 +1255,7 @@ const NurseRouteChildren: NurseRouteChildren = {
   NurseConstantRoute: NurseConstantRoute,
   NurseDashboardNurseRoute: NurseDashboardNurseRoute,
   NurseFichePatientRoute: NurseFichePatientRoute,
+  NurseMessageNurseRoute: NurseMessageNurseRoute,
   NursePatientMedecineRoute: NursePatientMedecineRoute,
   NurseReportNurseRoute: NurseReportNurseRoute,
   NurseSettingNurseRoute: NurseSettingNurseRoute,
@@ -1269,7 +1269,6 @@ interface OpdRouteChildren {
   OpdMessageOpdRoute: typeof OpdMessageOpdRoute
   OpdProfilOpdRoute: typeof OpdProfilOpdRoute
   OpdRegistrationOpdRoute: typeof OpdRegistrationOpdRoute
-  OpdRevisitRoute: typeof OpdRevisitRoute
   OpdSettingOpdRoute: typeof OpdSettingOpdRoute
   OpdVaccinRoute: typeof OpdVaccinRoute
 }
@@ -1280,7 +1279,6 @@ const OpdRouteChildren: OpdRouteChildren = {
   OpdMessageOpdRoute: OpdMessageOpdRoute,
   OpdProfilOpdRoute: OpdProfilOpdRoute,
   OpdRegistrationOpdRoute: OpdRegistrationOpdRoute,
-  OpdRevisitRoute: OpdRevisitRoute,
   OpdSettingOpdRoute: OpdSettingOpdRoute,
   OpdVaccinRoute: OpdVaccinRoute,
 }
@@ -1313,6 +1311,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof RadiologyRouteWithChildren
   '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
   '/menu-principal': typeof MenuPrincipalRoute
   '/appointment-list': typeof AppointmentsAppointmentListRoute
   '/clinic-tarif': typeof AppointmentsClinicTarifRoute
@@ -1338,13 +1337,12 @@ export interface FileRoutesByFullPath {
   '/service': typeof HomeServiceRoute
   '/setting': typeof HomeSettingRoute
   '/discharge': typeof IpdDischargeRoute
-  '/investigation': typeof IpdInvestigationRoute
-  '/ipd': typeof IpdIpdRoute
-  '/medecines': typeof IpdMedecinesRoute
+  '/message-ipd': typeof IpdMessageIpdRoute
   '/oT': typeof IpdOTRoute
   '/payment': typeof IpdPaymentRoute
+  '/profil-ipd': typeof IpdProfilIpdRoute
   '/registration-ipd': typeof IpdRegistrationIpdRoute
-  '/report-ipd': typeof IpdReportIpdRoute
+  '/setting-ipd': typeof IpdSettingIpdRoute
   '/ipd-request': typeof LabIpdRequestRoute
   '/message-lab': typeof LabMessageLabRoute
   '/opd-request': typeof LabOpdRequestRoute
@@ -1360,6 +1358,7 @@ export interface FileRoutesByFullPath {
   '/constant': typeof NurseConstantRoute
   '/dashboard-nurse': typeof NurseDashboardNurseRoute
   '/fiche-patient': typeof NurseFichePatientRoute
+  '/message-nurse': typeof NurseMessageNurseRoute
   '/patient-medecine': typeof NursePatientMedecineRoute
   '/report-nurse': typeof NurseReportNurseRoute
   '/setting-nurse': typeof NurseSettingNurseRoute
@@ -1368,7 +1367,6 @@ export interface FileRoutesByFullPath {
   '/message-opd': typeof OpdMessageOpdRoute
   '/profil-opd': typeof OpdProfilOpdRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
-  '/revisit': typeof OpdRevisitRoute
   '/setting-opd': typeof OpdSettingOpdRoute
   '/vaccin': typeof OpdVaccinRoute
   '/ipd-radiology': typeof RadiologyIpdRadiologyRoute
@@ -1385,6 +1383,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof RadiologyRouteWithChildren
   '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
   '/menu-principal': typeof MenuPrincipalRoute
   '/appointment-list': typeof AppointmentsAppointmentListRoute
   '/clinic-tarif': typeof AppointmentsClinicTarifRoute
@@ -1410,13 +1409,12 @@ export interface FileRoutesByTo {
   '/service': typeof HomeServiceRoute
   '/setting': typeof HomeSettingRoute
   '/discharge': typeof IpdDischargeRoute
-  '/investigation': typeof IpdInvestigationRoute
-  '/ipd': typeof IpdIpdRoute
-  '/medecines': typeof IpdMedecinesRoute
+  '/message-ipd': typeof IpdMessageIpdRoute
   '/oT': typeof IpdOTRoute
   '/payment': typeof IpdPaymentRoute
+  '/profil-ipd': typeof IpdProfilIpdRoute
   '/registration-ipd': typeof IpdRegistrationIpdRoute
-  '/report-ipd': typeof IpdReportIpdRoute
+  '/setting-ipd': typeof IpdSettingIpdRoute
   '/ipd-request': typeof LabIpdRequestRoute
   '/message-lab': typeof LabMessageLabRoute
   '/opd-request': typeof LabOpdRequestRoute
@@ -1432,6 +1430,7 @@ export interface FileRoutesByTo {
   '/constant': typeof NurseConstantRoute
   '/dashboard-nurse': typeof NurseDashboardNurseRoute
   '/fiche-patient': typeof NurseFichePatientRoute
+  '/message-nurse': typeof NurseMessageNurseRoute
   '/patient-medecine': typeof NursePatientMedecineRoute
   '/report-nurse': typeof NurseReportNurseRoute
   '/setting-nurse': typeof NurseSettingNurseRoute
@@ -1440,7 +1439,6 @@ export interface FileRoutesByTo {
   '/message-opd': typeof OpdMessageOpdRoute
   '/profil-opd': typeof OpdProfilOpdRoute
   '/registration-opd': typeof OpdRegistrationOpdRoute
-  '/revisit': typeof OpdRevisitRoute
   '/setting-opd': typeof OpdSettingOpdRoute
   '/vaccin': typeof OpdVaccinRoute
   '/ipd-radiology': typeof RadiologyIpdRadiologyRoute
@@ -1466,6 +1464,7 @@ export interface FileRoutesById {
   '/_opd': typeof OpdRouteWithChildren
   '/_radiology': typeof RadiologyRouteWithChildren
   '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
   '/menu-principal': typeof MenuPrincipalRoute
   '/_appointments/appointment-list': typeof AppointmentsAppointmentListRoute
   '/_appointments/clinic-tarif': typeof AppointmentsClinicTarifRoute
@@ -1491,13 +1490,12 @@ export interface FileRoutesById {
   '/_home/service': typeof HomeServiceRoute
   '/_home/setting': typeof HomeSettingRoute
   '/_ipd/discharge': typeof IpdDischargeRoute
-  '/_ipd/investigation': typeof IpdInvestigationRoute
-  '/_ipd/ipd': typeof IpdIpdRoute
-  '/_ipd/medecines': typeof IpdMedecinesRoute
+  '/_ipd/message-ipd': typeof IpdMessageIpdRoute
   '/_ipd/oT': typeof IpdOTRoute
   '/_ipd/payment': typeof IpdPaymentRoute
+  '/_ipd/profil-ipd': typeof IpdProfilIpdRoute
   '/_ipd/registration-ipd': typeof IpdRegistrationIpdRoute
-  '/_ipd/report-ipd': typeof IpdReportIpdRoute
+  '/_ipd/setting-ipd': typeof IpdSettingIpdRoute
   '/_lab/ipd-request': typeof LabIpdRequestRoute
   '/_lab/message-lab': typeof LabMessageLabRoute
   '/_lab/opd-request': typeof LabOpdRequestRoute
@@ -1513,6 +1511,7 @@ export interface FileRoutesById {
   '/_nurse/constant': typeof NurseConstantRoute
   '/_nurse/dashboard-nurse': typeof NurseDashboardNurseRoute
   '/_nurse/fiche-patient': typeof NurseFichePatientRoute
+  '/_nurse/message-nurse': typeof NurseMessageNurseRoute
   '/_nurse/patient-medecine': typeof NursePatientMedecineRoute
   '/_nurse/report-nurse': typeof NurseReportNurseRoute
   '/_nurse/setting-nurse': typeof NurseSettingNurseRoute
@@ -1521,7 +1520,6 @@ export interface FileRoutesById {
   '/_opd/message-opd': typeof OpdMessageOpdRoute
   '/_opd/profil-opd': typeof OpdProfilOpdRoute
   '/_opd/registration-opd': typeof OpdRegistrationOpdRoute
-  '/_opd/revisit': typeof OpdRevisitRoute
   '/_opd/setting-opd': typeof OpdSettingOpdRoute
   '/_opd/vaccin': typeof OpdVaccinRoute
   '/_radiology/ipd-radiology': typeof RadiologyIpdRadiologyRoute
@@ -1540,6 +1538,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/login'
+    | '/logout'
     | '/menu-principal'
     | '/appointment-list'
     | '/clinic-tarif'
@@ -1565,13 +1564,12 @@ export interface FileRouteTypes {
     | '/service'
     | '/setting'
     | '/discharge'
-    | '/investigation'
-    | '/ipd'
-    | '/medecines'
+    | '/message-ipd'
     | '/oT'
     | '/payment'
+    | '/profil-ipd'
     | '/registration-ipd'
-    | '/report-ipd'
+    | '/setting-ipd'
     | '/ipd-request'
     | '/message-lab'
     | '/opd-request'
@@ -1587,6 +1585,7 @@ export interface FileRouteTypes {
     | '/constant'
     | '/dashboard-nurse'
     | '/fiche-patient'
+    | '/message-nurse'
     | '/patient-medecine'
     | '/report-nurse'
     | '/setting-nurse'
@@ -1595,7 +1594,6 @@ export interface FileRouteTypes {
     | '/message-opd'
     | '/profil-opd'
     | '/registration-opd'
-    | '/revisit'
     | '/setting-opd'
     | '/vaccin'
     | '/ipd-radiology'
@@ -1611,6 +1609,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/login'
+    | '/logout'
     | '/menu-principal'
     | '/appointment-list'
     | '/clinic-tarif'
@@ -1636,13 +1635,12 @@ export interface FileRouteTypes {
     | '/service'
     | '/setting'
     | '/discharge'
-    | '/investigation'
-    | '/ipd'
-    | '/medecines'
+    | '/message-ipd'
     | '/oT'
     | '/payment'
+    | '/profil-ipd'
     | '/registration-ipd'
-    | '/report-ipd'
+    | '/setting-ipd'
     | '/ipd-request'
     | '/message-lab'
     | '/opd-request'
@@ -1658,6 +1656,7 @@ export interface FileRouteTypes {
     | '/constant'
     | '/dashboard-nurse'
     | '/fiche-patient'
+    | '/message-nurse'
     | '/patient-medecine'
     | '/report-nurse'
     | '/setting-nurse'
@@ -1666,7 +1665,6 @@ export interface FileRouteTypes {
     | '/message-opd'
     | '/profil-opd'
     | '/registration-opd'
-    | '/revisit'
     | '/setting-opd'
     | '/vaccin'
     | '/ipd-radiology'
@@ -1690,6 +1688,7 @@ export interface FileRouteTypes {
     | '/_opd'
     | '/_radiology'
     | '/login'
+    | '/logout'
     | '/menu-principal'
     | '/_appointments/appointment-list'
     | '/_appointments/clinic-tarif'
@@ -1715,13 +1714,12 @@ export interface FileRouteTypes {
     | '/_home/service'
     | '/_home/setting'
     | '/_ipd/discharge'
-    | '/_ipd/investigation'
-    | '/_ipd/ipd'
-    | '/_ipd/medecines'
+    | '/_ipd/message-ipd'
     | '/_ipd/oT'
     | '/_ipd/payment'
+    | '/_ipd/profil-ipd'
     | '/_ipd/registration-ipd'
-    | '/_ipd/report-ipd'
+    | '/_ipd/setting-ipd'
     | '/_lab/ipd-request'
     | '/_lab/message-lab'
     | '/_lab/opd-request'
@@ -1737,6 +1735,7 @@ export interface FileRouteTypes {
     | '/_nurse/constant'
     | '/_nurse/dashboard-nurse'
     | '/_nurse/fiche-patient'
+    | '/_nurse/message-nurse'
     | '/_nurse/patient-medecine'
     | '/_nurse/report-nurse'
     | '/_nurse/setting-nurse'
@@ -1745,7 +1744,6 @@ export interface FileRouteTypes {
     | '/_opd/message-opd'
     | '/_opd/profil-opd'
     | '/_opd/registration-opd'
-    | '/_opd/revisit'
     | '/_opd/setting-opd'
     | '/_opd/vaccin'
     | '/_radiology/ipd-radiology'
@@ -1771,6 +1769,7 @@ export interface RootRouteChildren {
   OpdRoute: typeof OpdRouteWithChildren
   RadiologyRoute: typeof RadiologyRouteWithChildren
   LoginRoute: typeof LoginRoute
+  LogoutRoute: typeof LogoutRoute
   MenuPrincipalRoute: typeof MenuPrincipalRoute
 }
 
@@ -1786,6 +1785,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpdRoute: OpdRouteWithChildren,
   RadiologyRoute: RadiologyRouteWithChildren,
   LoginRoute: LoginRoute,
+  LogoutRoute: LogoutRoute,
   MenuPrincipalRoute: MenuPrincipalRoute,
 }
 
@@ -1810,6 +1810,7 @@ export const routeTree = rootRoute
         "/_opd",
         "/_radiology",
         "/login",
+        "/logout",
         "/menu-principal"
       ]
     },
@@ -1860,13 +1861,12 @@ export const routeTree = rootRoute
       "filePath": "_ipd.tsx",
       "children": [
         "/_ipd/discharge",
-        "/_ipd/investigation",
-        "/_ipd/ipd",
-        "/_ipd/medecines",
+        "/_ipd/message-ipd",
         "/_ipd/oT",
         "/_ipd/payment",
+        "/_ipd/profil-ipd",
         "/_ipd/registration-ipd",
-        "/_ipd/report-ipd"
+        "/_ipd/setting-ipd"
       ]
     },
     "/_lab": {
@@ -1897,6 +1897,7 @@ export const routeTree = rootRoute
         "/_nurse/constant",
         "/_nurse/dashboard-nurse",
         "/_nurse/fiche-patient",
+        "/_nurse/message-nurse",
         "/_nurse/patient-medecine",
         "/_nurse/report-nurse",
         "/_nurse/setting-nurse"
@@ -1910,7 +1911,6 @@ export const routeTree = rootRoute
         "/_opd/message-opd",
         "/_opd/profil-opd",
         "/_opd/registration-opd",
-        "/_opd/revisit",
         "/_opd/setting-opd",
         "/_opd/vaccin"
       ]
@@ -1928,6 +1928,9 @@ export const routeTree = rootRoute
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/logout": {
+      "filePath": "logout.tsx"
     },
     "/menu-principal": {
       "filePath": "menu-principal.tsx"
@@ -2028,16 +2031,8 @@ export const routeTree = rootRoute
       "filePath": "_ipd/discharge.tsx",
       "parent": "/_ipd"
     },
-    "/_ipd/investigation": {
-      "filePath": "_ipd/investigation.tsx",
-      "parent": "/_ipd"
-    },
-    "/_ipd/ipd": {
-      "filePath": "_ipd/ipd.tsx",
-      "parent": "/_ipd"
-    },
-    "/_ipd/medecines": {
-      "filePath": "_ipd/medecines.tsx",
+    "/_ipd/message-ipd": {
+      "filePath": "_ipd/message-ipd.tsx",
       "parent": "/_ipd"
     },
     "/_ipd/oT": {
@@ -2048,12 +2043,16 @@ export const routeTree = rootRoute
       "filePath": "_ipd/payment.tsx",
       "parent": "/_ipd"
     },
+    "/_ipd/profil-ipd": {
+      "filePath": "_ipd/profil-ipd.tsx",
+      "parent": "/_ipd"
+    },
     "/_ipd/registration-ipd": {
       "filePath": "_ipd/registration-ipd.tsx",
       "parent": "/_ipd"
     },
-    "/_ipd/report-ipd": {
-      "filePath": "_ipd/report-ipd.tsx",
+    "/_ipd/setting-ipd": {
+      "filePath": "_ipd/setting-ipd.tsx",
       "parent": "/_ipd"
     },
     "/_lab/ipd-request": {
@@ -2116,6 +2115,10 @@ export const routeTree = rootRoute
       "filePath": "_nurse/fiche-patient.tsx",
       "parent": "/_nurse"
     },
+    "/_nurse/message-nurse": {
+      "filePath": "_nurse/message-nurse.tsx",
+      "parent": "/_nurse"
+    },
     "/_nurse/patient-medecine": {
       "filePath": "_nurse/patient-medecine.tsx",
       "parent": "/_nurse"
@@ -2146,10 +2149,6 @@ export const routeTree = rootRoute
     },
     "/_opd/registration-opd": {
       "filePath": "_opd/registration-opd.tsx",
-      "parent": "/_opd"
-    },
-    "/_opd/revisit": {
-      "filePath": "_opd/revisit.tsx",
       "parent": "/_opd"
     },
     "/_opd/setting-opd": {

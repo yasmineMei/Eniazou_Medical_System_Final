@@ -18,7 +18,7 @@ import {
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_lab/profil-lab")({
+export const Route = createFileRoute("/_ipd/profil-ipd")({
   component: ProfilePage,
 });
 
