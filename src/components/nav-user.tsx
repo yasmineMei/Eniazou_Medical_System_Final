@@ -80,11 +80,11 @@ export function NavUser({
 
     // Laboratoire
     if (
-      currentPath.includes("opd-request") ||
-      currentPath.includes("ipd-request") ||
-      currentPath.includes("report-lab")  ||
+      currentPath.includes("lab-request") ||
+      currentPath.includes("report-lab") ||
+      currentPath.includes("lab-list") ||
       currentPath.includes("setting-lab") ||
-      currentPath.includes("profil-lab")  ||
+      currentPath.includes("profil-lab") ||
       currentPath.includes("message-lab")
     ) {
       return "Laboratoire";
@@ -245,7 +245,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
-              <Link to="/logout" className="flex items-center">
+              <Link to="/login" className="flex items-center">
                 <LogOut className="mr-2 size-4" />
                 Déconnexion
               </Link>

@@ -15,7 +15,7 @@ const menuItems = [
     icon: "📅",
     path: "/dashboard-appointment",
   },
-  { title: "Laboratoire", icon: "🔬", path: "/opd-request" },
+  { title: "Laboratoire", icon: "🔬", path: "/lab-request" },
   { title: "Imagerie Médicale", icon: "📷", path: "/opd-radiology" },
   { title: "Infirmier", icon: "💉", path: "/dashboard-nurse" },
   { title: "Patient", icon: "🧍", path: "/patient-doctor" },

@@ -16,9 +16,9 @@ import {
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import {
   ClipboardList,
-  BedDouble,
   FileText,
   Settings2Icon,
+  Microscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_lab")({
@@ -33,25 +33,25 @@ function RouteComponent() {
 
   const navMain = [
     {
-      title: "Demande consultation",
-      url: "/opd-request",
-      icon: ClipboardList, 
+      title: "Demande d'analyses",
+      url: "/lab-request",
+      icon: ClipboardList,
       isActive: true,
     },
     {
-      title: "Demande hospitalisation",
-      url: "/ipd-request",
-      icon: BedDouble, 
+      title: "Liste des Analyses",
+      url: "/lab-list",
+      icon: Microscope,
     },
     {
       title: "Rapport laboratoire",
       url: "/report-lab",
-      icon: FileText, 
+      icon: FileText,
     },
     {
       title: "Paramètres",
       url: "/setting-lab",
-      icon: Settings2Icon, 
+      icon: Settings2Icon,
     },
   ];
 
@@ -59,11 +59,11 @@ function RouteComponent() {
   // Fonction pour déterminer le Breadcrumb en fonction de l'URL
   const renderBreadcrumb = () => {
     const breadcrumbs: Record<string, string> = {
-      "/opd-request": "Demande consultation",
-      "/ipd-request": "Demande hospitalisation",
+      "/lab-request": "Demande d'analyses",
+      "/lab-list": "Liste des Analyses",
       "/report-lab": "Rapport laboratoire",
       "/setting-lab": "Paramètres",
-      
+
       "/profil-lab": "Profil",
       "/message-lab": "Messagerie",
     };

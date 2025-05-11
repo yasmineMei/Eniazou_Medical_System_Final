@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,12 +14,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "@tanstack/react-router";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export const Route = createFileRoute("/_lab/opd-request")({
-  component: OpdRequestPage,
+export const Route = createFileRoute("/_lab/lab-request")({
+  component: LabRequestPage,
 });
 
-function OpdRequestPage() {
+function LabRequestPage() {
   const router = useRouter();
+  const printRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     medecinPrescripteur: "",
     centre: "",
@@ -53,12 +54,7 @@ function OpdRequestPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
-
   const handleAddToLabList = () => {
-    // Validation des champs requis
     if (
       !formData.nomPatient ||
       !formData.typeAnalyse ||
@@ -66,12 +62,11 @@ function OpdRequestPage() {
     ) {
       setStatus({
         type: "error",
-        message: "Veuillez remplir tous les champs obligatoires",
+        message: "Veuillez remplir tous les champs obligatoires (*)",
       });
       return;
     }
 
-    // Simulation d'enregistrement
     const newAnalysis = {
       id: `LAB-${Math.floor(Math.random() * 10000)}`,
       patientName: formData.nomPatient,
@@ -92,52 +87,72 @@ function OpdRequestPage() {
 
     setStatus({
       type: "success",
-      message: "La demande d'analyse a été ajoutée à la liste",
+      message: "La demande d'analyse a été ajoutée à la liste avec succès",
     });
 
-    // Réinitialisation après 2 secondes
     setTimeout(() => {
       setStatus({ type: "idle", message: "" });
-      // Redirection vers la liste des analyses
       router.navigate({ to: "/lab-list" });
     }, 2000);
   };
 
+  const handleCancel = () => {
+    setFormData({
+      medecinPrescripteur: "",
+      centre: "",
+      datePrelevement: "",
+      heurePrelevement: "",
+      dateEdition: "",
+      nomPatient: "",
+      age: "",
+      sexe: "",
+      numeroEnregistrement: "",
+      typeAnalyse: "",
+      hematologie: "",
+      parasitologie: "",
+      biochimie: "",
+      serologie: "",
+      observations: "",
+    });
+    setStatus({ type: "idle", message: "" });
+  };
+
   return (
-    <div className="p-4 space-y-6 print:p-0">
+    <div className="p-4 space-y-6" ref={printRef}>
       {status.type === "error" && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="mb-4">
           <AlertDescription>{status.message}</AlertDescription>
         </Alert>
       )}
       {status.type === "success" && (
-        <Alert>
+        <Alert className="mb-4">
           <AlertDescription>{status.message}</AlertDescription>
         </Alert>
       )}
 
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-bold">Demande Consultation</h2>
+        <h2 className="text-2xl font-bold text-[#018a8c]">
+          Demande d'Analyse Médicale
+        </h2>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={handlePrint}>
-            Imprimer
+          <Button variant="outline" onClick={handleCancel}>
+            Annuler
           </Button>
           <Button
             onClick={handleAddToLabList}
             className="bg-[#018a8c] hover:bg-[#016a6c]"
           >
-            Ajouter à la liste des analyses
+            Enregistrer
           </Button>
         </div>
       </div>
 
-      {/* ... (le reste du formulaire reste inchangé) ... */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Section informations de base */}
         <div className="space-y-4 p-4 border rounded-lg">
-          <h3 className="font-medium">Informations de la demande</h3>
+          <h3 className="font-medium text-lg">Informations de la demande</h3>
           <div className="grid gap-2">
-            <Label>Médecin prescripteur *</Label>
+            <Label className="font-semibold">Médecin prescripteur *</Label>
             <Input
               name="medecinPrescripteur"
               value={formData.medecinPrescripteur}
@@ -147,7 +162,7 @@ function OpdRequestPage() {
           </div>
 
           <div className="grid gap-2">
-            <Label>Centre *</Label>
+            <Label className="font-semibold">Centre *</Label>
             <Input
               name="centre"
               value={formData.centre}
@@ -158,7 +173,7 @@ function OpdRequestPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
-              <Label>Prélèvement le *</Label>
+              <Label className="font-semibold">Prélèvement le *</Label>
               <Input
                 type="date"
                 name="datePrelevement"
@@ -168,7 +183,7 @@ function OpdRequestPage() {
               />
             </div>
             <div className="grid gap-2">
-              <Label>Heure *</Label>
+              <Label className="font-semibold">Heure *</Label>
               <Input
                 type="time"
                 name="heurePrelevement"
@@ -180,7 +195,7 @@ function OpdRequestPage() {
           </div>
 
           <div className="grid gap-2">
-            <Label>Dossier édité le *</Label>
+            <Label className="font-semibold">Dossier édité le *</Label>
             <Input
               type="date"
               name="dateEdition"
@@ -193,9 +208,9 @@ function OpdRequestPage() {
 
         {/* Section informations patient */}
         <div className="space-y-4 p-4 border rounded-lg">
-          <h3 className="font-medium">Informations patient</h3>
+          <h3 className="font-medium text-lg">Informations patient</h3>
           <div className="grid gap-2">
-            <Label>Nom patient *</Label>
+            <Label className="font-semibold">Nom patient *</Label>
             <Input
               name="nomPatient"
               value={formData.nomPatient}
@@ -206,7 +221,7 @@ function OpdRequestPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
-              <Label>Âge *</Label>
+              <Label className="font-semibold">Âge *</Label>
               <Input
                 type="number"
                 name="age"
@@ -216,7 +231,7 @@ function OpdRequestPage() {
               />
             </div>
             <div className="grid gap-2">
-              <Label>Sexe *</Label>
+              <Label className="font-semibold">Sexe *</Label>
               <Select
                 value={formData.sexe}
                 onValueChange={(value) => handleSelectChange("sexe", value)}
@@ -234,7 +249,7 @@ function OpdRequestPage() {
           </div>
 
           <div className="grid gap-2">
-            <Label>N° enregistrement *</Label>
+            <Label className="font-semibold">N° enregistrement *</Label>
             <Input
               name="numeroEnregistrement"
               value={formData.numeroEnregistrement}
@@ -247,29 +262,34 @@ function OpdRequestPage() {
 
       {/* Section analyses */}
       <div className="space-y-4 p-4 border rounded-lg">
-        <h3 className="font-medium">Analyses demandées *</h3>
+        <h3 className="font-medium text-lg">Analyses demandées *</h3>
         <div className="grid gap-4">
-          <Select
-            value={formData.typeAnalyse}
-            onValueChange={(value) => handleSelectChange("typeAnalyse", value)}
-            required
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Sélectionner le type d'analyse" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="hematologie">Hématologie</SelectItem>
-              <SelectItem value="parasitologie">
-                Parasitologie sanguine
-              </SelectItem>
-              <SelectItem value="biochimie">Biochimie sanguine</SelectItem>
-              <SelectItem value="serologie">Sérologie bactérienne</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="grid gap-2">
+            <Label className="font-semibold">Type d'analyse *</Label>
+            <Select
+              value={formData.typeAnalyse}
+              onValueChange={(value) =>
+                handleSelectChange("typeAnalyse", value)
+              }
+              required
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sélectionner le type d'analyse" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="hematologie">Hématologie</SelectItem>
+                <SelectItem value="parasitologie">
+                  Parasitologie sanguine
+                </SelectItem>
+                <SelectItem value="biochimie">Biochimie sanguine</SelectItem>
+                <SelectItem value="serologie">Sérologie bactérienne</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           {formData.typeAnalyse === "hematologie" && (
             <div className="grid gap-4">
-              <Label>
+              <Label className="font-semibold">
                 Hématologie (Formule Globulaire et Formule Leucocytaire) *
               </Label>
               <Textarea
@@ -284,7 +304,7 @@ function OpdRequestPage() {
 
           {formData.typeAnalyse === "parasitologie" && (
             <div className="grid gap-4">
-              <Label>Parasitologie sanguine *</Label>
+              <Label className="font-semibold">Parasitologie sanguine *</Label>
               <Textarea
                 name="parasitologie"
                 value={formData.parasitologie}
@@ -297,7 +317,7 @@ function OpdRequestPage() {
 
           {formData.typeAnalyse === "biochimie" && (
             <div className="grid gap-4">
-              <Label>Biochimie sanguine *</Label>
+              <Label className="font-semibold">Biochimie sanguine *</Label>
               <Textarea
                 name="biochimie"
                 value={formData.biochimie}
@@ -310,7 +330,7 @@ function OpdRequestPage() {
 
           {formData.typeAnalyse === "serologie" && (
             <div className="grid gap-4">
-              <Label>Sérologie bactérienne *</Label>
+              <Label className="font-semibold">Sérologie bactérienne *</Label>
               <Textarea
                 name="serologie"
                 value={formData.serologie}
@@ -325,7 +345,7 @@ function OpdRequestPage() {
 
       {/* Observations */}
       <div className="space-y-4 p-4 border rounded-lg">
-        <Label>Observations</Label>
+        <Label className="font-semibold">Observations</Label>
         <Textarea
           name="observations"
           value={formData.observations}

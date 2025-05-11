@@ -50,11 +50,14 @@ import { Route as MedicalStockMessageStockImport } from './routes/_medical-stock
 import { Route as MedicalStockFournisseurImport } from './routes/_medical-stock/fournisseur'
 import { Route as MedicalStockCommandeImport } from './routes/_medical-stock/commande'
 import { Route as MedicalStockArticleImport } from './routes/_medical-stock/article'
+import { Route as LabTxtImport } from './routes/_lab/txt'
 import { Route as LabSettingLabImport } from './routes/_lab/setting-lab'
 import { Route as LabReportLabImport } from './routes/_lab/report-lab'
 import { Route as LabProfilLabImport } from './routes/_lab/profil-lab'
 import { Route as LabOpdRequestImport } from './routes/_lab/opd-request'
 import { Route as LabMessageLabImport } from './routes/_lab/message-lab'
+import { Route as LabLabRequestImport } from './routes/_lab/lab-request'
+import { Route as LabLabListImport } from './routes/_lab/lab-list'
 import { Route as LabIpdRequestImport } from './routes/_lab/ipd-request'
 import { Route as IpdSettingIpdImport } from './routes/_ipd/setting-ipd'
 import { Route as IpdRegistrationIpdImport } from './routes/_ipd/registration-ipd'
@@ -316,6 +319,12 @@ const MedicalStockArticleRoute = MedicalStockArticleImport.update({
   getParentRoute: () => MedicalStockRoute,
 } as any)
 
+const LabTxtRoute = LabTxtImport.update({
+  id: '/txt',
+  path: '/txt',
+  getParentRoute: () => LabRoute,
+} as any)
+
 const LabSettingLabRoute = LabSettingLabImport.update({
   id: '/setting-lab',
   path: '/setting-lab',
@@ -343,6 +352,18 @@ const LabOpdRequestRoute = LabOpdRequestImport.update({
 const LabMessageLabRoute = LabMessageLabImport.update({
   id: '/message-lab',
   path: '/message-lab',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const LabLabRequestRoute = LabLabRequestImport.update({
+  id: '/lab-request',
+  path: '/lab-request',
+  getParentRoute: () => LabRoute,
+} as any)
+
+const LabLabListRoute = LabLabListImport.update({
+  id: '/lab-list',
+  path: '/lab-list',
   getParentRoute: () => LabRoute,
 } as any)
 
@@ -864,6 +885,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabIpdRequestImport
       parentRoute: typeof LabImport
     }
+    '/_lab/lab-list': {
+      id: '/_lab/lab-list'
+      path: '/lab-list'
+      fullPath: '/lab-list'
+      preLoaderRoute: typeof LabLabListImport
+      parentRoute: typeof LabImport
+    }
+    '/_lab/lab-request': {
+      id: '/_lab/lab-request'
+      path: '/lab-request'
+      fullPath: '/lab-request'
+      preLoaderRoute: typeof LabLabRequestImport
+      parentRoute: typeof LabImport
+    }
     '/_lab/message-lab': {
       id: '/_lab/message-lab'
       path: '/message-lab'
@@ -897,6 +932,13 @@ declare module '@tanstack/react-router' {
       path: '/setting-lab'
       fullPath: '/setting-lab'
       preLoaderRoute: typeof LabSettingLabImport
+      parentRoute: typeof LabImport
+    }
+    '/_lab/txt': {
+      id: '/_lab/txt'
+      path: '/txt'
+      fullPath: '/txt'
+      preLoaderRoute: typeof LabTxtImport
       parentRoute: typeof LabImport
     }
     '/_medical-stock/article': {
@@ -1201,20 +1243,26 @@ const IpdRouteWithChildren = IpdRoute._addFileChildren(IpdRouteChildren)
 
 interface LabRouteChildren {
   LabIpdRequestRoute: typeof LabIpdRequestRoute
+  LabLabListRoute: typeof LabLabListRoute
+  LabLabRequestRoute: typeof LabLabRequestRoute
   LabMessageLabRoute: typeof LabMessageLabRoute
   LabOpdRequestRoute: typeof LabOpdRequestRoute
   LabProfilLabRoute: typeof LabProfilLabRoute
   LabReportLabRoute: typeof LabReportLabRoute
   LabSettingLabRoute: typeof LabSettingLabRoute
+  LabTxtRoute: typeof LabTxtRoute
 }
 
 const LabRouteChildren: LabRouteChildren = {
   LabIpdRequestRoute: LabIpdRequestRoute,
+  LabLabListRoute: LabLabListRoute,
+  LabLabRequestRoute: LabLabRequestRoute,
   LabMessageLabRoute: LabMessageLabRoute,
   LabOpdRequestRoute: LabOpdRequestRoute,
   LabProfilLabRoute: LabProfilLabRoute,
   LabReportLabRoute: LabReportLabRoute,
   LabSettingLabRoute: LabSettingLabRoute,
+  LabTxtRoute: LabTxtRoute,
 }
 
 const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
@@ -1344,11 +1392,14 @@ export interface FileRoutesByFullPath {
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/setting-ipd': typeof IpdSettingIpdRoute
   '/ipd-request': typeof LabIpdRequestRoute
+  '/lab-list': typeof LabLabListRoute
+  '/lab-request': typeof LabLabRequestRoute
   '/message-lab': typeof LabMessageLabRoute
   '/opd-request': typeof LabOpdRequestRoute
   '/profil-lab': typeof LabProfilLabRoute
   '/report-lab': typeof LabReportLabRoute
   '/setting-lab': typeof LabSettingLabRoute
+  '/txt': typeof LabTxtRoute
   '/article': typeof MedicalStockArticleRoute
   '/commande': typeof MedicalStockCommandeRoute
   '/fournisseur': typeof MedicalStockFournisseurRoute
@@ -1416,11 +1467,14 @@ export interface FileRoutesByTo {
   '/registration-ipd': typeof IpdRegistrationIpdRoute
   '/setting-ipd': typeof IpdSettingIpdRoute
   '/ipd-request': typeof LabIpdRequestRoute
+  '/lab-list': typeof LabLabListRoute
+  '/lab-request': typeof LabLabRequestRoute
   '/message-lab': typeof LabMessageLabRoute
   '/opd-request': typeof LabOpdRequestRoute
   '/profil-lab': typeof LabProfilLabRoute
   '/report-lab': typeof LabReportLabRoute
   '/setting-lab': typeof LabSettingLabRoute
+  '/txt': typeof LabTxtRoute
   '/article': typeof MedicalStockArticleRoute
   '/commande': typeof MedicalStockCommandeRoute
   '/fournisseur': typeof MedicalStockFournisseurRoute
@@ -1497,11 +1551,14 @@ export interface FileRoutesById {
   '/_ipd/registration-ipd': typeof IpdRegistrationIpdRoute
   '/_ipd/setting-ipd': typeof IpdSettingIpdRoute
   '/_lab/ipd-request': typeof LabIpdRequestRoute
+  '/_lab/lab-list': typeof LabLabListRoute
+  '/_lab/lab-request': typeof LabLabRequestRoute
   '/_lab/message-lab': typeof LabMessageLabRoute
   '/_lab/opd-request': typeof LabOpdRequestRoute
   '/_lab/profil-lab': typeof LabProfilLabRoute
   '/_lab/report-lab': typeof LabReportLabRoute
   '/_lab/setting-lab': typeof LabSettingLabRoute
+  '/_lab/txt': typeof LabTxtRoute
   '/_medical-stock/article': typeof MedicalStockArticleRoute
   '/_medical-stock/commande': typeof MedicalStockCommandeRoute
   '/_medical-stock/fournisseur': typeof MedicalStockFournisseurRoute
@@ -1571,11 +1628,14 @@ export interface FileRouteTypes {
     | '/registration-ipd'
     | '/setting-ipd'
     | '/ipd-request'
+    | '/lab-list'
+    | '/lab-request'
     | '/message-lab'
     | '/opd-request'
     | '/profil-lab'
     | '/report-lab'
     | '/setting-lab'
+    | '/txt'
     | '/article'
     | '/commande'
     | '/fournisseur'
@@ -1642,11 +1702,14 @@ export interface FileRouteTypes {
     | '/registration-ipd'
     | '/setting-ipd'
     | '/ipd-request'
+    | '/lab-list'
+    | '/lab-request'
     | '/message-lab'
     | '/opd-request'
     | '/profil-lab'
     | '/report-lab'
     | '/setting-lab'
+    | '/txt'
     | '/article'
     | '/commande'
     | '/fournisseur'
@@ -1721,11 +1784,14 @@ export interface FileRouteTypes {
     | '/_ipd/registration-ipd'
     | '/_ipd/setting-ipd'
     | '/_lab/ipd-request'
+    | '/_lab/lab-list'
+    | '/_lab/lab-request'
     | '/_lab/message-lab'
     | '/_lab/opd-request'
     | '/_lab/profil-lab'
     | '/_lab/report-lab'
     | '/_lab/setting-lab'
+    | '/_lab/txt'
     | '/_medical-stock/article'
     | '/_medical-stock/commande'
     | '/_medical-stock/fournisseur'
@@ -1873,11 +1939,14 @@ export const routeTree = rootRoute
       "filePath": "_lab.tsx",
       "children": [
         "/_lab/ipd-request",
+        "/_lab/lab-list",
+        "/_lab/lab-request",
         "/_lab/message-lab",
         "/_lab/opd-request",
         "/_lab/profil-lab",
         "/_lab/report-lab",
-        "/_lab/setting-lab"
+        "/_lab/setting-lab",
+        "/_lab/txt"
       ]
     },
     "/_medical-stock": {
@@ -2059,6 +2128,14 @@ export const routeTree = rootRoute
       "filePath": "_lab/ipd-request.tsx",
       "parent": "/_lab"
     },
+    "/_lab/lab-list": {
+      "filePath": "_lab/lab-list.tsx",
+      "parent": "/_lab"
+    },
+    "/_lab/lab-request": {
+      "filePath": "_lab/lab-request.tsx",
+      "parent": "/_lab"
+    },
     "/_lab/message-lab": {
       "filePath": "_lab/message-lab.tsx",
       "parent": "/_lab"
@@ -2077,6 +2154,10 @@ export const routeTree = rootRoute
     },
     "/_lab/setting-lab": {
       "filePath": "_lab/setting-lab.tsx",
+      "parent": "/_lab"
+    },
+    "/_lab/txt": {
+      "filePath": "_lab/txt.tsx",
       "parent": "/_lab"
     },
     "/_medical-stock/article": {
