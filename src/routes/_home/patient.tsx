@@ -4,6 +4,7 @@ import {
   CalendarDays,
   Clock,
   Eye,
+  Trash2,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -45,70 +46,156 @@ type Patient = {
   prenom: string;
   numberPhone: string;
   dateEnregistrement: string;
-  age: number;
+  birthdate: string;
+  genre: "M" | "F";
+  numeroDossier: string;
   status: "actif" | "inactif";
-  derniereVisite?: string;
 };
 
 function RouteComponent() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isAddPatientDialogOpen, setIsAddPatientDialogOpen] =
+    useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
-
-  // Données fictives pour les patients
-  const patients: Patient[] = [
-    // ... (vos données patients existantes)
-    // J'ai ajouté plus de données pour tester la pagination
+  const [patients, setPatients] = useState<Patient[]>([
     {
-      id: 5,
+      id: 1,
       nom: "Traoré",
       prenom: "Fatou",
       numberPhone: "07 89 45 12 36",
       dateEnregistrement: "2024-02-10",
-      age: 25,
+      birthdate: "1990-05-15",
+      genre: "F",
+      numeroDossier: "DM1123",
       status: "actif",
-      derniereVisite: "2024-03-20",
     },
     {
-      id: 6,
+      id: 2,
       nom: "Kouamé",
       prenom: "Paul",
       numberPhone: "01 45 78 96 32",
       dateEnregistrement: "2024-01-05",
-      age: 40,
+      birthdate: "1985-08-20",
+      genre: "M",
+      numeroDossier: "DM2234",
       status: "inactif",
-      derniereVisite: "2024-01-15",
     },
     {
-      id: 7,
+      id: 3,
       nom: "Bamba",
       prenom: "Aïcha",
       numberPhone: "05 78 96 32 14",
       dateEnregistrement: "2024-03-01",
-      age: 32,
+      birthdate: "1995-12-01",
+      genre: "F",
+      numeroDossier: "DM3345",
       status: "actif",
-      derniereVisite: "2024-03-18",
     },
     {
-      id: 8,
+      id: 4,
       nom: "Konaté",
       prenom: "Moussa",
       numberPhone: "01 23 65 98 74",
       dateEnregistrement: "2024-02-28",
-      age: 45,
+      birthdate: "1988-11-30",
+      genre: "M",
+      numeroDossier: "DM4456",
       status: "actif",
-      derniereVisite: "2024-03-15",
     },
-  ];
+  ]);
 
-  // Filtrer les patients en fonction de la recherche
+  // État pour le formulaire d'ajout
+  const [formData, setFormData] = useState<Omit<Patient, "id">>({
+    nom: "",
+    prenom: "",
+    numberPhone: "",
+    dateEnregistrement: new Date().toISOString().split("T")[0],
+    birthdate: "",
+    genre: "M",
+    numeroDossier: "",
+    status: "actif",
+  });
+
+  // Calculer l'âge à partir de la date de naissance
+  const calculateAge = (birthdate: string): number => {
+    const birthDate = new Date(birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  // Supprimer un patient
+  const handleDeletePatient = (id: number) => {
+    setPatients(patients.filter((patient) => patient.id !== id));
+  };
+
+  // Gérer les changements dans les inputs
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Gérer les changements dans les selects
+  const handleSelectChange = (field: keyof Patient, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Soumettre le formulaire
+  const handleSubmit = () => {
+    // Validation
+    if (
+      !formData.nom ||
+      !formData.prenom ||
+      !formData.numeroDossier ||
+      !formData.birthdate
+    ) {
+      alert("Veuillez remplir tous les champs obligatoires");
+      return;
+    }
+
+    // Créer un nouveau patient avec un ID unique
+    const newPatient: Patient = {
+      ...formData,
+      id: patients.length > 0 ? Math.max(...patients.map((p) => p.id)) + 1 : 1,
+    };
+
+    // Ajouter le nouveau patient
+    setPatients([...patients, newPatient]);
+
+    // Réinitialiser le formulaire
+    setFormData({
+      nom: "",
+      prenom: "",
+      numberPhone: "",
+      dateEnregistrement: new Date().toISOString().split("T")[0],
+      birthdate: "",
+      genre: "M",
+      numeroDossier: "",
+      status: "actif",
+    });
+
+    // Fermer le modal
+    setIsAddPatientDialogOpen(false);
+  };
+
+  // Filtrer les patients
   const filteredPatients = patients.filter(
     (patient) =>
       patient.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
       patient.prenom.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      patient.numberPhone.includes(searchQuery)
+      patient.numeroDossier.includes(searchQuery)
   );
 
   // Pagination
@@ -136,7 +223,14 @@ function RouteComponent() {
     },
     {
       title: "Nouveaux patients (30j)",
-      value: "12",
+      value: patients
+        .filter((p) => {
+          const registrationDate = new Date(p.dateEnregistrement);
+          const thirtyDaysAgo = new Date();
+          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+          return registrationDate >= thirtyDaysAgo;
+        })
+        .length.toString(),
       description: "Nouveaux inscrits ce mois-ci",
       icon: <Calendar1 className="h-8 w-8 text-[#018a8cff]" />,
       bgColor: "from-blue-50 to-blue-100",
@@ -152,7 +246,15 @@ function RouteComponent() {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <h1 className="text-2xl font-bold">Patients inscrits</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Patients inscrits</h1>
+        <Button
+          onClick={() => setIsAddPatientDialogOpen(true)}
+          className="bg-[#018a8cff] hover:bg-[#017a7cff] text-white"
+        >
+          Nouveau Patient
+        </Button>
+      </div>
 
       {/* Cartes de statistiques */}
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">
@@ -176,16 +278,16 @@ function RouteComponent() {
         ))}
       </div>
 
-      {/* Barre de recherche et sélection d'items par page */}
+      {/* Barre de recherche et pagination */}
       <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
           <Input
             type="text"
-            placeholder="Rechercher par nom, prénom ou téléphone..."
+            placeholder="Rechercher par nom, prénom ou numéro de dossier..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setCurrentPage(1); // Reset à la première page lors d'une nouvelle recherche
+              setCurrentPage(1);
             }}
             className="w-full max-w-md"
           />
@@ -204,7 +306,7 @@ function RouteComponent() {
             value={itemsPerPage.toString()}
             onValueChange={(value) => {
               setItemsPerPage(Number(value));
-              setCurrentPage(1); // Reset à la première page lors du changement d'items par page
+              setCurrentPage(1);
             }}
           >
             <SelectTrigger className="w-[80px]">
@@ -229,9 +331,9 @@ function RouteComponent() {
                 <TableHead>Nom complet</TableHead>
                 <TableHead>Date enregistrement</TableHead>
                 <TableHead>Âge</TableHead>
-                <TableHead>Téléphone</TableHead>
+                <TableHead>Numéro dossier</TableHead>
+                <TableHead>Genre</TableHead>
                 <TableHead>Statut</TableHead>
-                <TableHead>Dernière visite</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -243,8 +345,11 @@ function RouteComponent() {
                       {patient.nom} {patient.prenom}
                     </TableCell>
                     <TableCell>{patient.dateEnregistrement}</TableCell>
-                    <TableCell>{patient.age} ans</TableCell>
-                    <TableCell>{patient.numberPhone}</TableCell>
+                    <TableCell>{calculateAge(patient.birthdate)} ans</TableCell>
+                    <TableCell>{patient.numeroDossier}</TableCell>
+                    <TableCell>
+                      {patient.genre === "M" ? "Masculin" : "Féminin"}
+                    </TableCell>
                     <TableCell>
                       <Badge
                         variant={
@@ -259,18 +364,27 @@ function RouteComponent() {
                         {patient.status === "actif" ? "Actif" : "Inactif"}
                       </Badge>
                     </TableCell>
-                    <TableCell>{patient.derniereVisite || "N/A"}</TableCell>
                     <TableCell>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedPatient(patient);
-                          setIsDialogOpen(true);
-                        }}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedPatient(patient);
+                            setIsDialogOpen(true);
+                          }}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-red-500 hover:text-red-700"
+                          onClick={() => handleDeletePatient(patient.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
@@ -307,7 +421,6 @@ function RouteComponent() {
 
             <div className="flex items-center gap-1">
               {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                // Affiche seulement 5 pages max autour de la page courante
                 let pageToShow;
                 if (totalPages <= 5) {
                   pageToShow = i + 1;
@@ -378,7 +491,26 @@ function RouteComponent() {
                   {selectedPatient.dateEnregistrement}
                 </p>
                 <p>
-                  <strong>Âge :</strong> {selectedPatient.age} ans
+                  <strong>Âge :</strong>{" "}
+                  {calculateAge(selectedPatient.birthdate)} ans
+                </p>
+                <p>
+                  <strong>Genre :</strong>{" "}
+                  {selectedPatient.genre === "M" ? "Masculin" : "Féminin"}
+                </p>
+              </div>
+              <div className="space-y-2">
+                <p>
+                  <strong>Numéro de téléphone :</strong>{" "}
+                  {selectedPatient.numberPhone}
+                </p>
+                <p>
+                  <strong>Numéro de dossier :</strong>{" "}
+                  {selectedPatient.numeroDossier}
+                </p>
+                <p>
+                  <strong>Date de naissance :</strong>{" "}
+                  {selectedPatient.birthdate}
                 </p>
                 <p>
                   <strong>Statut :</strong>
@@ -394,31 +526,168 @@ function RouteComponent() {
                   </Badge>
                 </p>
               </div>
-              <div className="space-y-2">
-                <p>
-                  <strong>Numéro de téléphone :</strong>{" "}
-                  {selectedPatient.numberPhone}
-                </p>
-                <p>
-                  <strong>Dernière visite :</strong>{" "}
-                  {selectedPatient.derniereVisite || "N/A"}
-                </p>
-                <p>
-                  <strong>Inscrit depuis :</strong>
-                  {Math.floor(
-                    (new Date().getTime() -
-                      new Date(selectedPatient.dateEnregistrement).getTime()) /
-                      (1000 * 60 * 60 * 24)
-                  )}{" "}
-                  jours
-                </p>
-              </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal pour ajouter un nouveau patient */}
+      <Dialog
+        open={isAddPatientDialogOpen}
+        onOpenChange={setIsAddPatientDialogOpen}
+      >
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Inscrire un nouveau patient</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="nom" className="block text-sm font-medium mb-1">
+                  Nom*
+                </label>
+                <Input
+                  id="nom"
+                  placeholder="Entrez le nom"
+                  value={formData.nom}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="prenom"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Prénom*
+                </label>
+                <Input
+                  id="prenom"
+                  placeholder="Entrez le prénom"
+                  value={formData.prenom}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="birthdate"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Date de naissance*
+                </label>
+                <Input
+                  id="birthdate"
+                  type="date"
+                  value={formData.birthdate}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="genre"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Genre*
+                </label>
+                <Select
+                  value={formData.genre}
+                  onValueChange={(value) => handleSelectChange("genre", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez le genre" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="M">Masculin</SelectItem>
+                    <SelectItem value="F">Féminin</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="numberPhone"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Téléphone
+                </label>
+                <Input
+                  id="numberPhone"
+                  placeholder="Entrez le numéro de téléphone"
+                  value={formData.numberPhone}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="numeroDossier"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Numéro de dossier*
+                </label>
+                <Input
+                  id="numeroDossier"
+                  placeholder="Entrez le numéro de dossier"
+                  value={formData.numeroDossier}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="dateEnregistrement"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Date d'enregistrement
+                </label>
+                <Input
+                  id="dateEnregistrement"
+                  type="date"
+                  value={formData.dateEnregistrement}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="status"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Statut*
+                </label>
+                <Select
+                  value={formData.status}
+                  onValueChange={(value) => handleSelectChange("status", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez un statut" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="actif">Actif</SelectItem>
+                    <SelectItem value="inactif">Inactif</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsAddPatientDialogOpen(false)}
+            >
+              Annuler
+            </Button>
+            <Button
+              className="bg-[#018a8cff] hover:bg-[#017a7cff]"
+              onClick={handleSubmit}
+            >
+              Enregistrer
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
   );
 }
-
-
+export default RouteComponent;
